@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="@color/gray_bg"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+        >
+
+    <include layout="@layout/title_include"></include>
+
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:layout_centerInParent="true"
+            android:id="@+id/ll_all_botton">
+    <Button android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_car_loan"
+            style="@style/loan"
+            android:text="@string/car_loan"
+            android:layout_above="@+id/ll_combine" android:layout_marginTop="@dimen/space_50"/>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+            android:id="@+id/ll_combine" android:orientation="vertical" >
+    <Button android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_house_loan"
+            style="@style/loan"
+            android:text="@string/house_loan"
+            />
+
+    <Button android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/loan"
+            android:id="@+id/btn_credit_loan"
+            android:text="@string/credit_loan"
+            />
+    </LinearLayout>
+
+    <Button android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_other_loan"
+            style="@style/loan"
+            android:text="@string/other_loan"
+            android:layout_below="@+id/ll_combine"/>
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>
+

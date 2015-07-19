@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:background="@color/white">
+
+        <ImageButton android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/btn_photo" android:background="@color/transparent"
+                     android:src="@drawable/btn_house_surface_selector" android:paddingLeft="@dimen/space_10"
+                     android:paddingTop="@dimen/space_10" android:paddingRight="@dimen/space_10"/>
+
+        <EditText android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/et_remark"
+                  android:layout_toRightOf="@+id/btn_photo"
+                  android:background="@null"
+                  android:layout_above="@+id/tv_line"
+                  android:hint="@string/remark"
+                  android:textColor="@color/gray_text" android:paddingTop="@dimen/space_30"
+                  android:paddingBottom="@dimen/space_7"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="@dimen/space_1"
+                  android:id="@+id/tv_line" android:layout_alignBottom="@+id/btn_photo"
+                  android:layout_toRightOf="@+id/btn_photo" android:background="@color/gray_bg"/>
+    </RelativeLayout>
+
+</LinearLayout>

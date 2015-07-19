@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+                android:background="@color/white">
+    <ImageView android:layout_width="wrap_content" android:layout_height="60dp"
+            android:src="@drawable/defaul_head_image" android:layout_margin="@dimen/space_10"/>
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+                    android:layout_marginRight="@dimen/space_10" android:layout_marginTop="@dimen/space_10"
+                    android:layout_marginBottom="@dimen/space_10">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="tv_name" android:id="@+id/tv_name" />
+    </RelativeLayout>
+
+</LinearLayout>

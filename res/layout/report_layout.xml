@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="@color/gray_bg"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+        >
+    <include layout="@layout/title_include"></include>
+
+    <EditText android:layout_width="match_parent" android:layout_height="@dimen/space_140" android:id="@+id/et_report"
+              android:hint="@string/report_et" android:gravity="top" android:textSize="@dimen/textsize_18"
+              android:background="@color/white"
+              style="@null"
+              android:textColorHint="@color/gray_text_search"/>
+
+    <Button android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_pay_money"
+            android:gravity="center_vertical|center_horizontal" android:background="@drawable/btn_selector" android:text="@string/submit_btn"
+            android:textSize="@dimen/textsize_18" android:textColor="@color/white"
+            android:layout_margin="@dimen/space_10" android:padding="@dimen/space_16"/>
+</LinearLayout>
+

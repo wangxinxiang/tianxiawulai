@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="@color/gray_bg"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+        >
+    <EditText android:layout_width="match_parent"
+              android:layout_height="wrap_content" android:id="@+id/et_regist_mobile"
+              android:background="@drawable/register_input_box"
+              android:textSize="@dimen/textsize_24"
+              android:padding="@dimen/space_16" android:hint="@string/regist_mobile_number"
+              android:layout_marginLeft="@dimen/space_10" android:layout_marginTop="@dimen/space_20"
+              android:layout_marginRight="@dimen/space_10" android:inputType="number"/>
+
+
+
+    <RelativeLayout android:layout_width="match_parent"
+                  android:id="@+id/rl_regist_check_code"
+                  android:layout_height="wrap_content">
+
+    <EditText android:layout_width="match_parent"
+              android:layout_height="wrap_content" android:id="@+id/et_check_code_number"
+              android:background="@drawable/register_input_box"
+              android:textSize="@dimen/textsize_24"
+              android:padding="@dimen/space_16" android:hint="@string/regist_check_code_number"
+              android:layout_toLeftOf="@+id/btn_get_check_code" android:layout_marginLeft="@dimen/space_10"
+              android:layout_marginTop="@dimen/space_10" android:layout_marginBottom="@dimen/space_10"
+              android:inputType="number"/>
+
+        <Button android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_get_check_code"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="@drawable/btn_selector"
+                android:text="@string/regist_get_check_code"
+                android:textSize="@dimen/textsize_24" android:textColor="@color/white"
+                android:layout_margin="@dimen/space_10" android:padding="@dimen/space_16"
+                android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+    <EditText android:layout_width="match_parent"
+              android:layout_height="wrap_content" android:id="@+id/et_password"
+              android:background="@drawable/register_input_box"
+              android:textSize="@dimen/textsize_24" android:layout_margin="@dimen/space_10"
+              android:padding="@dimen/space_16" android:hint="@string/regist_password"
+              android:inputType="textPassword"/>
+
+    <Button android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_pay_money"
+            android:gravity="center_vertical|center_horizontal" android:background="@drawable/btn_selector" android:text="@string/pay_btn"
+            android:textSize="@dimen/textsize_24" android:textColor="@color/white"
+            android:layout_margin="@dimen/space_10" android:padding="@dimen/space_16"/>
+
+    <Button android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_regist"
+            android:gravity="center_vertical|center_horizontal" android:background="@color/lightgray" android:text="@string/login_regist"
+            android:textSize="@dimen/textsize_24" android:textColor="@color/midblack"
+            android:padding="@dimen/space_16" android:layout_marginLeft="@dimen/space_10"
+            android:layout_marginRight="@dimen/space_10"/>
+</LinearLayout>
+

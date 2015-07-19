@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+            android:background="@color/orange_main">
+    <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:src="@drawable/btn_title_back" android:background="@color/transparent"
+            android:padding="@dimen/space_12" android:id="@+id/ibtn_title_back"
+            android:layout_alignParentLeft="true" android:visibility="invisible"/>
+    <TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:text="标题" android:textSize="@dimen/textsize_22"
+              android:singleLine="true" android:ellipsize="end"
+              android:textColor="@color/white" android:layout_centerVertical="true"
+              android:layout_centerHorizontal="true" android:id="@+id/tv_title" android:gravity="center_horizontal"
+              android:layout_marginLeft="@dimen/space_140"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="右功能键" android:textColor="@color/white" android:textSize="@dimen/textsize_16"
+            android:id="@+id/tv_right" android:padding="@dimen/space_12"
+              android:layout_centerVertical="true" android:layout_alignParentRight="true" android:visibility="invisible"
+              android:clickable="false"/>
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:id="@+id/ll_add_sub" android:orientation="horizontal"
+            android:layout_alignParentRight="true" android:visibility="visible">
+        <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:src="@drawable/btn_add_selector" android:background="@color/transparent"
+                android:padding="@dimen/space_12" android:id="@+id/ibtn_add" android:visibility="gone"/>
+        <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
+                     android:src="@drawable/btn_sub_selector" android:background="@color/transparent"
+                     android:padding="@dimen/space_12" android:id="@+id/ibtn_sub" android:visibility="gone"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

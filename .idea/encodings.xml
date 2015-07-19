@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/res/drawable-xhdpi/btn_normal.9.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/res/drawable-xhdpi/btn_pressed.9.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/res/drawable-xhdpi/defaul_head_image.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/res/drawable/btn_selector.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/res/drawable/tab_edit_selector.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/res/drawable/tab_me_selector.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/res/drawable/tab_menu_selector.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/res/drawable/tab_search_selector.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/res/layout/blacklist_layout.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/res/layout/join_blacklist_layout.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/res/layout/report_layout.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/res/values/color.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/res/values/dimens.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/res/values/strings.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/example/txwl_first/EditFragment.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/example/txwl_first/MainActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/example/txwl_first/MeFragment.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/example/txwl_first/MenuFragment.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/example/txwl_first/SearchFragment.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/example/txwl_first/View/CustomScrollView.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/example/txwl_first/ViewPagerFragment.java" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>
