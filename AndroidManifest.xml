@@ -7,8 +7,7 @@
 
     <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
 
-    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher"
-            android:name=".Util.TXWLApplication">
+    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher">
         <activity android:name=".MainActivity"
                   android:label="@string/app_name" android:screenOrientation="portrait"
                   android:theme="@android:style/Theme.NoTitleBar.OverlayActionModes"

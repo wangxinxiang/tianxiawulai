@@ -11,7 +11,7 @@
               android:hint="@string/report_et" android:gravity="top" android:textSize="@dimen/textsize_18"
               android:background="@color/white"
               style="@null"
-              android:textColorHint="@color/gray_text_search"/>
+              android:textColorHint="@color/gray_text_search" android:textColor="@color/gray_text_deep"/>
 
     <Button android:layout_width="match_parent"
             android:layout_height="wrap_content"

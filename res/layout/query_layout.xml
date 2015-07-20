@@ -14,7 +14,8 @@
               android:background="@drawable/input_box_orange"
               android:hint="@string/input_et_query"
               android:textColorHint="@color/gray_text_search"
-              android:textSize="@dimen/textsize_22" android:layout_margin="@dimen/space_14"/>
+              android:textSize="@dimen/textsize_22" android:layout_margin="@dimen/space_14" android:ellipsize="end"
+              android:singleLine="true"/>
 
     <Button android:layout_width="match_parent"
             android:layout_height="wrap_content"

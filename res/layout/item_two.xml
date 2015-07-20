@@ -20,7 +20,7 @@
                   android:layout_above="@+id/tv_line"
                   android:hint="@string/remark"
                   android:textColor="@color/gray_text" android:paddingTop="@dimen/space_30"
-                  android:paddingBottom="@dimen/space_7"/>
+                  android:paddingBottom="@dimen/space_7" android:singleLine="false"/>
 
         <TextView android:layout_width="match_parent"
                   android:layout_height="@dimen/space_1"

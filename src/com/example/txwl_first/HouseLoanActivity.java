@@ -12,9 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
-import com.example.txwl_first.Util.Constant;
 import com.example.txwl_first.Util.DataVeri;
-import com.example.txwl_first.Util.TXWLApplication;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -304,7 +302,7 @@ public class HouseLoanActivity extends Activity implements AddItem{
             });
 
             for(int i =0;i< selectors.length;i++){
-                AddHouse_Items(ll_my_loan_detail,selectors[i],car_owner_show[i],car_owner_des_show[i], i);
+                AddHouse_Items(ll_my_loan_detail,selectors[i],car_owner_show[i],car_owner_des_show[i]);
             }
 
             for(int i = 0;i<owner.length;i++){
@@ -326,7 +324,7 @@ public class HouseLoanActivity extends Activity implements AddItem{
                 }
             });
             for(int i =0;i< selectors.length;i++){
-                AddHouse_Items(ll_my_loan_detail,selectors[i],"备注","", i);
+                AddHouse_Items(ll_my_loan_detail,selectors[i],"备注","");
             }
 
             for(int i = 0;i<owner.length;i++){
@@ -412,7 +410,7 @@ public class HouseLoanActivity extends Activity implements AddItem{
      * @param remark 备注或描述字段
      * @param descrip_content 描述内容
      */
-    private void AddHouse_Items(LinearLayout layout,Integer house,String remark,String descrip_content, int i){
+    private void AddHouse_Items(LinearLayout layout,Integer house,String remark,String descrip_content){
         //如果处于显示状态
         if("query_listview_car_item".equals(from_button)||"query_listview_house_item".equals(from_button)||
                 "query_listview_credit_item".equals(from_button)||"query_listview_other_item".equals(from_button)){
@@ -421,6 +419,7 @@ public class HouseLoanActivity extends Activity implements AddItem{
             TextView tv_descrip = (TextView) rl_item_five.findViewById(R.id.tv_descrip);
             TextView tv_descrip_content = (TextView) rl_item_five.findViewById(R.id.tv_descrip_content);
             btn_photo.setImageResource(house);
+            btn_photo.setClickable(false);
             tv_descrip.setText(remark);
             tv_descrip_content.setText(descrip_content);
             layout.addView(rl_item_five);
@@ -430,18 +429,8 @@ public class HouseLoanActivity extends Activity implements AddItem{
             ImageButton btn_photo = (ImageButton) rl_house_detail.findViewById(R.id.btn_photo);
             EditText et_remark = (EditText) rl_house_detail.findViewById(R.id.et_remark);
             btn_photo.setImageResource(house);
-            et_remark.setText(remark);
+            et_remark.setHint(remark);
             layout.addView(rl_house_detail);
-
-            btn_photo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    TXWLApplication.getInstance().showTextToast("上传图片");
-                    Intent intent = new Intent();
-                    intent.putExtra("from", "" + i);
-                    startActivityForResult(intent, Constant.GETPHOTO);
-                }
-            });
         }
     }
 
