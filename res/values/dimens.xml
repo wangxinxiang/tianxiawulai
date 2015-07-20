@@ -33,4 +33,6 @@
     <dimen name="space_100">100dp</dimen>
     <dimen name="space_140">140dp</dimen>
     <dimen name="space_200">200dp</dimen>
+
+    <dimen name="normal_space">10dp</dimen>
 </resources>

@@ -12,7 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
+import com.example.txwl_first.Util.Constant;
 import com.example.txwl_first.Util.DataVeri;
+import com.example.txwl_first.Util.TXWLApplication;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -302,7 +304,7 @@ public class HouseLoanActivity extends Activity implements AddItem{
             });
 
             for(int i =0;i< selectors.length;i++){
-                AddHouse_Items(ll_my_loan_detail,selectors[i],car_owner_show[i],car_owner_des_show[i]);
+                AddHouse_Items(ll_my_loan_detail,selectors[i],car_owner_show[i],car_owner_des_show[i], i);
             }
 
             for(int i = 0;i<owner.length;i++){
@@ -324,7 +326,7 @@ public class HouseLoanActivity extends Activity implements AddItem{
                 }
             });
             for(int i =0;i< selectors.length;i++){
-                AddHouse_Items(ll_my_loan_detail,selectors[i],"备注","");
+                AddHouse_Items(ll_my_loan_detail,selectors[i],"备注","", i);
             }
 
             for(int i = 0;i<owner.length;i++){
@@ -410,7 +412,7 @@ public class HouseLoanActivity extends Activity implements AddItem{
      * @param remark 备注或描述字段
      * @param descrip_content 描述内容
      */
-    private void AddHouse_Items(LinearLayout layout,Integer house,String remark,String descrip_content){
+    private void AddHouse_Items(LinearLayout layout,Integer house,String remark,String descrip_content, int i){
         //如果处于显示状态
         if("query_listview_car_item".equals(from_button)||"query_listview_house_item".equals(from_button)||
                 "query_listview_credit_item".equals(from_button)||"query_listview_other_item".equals(from_button)){
@@ -430,6 +432,16 @@ public class HouseLoanActivity extends Activity implements AddItem{
             btn_photo.setImageResource(house);
             et_remark.setText(remark);
             layout.addView(rl_house_detail);
+
+            btn_photo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TXWLApplication.getInstance().showTextToast("上传图片");
+                    Intent intent = new Intent();
+                    intent.putExtra("from", "" + i);
+                    startActivityForResult(intent, Constant.GETPHOTO);
+                }
+            });
         }
     }
 
