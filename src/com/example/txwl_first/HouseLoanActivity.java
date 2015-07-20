@@ -133,7 +133,7 @@ public class HouseLoanActivity extends Activity implements AddItem{
     }
 
     //检查字段信息
-    private void checkData() {
+    protected void checkData() {
         String[] check_data_str = getData().toString().split(",");
 
         for(int i = 0;i<check_data_str.length;i++){
@@ -203,7 +203,7 @@ public class HouseLoanActivity extends Activity implements AddItem{
     }
 
 
-    private StringBuffer getData() {
+    protected StringBuffer getData() {
         StringBuffer data = new StringBuffer();
         //循环遍历LinearLayout Item，获取子控件数据
         Log.d("ChildCount-->", "|" + ll_person_detail.getChildCount());
