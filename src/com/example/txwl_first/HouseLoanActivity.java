@@ -5,6 +5,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.LauncherActivity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.method.DateTimeKeyListener;
@@ -12,8 +14,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
+import com.example.txwl_first.Util.Constant;
 import com.example.txwl_first.Util.DataVeri;
+import com.example.txwl_first.Util.TXWLApplication;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -21,6 +26,11 @@ public class HouseLoanActivity extends Activity implements AddItem{
     private TextView tv_title,tv_right;
     private ImageButton ibtn_title_back,ibtn_sub;
     private LinearLayout ll_my_loan_detail,ll_person_detail,layout_item_three;
+
+    private Integer[] image_show;
+
+    private String[] image_url = new String[5];     //储存要提交的图片
+    private String[] image_remark = new String[5];      //储存图片的备注
 
     //房贷个人信息编辑字段
     private final String[] houseowner = {"房主姓名","性别","年龄","手机号","工作单位","身份证号","所在地区","详细地址","借款金额","借款日","还款日","年利率","详细说明"};
@@ -38,15 +48,15 @@ public class HouseLoanActivity extends Activity implements AddItem{
 
 
     //房贷默认图片背景
-    private final Integer[] house_image_selectors = {R.drawable.btn_house_surface_selector,R.drawable.btn_house_pager_number_selector,
+    private Integer[] house_image_selectors = {R.drawable.btn_house_surface_selector,R.drawable.btn_house_pager_number_selector,
     R.drawable.btn_house_pager_number_selector,R.drawable.btn_house_head_image_selector,R.drawable.btn_car_contact_image_selector};
 
     //车贷默认图片背景
-    private final Integer[] car_image_selectors = {R.drawable.btn_car_surface_image_selector,R.drawable.btn_car_engine_number_selector,
+    private Integer[] car_image_selectors = {R.drawable.btn_car_surface_image_selector,R.drawable.btn_car_engine_number_selector,
             R.drawable.btn_car_pager_image_selector,R.drawable.btn_car_head_image_selector,R.drawable.btn_car_contact_image_selector};
 
     //信用贷、其它贷款默认图片背景
-    private final Integer[] credit_image_selectors = {R.drawable.loan_pager_image_selector,R.drawable.btn_loan_head_image_selector,
+    private Integer[] credit_image_selectors = {R.drawable.loan_pager_image_selector,R.drawable.btn_loan_head_image_selector,
             R.drawable.btn_car_contract_image_selector};
 
 
@@ -65,11 +75,11 @@ public class HouseLoanActivity extends Activity implements AddItem{
             R.drawable.btn_house_pager_number_selector,R.drawable.btn_house_head_image_selector,R.drawable.btn_car_contact_image_selector};
 
     //信用贷详情图片背景
-    private final Integer[] credit_own_image_show = {R.drawable.loan_pager_image_selector,R.drawable.btn_loan_head_image_selector,
+    private Integer[] credit_own_image_show = {R.drawable.loan_pager_image_selector,R.drawable.btn_loan_head_image_selector,
             R.drawable.btn_car_contract_image_selector};
 
     //其它贷款详情图片背景
-    private final Integer[] other_own_image_show = {R.drawable.loan_pager_image_selector,R.drawable.btn_loan_head_image_selector,
+    private Integer[] other_own_image_show = {R.drawable.loan_pager_image_selector,R.drawable.btn_loan_head_image_selector,
             R.drawable.btn_car_contract_image_selector};
 
 
@@ -228,6 +238,17 @@ public class HouseLoanActivity extends Activity implements AddItem{
             }
         }
         data.deleteCharAt(data.length() - 1);
+
+        //遍历备注
+        for (int i = 0; i < ll_my_loan_detail.getChildCount(); i++) {
+            RelativeLayout relativeLayout = (RelativeLayout) ll_my_loan_detail.getChildAt(i);
+            EditText editText = (EditText) relativeLayout.getChildAt(1);
+            image_remark[i] = editText.getText().toString();
+            if ("".equals(image_remark[i])) {
+                TXWLApplication.getInstance().showTextToast("备注不能为空");
+            }
+        }
+
         return data;
     }
 
@@ -251,19 +272,24 @@ public class HouseLoanActivity extends Activity implements AddItem{
         switch (from_button){
             //字段输入上传到接口
             case "house_loan_button":
-                fill_LinearLayout("房贷",houseowner,house_image_selectors);
+                image_show = house_image_selectors;
+                fill_LinearLayout("房贷",houseowner,image_show);
                 break;
             case "car_loan_button":
-                fill_LinearLayout("车贷",carowner,car_image_selectors);
+                image_show = car_image_selectors;
+                fill_LinearLayout("车贷",carowner,image_show);
                 break;
             case "credit_loan_button":
+                image_show = credit_image_selectors;
                 fill_LinearLayout("信用贷",creditowner,credit_image_selectors);
                 break;
             case "other_loan_button":
+                image_show = credit_image_selectors;
                 fill_LinearLayout("其它",creditowner,credit_image_selectors);
                 break;
             case "menufragment":
-                fill_LinearLayout("添加老赖",creditowner,credit_image_selectors);
+                image_show = credit_image_selectors;
+                fill_LinearLayout("添加老赖",creditowner,image_show);
                 break;
             //从接口获取网络数据填充
             case "query_listview_car_item":
@@ -302,7 +328,7 @@ public class HouseLoanActivity extends Activity implements AddItem{
             });
 
             for(int i =0;i< selectors.length;i++){
-                AddHouse_Items(ll_my_loan_detail,selectors[i],car_owner_show[i],car_owner_des_show[i]);
+                AddHouse_Items(ll_my_loan_detail,selectors[i],car_owner_show[i],car_owner_des_show[i], i);
             }
 
             for(int i = 0;i<owner.length;i++){
@@ -324,7 +350,7 @@ public class HouseLoanActivity extends Activity implements AddItem{
                 }
             });
             for(int i =0;i< selectors.length;i++){
-                AddHouse_Items(ll_my_loan_detail,selectors[i],"备注","");
+                AddHouse_Items(ll_my_loan_detail,selectors[i],"备注","", i);
             }
 
             for(int i = 0;i<owner.length;i++){
@@ -410,7 +436,7 @@ public class HouseLoanActivity extends Activity implements AddItem{
      * @param remark 备注或描述字段
      * @param descrip_content 描述内容
      */
-    private void AddHouse_Items(LinearLayout layout,Integer house,String remark,String descrip_content){
+    private void AddHouse_Items(LinearLayout layout,Integer house,String remark,String descrip_content, int position){
         //如果处于显示状态
         if("query_listview_car_item".equals(from_button)||"query_listview_house_item".equals(from_button)||
                 "query_listview_credit_item".equals(from_button)||"query_listview_other_item".equals(from_button)){
@@ -425,12 +451,21 @@ public class HouseLoanActivity extends Activity implements AddItem{
             layout.addView(rl_item_five);
 
         }else{
-            LinearLayout rl_house_detail = (LinearLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_two, null);
+            RelativeLayout rl_house_detail = (RelativeLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_two, null);
             ImageButton btn_photo = (ImageButton) rl_house_detail.findViewById(R.id.btn_photo);
             EditText et_remark = (EditText) rl_house_detail.findViewById(R.id.et_remark);
             btn_photo.setImageResource(house);
             et_remark.setHint(remark);
             layout.addView(rl_house_detail);
+            //添加图片上传功能
+            btn_photo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(HouseLoanActivity.this, PhotoActivity.class);
+                    intent.putExtra("from", position);
+                    startActivityForResult(intent, Constant.GETPHOTO);
+                }
+            });
         }
     }
 
@@ -493,4 +528,27 @@ public class HouseLoanActivity extends Activity implements AddItem{
         }
         return null;
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case Constant.GETPHOTO:
+                if (data != null) {
+                    //获取结果
+                    int position = data.getIntExtra("from", -1);
+                    File imgFile = data.getParcelableExtra("img");
+                    image_url[position] = data.getStringExtra("imgUrl");
+                    //设置图片
+                    RelativeLayout childView = (RelativeLayout) ll_my_loan_detail.getChildAt(position);
+                    ImageButton imageButton = (ImageButton) childView.getChildAt(0);
+
+                    Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getPath());
+                    imageButton.setImageBitmap(bitmap);
+                }
+
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
 }

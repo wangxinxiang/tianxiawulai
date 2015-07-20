@@ -26,4 +26,10 @@
         <item name="android:padding">@dimen/space_10</item>
         <item name="android:textSize">@dimen/textsize_18</item>
     </style>
+
+    <!--设置半透明主题-->
+    <style name="Theme.Translucent" parent="android:style/Theme.Translucent">
+        <item name="android:colorForeground">@color/gray_text</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 </resources>

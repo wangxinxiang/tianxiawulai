@@ -11,10 +11,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import com.example.txwl_first.Util.Constant;
-import com.example.txwl_first.Util.TXWLApplication;
-import com.example.txwl_first.Util.TimeUtil;
-import com.example.txwl_first.Util.Url;
+import com.example.txwl_first.Util.*;
 import com.example.txwl_first.bean.UpLoadImgBean;
 import com.google.gson.GsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;
@@ -31,16 +28,15 @@ import java.net.URL;
  */
 public class PhotoActivity extends Activity{
     private TextView takePhoto,photoAlbum,cancel;
-    private File imgFile;
-    private String from;
-    private static String path="/sdcard/img/";      //sd路径
+    private int from;
+    private static String path= ImageUtils.path;     //sd路径
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photo);
         Intent intent1 = getIntent();
-        from = intent1.getStringExtra("from");
+        from = intent1.getIntExtra("from", -1);
         init();
         initListener();
 
@@ -66,8 +62,8 @@ public class PhotoActivity extends Activity{
         photoAlbum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1 = new Intent(Intent.ACTION_PICK, null);
-                intent1.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                Intent intent1 = new Intent(Intent.ACTION_PICK);
+                intent1.setType("image/*");
                 startActivityForResult(intent1, 1);
             }
         });
@@ -83,10 +79,12 @@ public class PhotoActivity extends Activity{
         switch (requestCode) {
             case 1:
                 if (resultCode == RESULT_OK) {
-                    Bitmap cameraBitmap = (Bitmap) data.getExtras().get("data");
+                    ContentResolver resolver = getContentResolver();
                     try{
-                        setPicToView(cameraBitmap);
-                        upLoadImg(imgFile);
+                        Bitmap photo = MediaStore.Images.Media.getBitmap(resolver, data.getData());
+                        String imgKey = TimeUtil.getFileKeyByNowDate();
+                        setPicToView(photo, imgKey);
+                        upLoadImg(imgKey);
                     } catch (Exception e){
                         // 保存不成功时捕获异常
                         e.printStackTrace();
@@ -96,9 +94,10 @@ public class PhotoActivity extends Activity{
                 break;
             case 2:
                 if (resultCode == RESULT_OK) {
-                    imgFile = new File(Environment.getExternalStorageDirectory()
-                            + "/img.jpg");
-                    upLoadImg(imgFile);
+                    Bitmap photo = data.getParcelableExtra("data");
+                    String imgKey = TimeUtil.getFileKeyByNowDate();
+                    setPicToView(photo, imgKey);
+                    upLoadImg(imgKey);
                 }
 
                 break;
@@ -109,7 +108,7 @@ public class PhotoActivity extends Activity{
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void setPicToView(Bitmap mBitmap) {
+    private void setPicToView(Bitmap mBitmap, String imgKey) {
         String sdStatus = Environment.getExternalStorageState();
         if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
             return;
@@ -117,7 +116,7 @@ public class PhotoActivity extends Activity{
         FileOutputStream b = null;
         File file = new File(path);
         file.mkdirs();// 创建文件夹
-        String fileName =path + "img.jpg";//图片名字
+        String fileName =path +imgKey + "img.jpg";//图片名字
         try {
             b = new FileOutputStream(fileName);
             mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文件
@@ -138,21 +137,20 @@ public class PhotoActivity extends Activity{
 
 
     //上传头像
-    private void upLoadImg(File file) {
+    private void upLoadImg(String imgKey) {
         AsyncHttpClient client = new AsyncHttpClient();
         String url = Url.UPLOADURL;     //改用post请求数据
         Log.d("upLoadImg_url -->" ,url);
 
-        if (file == null) {
-            file = new File(path + "img.jpg");
-        }
+        File file = new File(path + imgKey + "img.jpg");
+
 
 //        Bitmap head = BitmapFactory.decodeFile(path + "head.jpg");
 
         if (file.exists() && file.length() > 0) {
             RequestParams params = new RequestParams();
             try {
-                params.put("", file);
+                params.put("img", file);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -168,6 +166,7 @@ public class PhotoActivity extends Activity{
                             Intent intent = new Intent();
                             intent.putExtra("imgUrl", upLoadImgBean.getImgurl());
                             intent.putExtra("from", from);
+                            intent.putExtra("img", file);
                             setResult(Constant.GETPHOTO, intent);
                             finish();
                         } else {
@@ -184,8 +183,6 @@ public class PhotoActivity extends Activity{
                     TXWLApplication.getInstance().showTextToast("网络错误");
                 }
             });
-
-            imgFile = null;
 
         }
     }
