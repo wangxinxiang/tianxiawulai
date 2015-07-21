@@ -9,16 +9,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.txwl_first.R;
 import com.example.txwl_first.bean.LoanBean;
+import com.example.txwl_first.bean.QueryResultListBean;
 
 import java.util.ArrayList;
 
 public class QueryResultAdapter extends BaseAdapter {
     private Context mContext;
     private LoanBean loanBean;
-    private ArrayList<LoanBean> loanBeans = new ArrayList<LoanBean>();
+    private ArrayList<QueryResultListBean> loanBeans = new ArrayList<QueryResultListBean>();
     private HolderView holderView;
 
-    public QueryResultAdapter(Context context,ArrayList<LoanBean> loanBeanArrayList) {
+    public QueryResultAdapter(Context context,ArrayList<QueryResultListBean> loanBeanArrayList) {
         super();
         this.mContext = context;
         this.loanBeans = loanBeanArrayList;
@@ -50,14 +51,14 @@ public class QueryResultAdapter extends BaseAdapter {
         }else {
             holderView = (HolderView) convertView.getTag();
         }
-        final LoanBean loanBeanlist = loanBeans.get(position);
+        final QueryResultListBean loanBeanlist = loanBeans.get(position);
 
         holderView.own_user_head_image.setImageResource(R.drawable.defaul_head_image);
-        holderView.tv_own_user_name.setText(loanBeanlist.getOwn_user_name());
-        holderView.tv_own_user_phone.setText(loanBeanlist.getOwn_user_phone());
-        holderView.tv_debt_type.setText(loanBeanlist.getDebt_type());
-        holderView.tv_debt_money.setText(loanBeanlist.getDebt_money());
-        holderView.tv_own_user_place.setText(loanBeanlist.getOwn_user_place());
+        holderView.tv_own_user_name.setText(loanBeanlist.getName());
+        holderView.tv_own_user_phone.setText(loanBeanlist.getMobile());
+        holderView.tv_debt_type.setText(loanBeanlist.getDate());
+        holderView.tv_debt_money.setText(loanBeanlist.getAccount());
+        holderView.tv_own_user_place.setText(getLoan_type(loanBeanlist.getRegisttype()));
 
         return convertView;
     }
@@ -79,5 +80,18 @@ public class QueryResultAdapter extends BaseAdapter {
         private TextView tv_reward_money;
         private TextView tv_reward_user_phone;
         private TextView tv_over_day;
+    }
+
+    private String getLoan_type(String i) {
+        switch (i) {
+            case "1":
+                return "车贷";
+            case "2":
+                return "房贷";
+            case "3":
+                return "信用贷";
+            default:
+                return "其他";
+        }
     }
 }
