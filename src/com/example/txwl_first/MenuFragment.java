@@ -31,8 +31,7 @@ public class MenuFragment extends Fragment {
         tv_add_deadbeater.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),HouseLoanActivity.class);
-                intent.putExtra("fromButton","menufragment");
+                Intent intent = new Intent(getActivity(),AddOldBeaterActivity.class);
                 startActivity(intent);
             }
         });

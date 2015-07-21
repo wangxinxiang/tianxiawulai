@@ -43,31 +43,27 @@ public class EditFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),HouseLoanActivity.class);
-                intent.putExtra("fromButton",HOUSE_LOAN_BUTTON);
                 startActivity(intent);
             }
         });
         btn_car_loan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent car_loan_intent = new Intent(getActivity(),HouseLoanActivity.class);
-                car_loan_intent.putExtra("fromButton",CAR_LOAN_BUTTON);
+                Intent car_loan_intent = new Intent(getActivity(),CarLoanActivity.class);
                 startActivity(car_loan_intent);
             }
         });
         btn_cridet_loan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent credit_loan_intent = new Intent(getActivity(),HouseLoanActivity.class);
-                credit_loan_intent.putExtra("fromButton",CREDIT_LOAN_BUTTON);
+                Intent credit_loan_intent = new Intent(getActivity(),CreditLoanActivity.class);
                 startActivity(credit_loan_intent);
             }
         });
         btn_other_loan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent other_loan_intent = new Intent(getActivity(),HouseLoanActivity.class);
-                other_loan_intent.putExtra("fromButton",OTHER_LOAN_BUTTON);
+                Intent other_loan_intent = new Intent(getActivity(),OtherLoanActivity.class);
                 startActivity(other_loan_intent);
             }
         });

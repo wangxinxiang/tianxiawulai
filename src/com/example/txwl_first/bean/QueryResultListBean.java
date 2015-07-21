@@ -14,7 +14,7 @@ import com.google.gson.annotations.SerializedName;
  repaydate 应该还款日期
  owneridimg 用户头像
  description 详细描述
- status2 用户状态   1 正常  2 已还款  3 黑名单
+ status2 用户状态
  date 用户还款信息
  registtype 登记类型:1 车贷 ,2 房贷,3 信用贷 4 其他
  loandate 借款日期

@@ -7,7 +7,7 @@
         >
     <include layout="@layout/title_include"></include>
 
-    <include layout="@layout/item_three"></include>
+    <include layout="@layout/item_three_new"></include>
 
     <RelativeLayout android:layout_width="match_parent" android:layout_height="@dimen/space_60"
                     android:layout_marginTop="@dimen/space_10"

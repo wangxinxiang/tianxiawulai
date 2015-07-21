@@ -11,10 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.example.txwl_first.Adapter.QueryResultAdapter;
+import com.example.txwl_first.Adapter.QueryResultNewAdapter;
 import com.example.txwl_first.Util.TXWLApplication;
 import com.example.txwl_first.Util.Url;
-import com.example.txwl_first.bean.LoanBean;
 import com.example.txwl_first.bean.QueryResultBean;
 import com.example.txwl_first.bean.QueryResultListBean;
 import com.google.gson.GsonBuilder;
@@ -30,9 +29,9 @@ public class QueryResultActivity extends Activity {
 
     private String way;
     private TextView tv_title,tv_right;
-    private ImageButton ibtn_title_back,ibtn_sub;
+    private ImageButton ibtn_title_back;
     private ListView lv_query;
-    private QueryResultAdapter adapter;
+    private QueryResultNewAdapter adapter;
     private ArrayList<QueryResultListBean> loanBeans;
     private final static  String QUERY_LISTVIEW_CAR_ITEM="query_listview_car_item";
     private final static  String QUERY_LISTVIEW_HOUSE_ITEM="query_listview_house_item";
@@ -62,7 +61,7 @@ public class QueryResultActivity extends Activity {
         lv_query.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent(getApplicationContext(),HouseLoanActivity.class);
+                Intent intent = new Intent(getApplicationContext(),LoanDetailActivity.class);
                 if("1".equals(loanBeans.get(position).getRegisttype())){
                     intent.putExtra("fromButton", QUERY_LISTVIEW_CAR_ITEM);
                 }
@@ -90,13 +89,12 @@ public class QueryResultActivity extends Activity {
         tv_title = (TextView) findViewById(R.id.tv_title);
         ibtn_title_back = (ImageButton) findViewById(R.id.ibtn_title_back);
         lv_query = (ListView) findViewById(R.id.lv_query);
-        ibtn_sub = (ImageButton) findViewById(R.id.ibtn_sub);
         ibtn_title_back.setVisibility(View.VISIBLE);
         tv_right = (TextView) findViewById(R.id.tv_right);
         tv_right.setVisibility(View.GONE);
         tv_title.setText("查询结果");
 
-        adapter = new QueryResultAdapter(QueryResultActivity.this,loanBeans);
+        adapter = new QueryResultNewAdapter(QueryResultActivity.this,loanBeans);
         lv_query.setAdapter(adapter);
     }
 

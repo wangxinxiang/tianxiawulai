@@ -32,15 +32,20 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".DetailActivity"></activity>
-        <activity android:name=".HouseLoanActivity" android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
+        <activity android:name=".LoanActivity" android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
         <activity android:name=".PersonalInfoActivity" android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
         <activity android:name=".QueryResultActivity" android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
         <activity android:name=".ReportActivity" android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
         <activity android:name=".LoginActivity" android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
         <activity android:name=".MyGroupActivity" android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
         <activity android:name=".AddActivity" android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
+        <activity android:name=".CarLoanActivity" android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
+        <activity android:name=".HouseLoanActivity" android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
+        <activity android:name=".CreditLoanActivity" android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
+        <activity android:name=".OtherLoanActivity" android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
+        <activity android:name=".LoanDetailActivity" android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
 
         <activity android:name=".PhotoActivity" android:theme="@style/Theme.Translucent"/>
+        <activity android:name=".AddOldBeaterActivity" android:theme="@android:style/Theme.Holo.NoActionBar"/>
     </application>
 </manifest>

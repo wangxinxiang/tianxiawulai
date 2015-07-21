@@ -13,7 +13,7 @@
            <LinearLayout android:layout_width="match_parent"
                          android:id="@+id/layout_item_three"
                          android:layout_height="wrap_content" android:visibility="gone">
-               <include layout="@layout/item_three"></include>
+               <include layout="@layout/item_three_new"></include>
            </LinearLayout>
 
 
