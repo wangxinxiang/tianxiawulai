@@ -22,12 +22,13 @@
                       android:layout_height="wrap_content" android:id="@+id/et_search" android:hint="@string/search_hint"
                       android:background="@drawable/input_box_bg" android:textColorHint="@color/gray_text_search"
                       android:textSize="@dimen/textsize_16" android:singleLine="true" android:ellipsize="end"
+                      android:imeOptions="actionSearch"
                       android:paddingRight="@dimen/space_30"/>
            <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:background="@color/transparent" android:src="@drawable/btn_search_selector"
                         android:layout_alignParentRight="true" android:layout_alignWithParentIfMissing="false"
                         android:layout_centerVertical="true" android:layout_margin="@dimen/space_7"
-                        android:id="@+id/ibtn_search"/>
+                        android:id="@+id/ibtn_search" android:visibility="gone"/>
         </RelativeLayout>
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"

@@ -8,17 +8,17 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.txwl_first.R;
-import com.example.txwl_first.bean.QueryResultListBean;
+import com.example.txwl_first.bean.QueryResultItemBean;
 import com.example.txwl_first.business.LoaderBusiness;
 
 import java.util.ArrayList;
 
 public class QueryResultNewAdapter extends BaseAdapter {
     private Context mContext;
-    private ArrayList<QueryResultListBean> loanBeans = new ArrayList<>();
+    private ArrayList<QueryResultItemBean> loanBeans = new ArrayList<>();
     private HolderView holderView;
 
-    public QueryResultNewAdapter(Context context, ArrayList<QueryResultListBean> loanBeanArrayList) {
+    public QueryResultNewAdapter(Context context, ArrayList<QueryResultItemBean> loanBeanArrayList) {
         super();
         this.mContext = context;
         this.loanBeans = loanBeanArrayList;
@@ -52,7 +52,7 @@ public class QueryResultNewAdapter extends BaseAdapter {
         }else {
             holderView = (HolderView) convertView.getTag();
         }
-        final QueryResultListBean loanBeanlist = loanBeans.get(position);
+        final QueryResultItemBean loanBeanlist = loanBeans.get(position);
 
         LoaderBusiness.loadImage(loanBeanlist.getOwneridimg(), holderView.own_user_head_image);
         holderView.tv_own_user_name.setText(loanBeanlist.getName());

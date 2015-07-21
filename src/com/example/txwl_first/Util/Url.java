@@ -10,4 +10,8 @@ public class Url {
     public static String  UPLOADURL = URL + "Default/uploadimage";      //上传图片接口
 
     public static String  QUERY_URL = URL + "Default/GetUserListByway";      //上传图片接口
+
+    public static String  QueryAllBlackPerson_URL = URL + "Default/QueryAllBlackPerson";      //获取所有黑名单接口
+
+
 }

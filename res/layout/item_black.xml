@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+        android:background="@color/white">
+    <ImageView android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:id="@+id/img_user_head"
+               android:layout_gravity="center_vertical"
+               android:src="@drawable/car_head_image_pressed"
+               android:padding="@dimen/space_10"/>
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/space_12">
+        <TextView android:layout_width="wrap_content" android:id="@+id/tv_username" android:layout_height="wrap_content"
+                  android:textSize="@dimen/textsize_16" android:layout_alignParentTop="true"
+                  android:layout_alignParentLeft="true" android:layout_marginTop="-2dp"
+                  android:textStyle="bold" android:text="傅旭东" android:textColor="@color/black"/>
+        <TextView android:layout_width="wrap_content"
+                  android:id="@+id/tv_user_phone_num"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/space_10"
+                  android:layout_toRightOf="@+id/tv_username" android:textColor="@color/gray_text"
+                  android:text="180XXXXXXXX" android:layout_alignParentTop="true"/>
+        <TextView android:layout_width="wrap_content" android:id="@+id/tv_province" android:layout_height="wrap_content"
+                  android:text="地点" android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:id="@+id/tv_descrip" android:layout_below="@id/tv_username"
+                android:text="描述" android:textColor="@color/black" android:layout_alignParentRight="true"
+                  android:layout_alignParentLeft="true"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:id="@+id/tv_reward" android:layout_alignParentLeft="true" android:text="悬赏金额"
+                android:textColor="@color/black" android:layout_below="@+id/tv_descrip"
+                  android:layout_alignParentRight="true"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:id="@+id/tv_contact" android:layout_alignParentLeft="true" android:text="联系人"
+                  android:textColor="@color/black" android:layout_below="@+id/tv_reward"
+                  android:layout_alignParentRight="true"/>
+
+
+    </RelativeLayout>
+</LinearLayout>

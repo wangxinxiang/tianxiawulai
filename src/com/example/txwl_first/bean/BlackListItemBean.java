@@ -2,28 +2,25 @@ package com.example.txwl_first.bean;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Administrator on 2015/7/20.
- *userid 用户ID
- name 姓名
- registid 登记者ID
- mobile 手机号码
- province 地址
- companyname公司名称
- accout借款金额
- repaydate 应该还款日期
- owneridimg 用户头像
- description 详细描述
- status2 用户状态
- date 用户还款信息
- registtype 登记类型:1 车贷 ,2 房贷,3 信用贷 4 其他
- loandate 借款日期
- registcompany 登记人所属公司
- contactname 悬赏人姓名
- contactmobile 悬赏人手机号
- rewardmoney 悬赏金额
+/*
+说明：
+userid 用户ID
+name 姓名
+registid 登记者ID
+mobile 手机号码
+province 地址
+companyname公司名称
+accout借款金额
+owneridimg 用户头像
+description 详细描述
+status2 用户状态
+registtype 登记类型:1 车贷 ,2 房贷,3 信用贷 4 其他
+registcompany 登记人所属公司
+contactname 悬赏人姓名
+contactmobile 悬赏人手机号
+rewardmoney 悬赏金额
  */
-public class QueryResultListBean {
+public class BlackListItemBean {
 
     @SerializedName("userid")
     private String userid;
@@ -39,20 +36,16 @@ public class QueryResultListBean {
     private String companyname;
     @SerializedName("account")
     private String account;
-    @SerializedName("repaydate")
-    private String repaydate;
+
     @SerializedName("owneridimg")
     private String owneridimg;
     @SerializedName("description")
     private String description;
     @SerializedName("status2")
     private String status2;
-    @SerializedName("date")
-    private String date;
+
     @SerializedName("registtype")
     private String registtype;
-    @SerializedName("loandate")
-    private String loandate;
     @SerializedName("registcompany")
     private String registcompany;
     @SerializedName("contactname")
@@ -118,14 +111,6 @@ public class QueryResultListBean {
         this.account = account;
     }
 
-    public String getRepaydate() {
-        return repaydate;
-    }
-
-    public void setRepaydate(String repaydate) {
-        this.repaydate = repaydate;
-    }
-
     public String getOwneridimg() {
         return owneridimg;
     }
@@ -150,28 +135,12 @@ public class QueryResultListBean {
         this.status2 = status2;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public String getRegisttype() {
         return registtype;
     }
 
     public void setRegisttype(String registtype) {
         this.registtype = registtype;
-    }
-
-    public String getLoandate() {
-        return loandate;
-    }
-
-    public void setLoandate(String loandate) {
-        this.loandate = loandate;
     }
 
     public String getRegistcompany() {

@@ -16,7 +16,7 @@ import com.google.gson.annotations.SerializedName;
 public class QueryResultBean {
 
     @SerializedName("list")
-    private QueryResultListBean[] getQueryResultListBean;
+    private QueryResultItemBean[] getQueryResultListBean;
     @SerializedName("CallBackType")
     private String CallBackType;
     @SerializedName("url")
@@ -32,11 +32,11 @@ public class QueryResultBean {
     @SerializedName("status")
     private String status;
 
-    public QueryResultListBean[] getGetQueryResultListBean() {
+    public QueryResultItemBean[] getGetQueryResultListBean() {
         return getQueryResultListBean;
     }
 
-    public void setGetQueryResultListBean(QueryResultListBean[] getQueryResultListBean) {
+    public void setGetQueryResultListBean(QueryResultItemBean[] getQueryResultListBean) {
         this.getQueryResultListBean = getQueryResultListBean;
     }
 

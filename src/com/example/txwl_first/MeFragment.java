@@ -14,26 +14,24 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import com.example.txwl_first.Adapter.MyFragmentPagerAdapter;
+import com.example.txwl_first.View.CustomScrollView;
 
 import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2015/7/8 0008.
  */
-public class MeFragment extends Fragment {
+public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
     private static String TAG="MeFragment";
     private Resources resources;
-    private View view;//填充Fragment的视图
+    private ViewGroup rootview;//填充Fragment的视图
 
     private TextView tv_title,tv_right;
 
@@ -52,7 +50,6 @@ public class MeFragment extends Fragment {
     private int iv_x;
     private TextView tv_indicate_all,tv_indicate_car,tv_indicate_house,tv_indicate_loan,tv_indicate_other;
     private MyFragmentPagerAdapter adapter;
-//    private MyListener listener = new MyListener();
 
     private int currIndex = 0;
     private int bottomLineWidth;//下划线的宽度
@@ -63,12 +60,15 @@ public class MeFragment extends Fragment {
     private int position_four;
     public final static int num = 5 ;//indicate的数量
 
+    private CustomScrollView mScrollView;
+    private LinearLayout ll_indicate,ll_indicate_content;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG,"onCreateView");
-        view=inflater.inflate(R.layout.tab_me_fragment,null);
+        rootview=(ViewGroup)inflater.inflate(R.layout.tab_me_fragment,container,false);
         resources = getResources();
-        return view;
+        return rootview;
     }
 
     @Override
@@ -77,6 +77,7 @@ public class MeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         initTitle();//初始化 标题栏
         initHeadViewPager();//初始化头部控件
+        initScroll();//初始化scrollview的滑动处理
         initListener();//绑定头部的事件
         initWidth();//bottomeLinen 并测量屏幕宽度划分5份
         initTextView();//初始化indicate的textview 并绑定点击事件
@@ -88,9 +89,25 @@ public class MeFragment extends Fragment {
 
     }
 
+    private void initScroll() {
+        mScrollView= (CustomScrollView) rootview.findViewById(R.id.scroll_view);
+        mScrollView.setCallbacks(this);
+
+        ll_indicate= (LinearLayout) rootview.findViewById(R.id.ll_indicate);
+        ll_indicate_content= (LinearLayout) rootview.findViewById(R.id.ll_indicate_content);
+
+        mScrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                onScrollChanged(mScrollView.getScrollY());
+            }
+        });
+
+    }
+
     private void initTitle() {
-        tv_title= (TextView) view.findViewById(R.id.tv_title);
-        tv_right= (TextView) view.findViewById(R.id.tv_right);
+        tv_title= (TextView) rootview.findViewById(R.id.tv_title);
+        tv_right= (TextView) rootview.findViewById(R.id.tv_right);
         tv_right.setVisibility(View.VISIBLE);
         tv_right.setText("我的团队");
     }
@@ -261,23 +278,23 @@ public class MeFragment extends Fragment {
     }
 
     private void initHeadViewPager() {
-        rl_myInfo= (RelativeLayout) view.findViewById(R.id.rl_myInfo);
-        img_headimage= (ImageView) view.findViewById(R.id.img_headimage);
-        ibtn_clear= (ImageButton) view.findViewById(R.id.ibtn_clear);
-        tv_user_name= (TextView) view.findViewById(R.id.tv_user_name);
-        et_search= (EditText) view.findViewById(R.id.et_search);
-        tv_total= (TextView) view.findViewById(R.id.tv_total);
-        tv_violate= (TextView) view.findViewById(R.id.tv_violate);
-        tv_reclaimed= (TextView) view.findViewById(R.id.tv_reclaimed);
-        tv_reclaiming= (TextView) view.findViewById(R.id.tv_reclaiming);
+        rl_myInfo= (RelativeLayout) rootview.findViewById(R.id.rl_myInfo);
+        img_headimage= (ImageView) rootview.findViewById(R.id.img_headimage);
+        ibtn_clear= (ImageButton) rootview.findViewById(R.id.ibtn_clear);
+        tv_user_name= (TextView) rootview.findViewById(R.id.tv_user_name);
+        et_search= (EditText) rootview.findViewById(R.id.et_search);
+        tv_total= (TextView) rootview.findViewById(R.id.tv_total);
+        tv_violate= (TextView) rootview.findViewById(R.id.tv_violate);
+        tv_reclaimed= (TextView) rootview.findViewById(R.id.tv_reclaimed);
+        tv_reclaiming= (TextView) rootview.findViewById(R.id.tv_reclaiming);
     }
 
     private void initTextView() {
-        tv_indicate_all = (TextView) view.findViewById(R.id.tv_indicate_all);
-        tv_indicate_car = (TextView) view.findViewById(R.id.tv_indicate_car);
-        tv_indicate_house = (TextView) view.findViewById(R.id.tv_indicate_house);
-        tv_indicate_loan = (TextView) view.findViewById(R.id.tv_indicate_loan);
-        tv_indicate_other = (TextView) view.findViewById(R.id.tv_indicate_other);
+        tv_indicate_all = (TextView) rootview.findViewById(R.id.tv_indicate_all);
+        tv_indicate_car = (TextView) rootview.findViewById(R.id.tv_indicate_car);
+        tv_indicate_house = (TextView) rootview.findViewById(R.id.tv_indicate_house);
+        tv_indicate_loan = (TextView) rootview.findViewById(R.id.tv_indicate_loan);
+        tv_indicate_other = (TextView) rootview.findViewById(R.id.tv_indicate_other);
 
         tv_indicate_all.setOnClickListener(new MyOnClickListener(0));
         tv_indicate_car.setOnClickListener(new MyOnClickListener(1));
@@ -292,7 +309,7 @@ public class MeFragment extends Fragment {
         DisplayMetrics dm = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
         screenW = dm.widthPixels;
-        ivBottomLine = (ImageView) view.findViewById(R.id.iv_bottom_line);
+        ivBottomLine = (ImageView) rootview.findViewById(R.id.iv_bottom_line);
         ivBottomLine.setLayoutParams(new LinearLayout.LayoutParams(screenW / 5, 3));
 
 
@@ -309,7 +326,7 @@ public class MeFragment extends Fragment {
     }
 
     private void initViewPager() {
-        mPager = (ViewPager)view.findViewById(R.id.viewPager);
+        mPager = (ViewPager)rootview.findViewById(R.id.viewPager);
         fragmentsList = new ArrayList<Fragment>();
 
         fragment_all = new ViewPagerFragment();
@@ -349,6 +366,21 @@ public class MeFragment extends Fragment {
 //        mPager.setOffscreenPageLimit(3);//设定加载数量
         mPager.setOnPageChangeListener(new MyOnPageChangeListener());
         mPager.setCurrentItem(0);
+    }
+
+    @Override
+    public void onScrollChanged(int scrollY) {
+        ll_indicate.setTranslationY(Math.max(ll_indicate_content.getTop(), scrollY));
+    }
+
+    @Override
+    public void onDownMotionEvent() {
+
+    }
+
+    @Override
+    public void onUpOrCancelMotionEvent() {
+
     }
 
     public class MyOnClickListener implements View.OnClickListener {

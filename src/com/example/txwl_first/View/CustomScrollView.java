@@ -24,6 +24,8 @@ public class CustomScrollView extends ScrollView {
 	protected Field scrollView_mScroller;
 	private static final String TAG = "CustomScrollView";
 
+	private Callbacks mCallbacks;//滑动监听的回调
+
 	public CustomScrollView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mGestureDetector = new GestureDetector(context, new YScrollDetector());
@@ -54,6 +56,7 @@ public class CustomScrollView extends ScrollView {
 
 	@Override
 	protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+		super.onScrollChanged(l, t, oldl, oldt);
 		boolean stop = false;
 		if (Scroll_height - view_height == t) {
 			stop = true;
@@ -76,7 +79,13 @@ public class CustomScrollView extends ScrollView {
 				Log.e(TAG, e.getMessage());
 			}
 		}
-		super.onScrollChanged(l, t, oldl, oldt);
+
+		// scrollview 控件滑动 定位 监听器设置值
+		if (mCallbacks != null) {
+			mCallbacks.onScrollChanged(t);
+		}
+
+
 	}
 
 	private void stopAnim() {
@@ -136,5 +145,34 @@ public class CustomScrollView extends ScrollView {
 			}
 		}
 		return null;
+	}
+
+
+	//实现scrollview中嵌套控件根据滑动 定位 的代码
+	@Override
+	public boolean onTouchEvent(MotionEvent ev) {
+		if (mCallbacks != null) {
+			switch (ev.getActionMasked()) {
+				case MotionEvent.ACTION_DOWN:
+					mCallbacks.onDownMotionEvent();
+					break;
+				case MotionEvent.ACTION_UP:
+				case MotionEvent.ACTION_CANCEL:
+					mCallbacks.onUpOrCancelMotionEvent();
+					break;
+			}
+		}
+		return super.onTouchEvent(ev);
+	}
+
+
+	public void setCallbacks(Callbacks listener) {
+		mCallbacks = listener;
+	}
+
+	public static interface Callbacks {
+		public void onScrollChanged(int scrollY);
+		public void onDownMotionEvent();
+		public void onUpOrCancelMotionEvent();
 	}
 }

@@ -15,7 +15,7 @@ import com.example.txwl_first.Adapter.QueryResultNewAdapter;
 import com.example.txwl_first.Util.TXWLApplication;
 import com.example.txwl_first.Util.Url;
 import com.example.txwl_first.bean.QueryResultBean;
-import com.example.txwl_first.bean.QueryResultListBean;
+import com.example.txwl_first.bean.QueryResultItemBean;
 import com.google.gson.GsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -32,7 +32,7 @@ public class QueryResultActivity extends Activity {
     private ImageButton ibtn_title_back;
     private ListView lv_query;
     private QueryResultNewAdapter adapter;
-    private ArrayList<QueryResultListBean> loanBeans;
+    private ArrayList<QueryResultItemBean> loanBeans;
     private final static  String QUERY_LISTVIEW_CAR_ITEM="query_listview_car_item";
     private final static  String QUERY_LISTVIEW_HOUSE_ITEM="query_listview_house_item";
     private final static  String QUERY_LISTVIEW_CREDIT_ITEM="query_listview_credit_item";
@@ -42,7 +42,7 @@ public class QueryResultActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.querylist_layout);
-        loanBeans = new ArrayList<QueryResultListBean>();
+        loanBeans = new ArrayList<QueryResultItemBean>();
         way = getIntent().getStringExtra("key");
         //TODO:从网络接口得到数据
         getSearchData();

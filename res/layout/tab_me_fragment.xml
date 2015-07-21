@@ -5,9 +5,13 @@
               android:layout_height="match_parent"
                 android:background="@color/white_bg">
     <include layout="@layout/title_include"></include>
-      <com.example.txwl_first.View.CustomScrollView
+    <com.example.txwl_first.View.CustomScrollView
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="match_parent"
+              android:id="@+id/scroll_view">
+          <FrameLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
           <LinearLayout android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
@@ -22,11 +26,11 @@
                              android:id="@+id/rl_myInfo"
                              android:orientation="horizontal">
                    <ImageView android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:id="@+id/img_headimage"
-                           android:src="@drawable/defaul_head_image"
-                           android:padding="@dimen/space_12"
-                           android:layout_alignParentLeft="true"/>
+                              android:layout_height="wrap_content"
+                              android:id="@+id/img_headimage"
+                              android:src="@drawable/defaul_head_image"
+                              android:padding="@dimen/space_12"
+                              android:layout_alignParentLeft="true"/>
                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                              android:id="@+id/tv_user_name"
                            android:text="@string/user_name_tv" android:textColor="@color/white"
@@ -133,80 +137,114 @@
               <ImageView android:layout_width="fill_parent" android:layout_height="@dimen/space_10"
                       android:background="@color/white_line" android:layout_marginTop="@dimen/space_1"
                       android:layout_marginBottom="@dimen/space_1" android:id="@+id/img_line1"/>
-              <LinearLayout
-                      android:id="@+id/ll_tab_text"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:paddingBottom="5dip"
-                      android:background="@color/white"
-                      android:orientation="horizontal"
-                      android:paddingTop="10dip"
-                      >
 
+              <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
+                            android:background="@color/white"
+                      android:orientation="vertical" android:id="@+id/ll_indicate_content">
                   <TextView
-                          android:id="@+id/tv_indicate_all"
-                          android:layout_width="0dp"
-                          android:layout_height="fill_parent"
-                          android:layout_weight="1.0"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:paddingBottom="5dip"
+                          android:orientation="horizontal"
+                          android:paddingTop="10dip"
                           android:gravity="center"
                           android:text="@string/indicate_all"
                           android:textColor="@color/orange_main"
-                          android:textSize="@dimen/textsize_18" />
+                          android:textSize="@dimen/textsize_18"
+                          android:id="@+id/tv_indicate_content"/>
 
-                  <TextView
-                          android:id="@+id/tv_indicate_car"
-                          android:layout_width="0dp"
-                          android:layout_height="fill_parent"
-                          android:layout_weight="1.0"
-                          android:gravity="center"
-                          android:text="@string/indicate_car"
-                          android:textColor="@color/gray_tab"
-                          android:textSize="@dimen/textsize_18" />
-                  <TextView
-                          android:id="@+id/tv_indicate_house"
-                          android:layout_width="0dp"
-                          android:layout_height="fill_parent"
-                          android:layout_weight="1.0"
-                          android:gravity="center"
-                          android:text="@string/indicate_house"
-                          android:textColor="@color/gray_tab"
-                          android:textSize="@dimen/textsize_18" />
-                  <TextView
-                          android:id="@+id/tv_indicate_loan"
-                          android:layout_width="0dp"
-                          android:layout_height="fill_parent"
-                          android:layout_weight="1.0"
-                          android:gravity="center"
-                          android:text="@string/indicate_loan"
-                          android:textColor="@color/gray_tab"
-                          android:textSize="@dimen/textsize_18" />
-                  <TextView
-                          android:id="@+id/tv_indicate_other"
-                          android:layout_width="0dp"
-                          android:layout_height="fill_parent"
-                          android:layout_weight="1.0"
-                          android:gravity="center"
-                          android:text="@string/indicate_other"
-                          android:textColor="@color/gray_tab"
-                          android:textSize="@dimen/textsize_18" />
+
+                  <ImageView
+                          android:id="@+id/iv_bottom_line_content"
+                          android:layout_width="50dip"
+                          android:layout_height="2dip"
+                          android:scaleType="matrix"
+                         />
+                  <View android:layout_width="fill_parent" android:layout_height="@dimen/space_1"
+                        android:background="@color/white_bg"/>
+
               </LinearLayout>
+              <View android:layout_width="fill_parent" android:layout_height="@dimen/space_10"
+                    android:background="@color/white_line"/>
+              <View android:layout_width="fill_parent" android:layout_height="@dimen/space_1"
+                    android:background="@color/white_bg"/>
 
-              <ImageView
-                      android:id="@+id/iv_bottom_line"
-                      android:layout_width="10dip"
-                      android:layout_height="2dip"
-                      android:layout_marginLeft="@dimen/space_12"
-                      android:scaleType="matrix"
-                      android:src="@color/orange_main" />
-              <ImageView android:layout_width="fill_parent" android:layout_height="@dimen/space_10"
-                         android:background="@color/white_line" android:layout_marginTop="@dimen/space_1"
-                         android:layout_marginBottom="@dimen/space_1" android:id="@+id/img_line2"/>
               <android.support.v4.view.ViewPager
                       android:id="@+id/viewPager"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content" />
           </LinearLayout>
 
+              <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
+                            android:orientation="vertical" android:id="@+id/ll_indicate"
+                      android:background="@color/white">
+                  <LinearLayout
+                          android:id="@+id/ll_tab_text"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:paddingBottom="5dip"
+                          android:orientation="horizontal"
+                          android:paddingTop="10dip"
+                          >
+                      <TextView
+                              android:id="@+id/tv_indicate_all"
+                              android:layout_width="0dp"
+                              android:layout_height="fill_parent"
+                              android:layout_weight="1.0"
+                              android:gravity="center"
+                              android:text="@string/indicate_all"
+                              android:textColor="@color/orange_main"
+                              android:textSize="@dimen/textsize_18" />
 
+                      <TextView
+                              android:id="@+id/tv_indicate_car"
+                              android:layout_width="0dp"
+                              android:layout_height="fill_parent"
+                              android:layout_weight="1.0"
+                              android:gravity="center"
+                              android:text="@string/indicate_car"
+                              android:textColor="@color/gray_tab"
+                              android:textSize="@dimen/textsize_18" />
+                      <TextView
+                              android:id="@+id/tv_indicate_house"
+                              android:layout_width="0dp"
+                              android:layout_height="fill_parent"
+                              android:layout_weight="1.0"
+                              android:gravity="center"
+                              android:text="@string/indicate_house"
+                              android:textColor="@color/gray_tab"
+                              android:textSize="@dimen/textsize_18" />
+                      <TextView
+                              android:id="@+id/tv_indicate_loan"
+                              android:layout_width="0dp"
+                              android:layout_height="fill_parent"
+                              android:layout_weight="1.0"
+                              android:gravity="center"
+                              android:text="@string/indicate_loan"
+                              android:textColor="@color/gray_tab"
+                              android:textSize="@dimen/textsize_18" />
+                      <TextView
+                              android:id="@+id/tv_indicate_other"
+                              android:layout_width="0dp"
+                              android:layout_height="fill_parent"
+                              android:layout_weight="1.0"
+                              android:gravity="center"
+                              android:text="@string/indicate_other"
+                              android:textColor="@color/gray_tab"
+                              android:textSize="@dimen/textsize_18" />
+                  </LinearLayout>
+
+                  <ImageView
+                          android:id="@+id/iv_bottom_line"
+                          android:layout_width="10dip"
+                          android:layout_height="2dip"
+                          android:layout_marginLeft="@dimen/space_12"
+                          android:scaleType="matrix"
+                          android:src="@color/orange_main" />
+                  <View android:layout_width="fill_parent" android:layout_height="@dimen/space_1"
+                        android:background="@color/white_bg"/>
+
+              </LinearLayout>
+     </FrameLayout>
       </com.example.txwl_first.View.CustomScrollView>
 </LinearLayout>
