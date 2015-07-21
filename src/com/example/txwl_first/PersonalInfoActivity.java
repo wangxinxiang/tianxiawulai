@@ -78,6 +78,11 @@ public class PersonalInfoActivity extends Activity implements AddItem {
 
     }
 
+    @Override
+    public void fill_LinearLayout(String title_name, String[] owner, String[] selectors) {
+
+    }
+
     private void initView() {
         ll_person_detail = (LinearLayout) findViewById(R.id.ll_person_detail);
         ll_my_loan_detail = (LinearLayout) findViewById(R.id.ll_my_loan_detail);

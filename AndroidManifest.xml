@@ -32,7 +32,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".LoanActivity" android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
         <activity android:name=".PersonalInfoActivity" android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
         <activity android:name=".QueryResultActivity" android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
         <activity android:name=".ReportActivity" android:theme="@android:style/Theme.Holo.NoActionBar"></activity>

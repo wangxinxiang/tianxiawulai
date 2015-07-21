@@ -30,7 +30,6 @@ public class OtherLoanActivity extends LoanActivity {
     @Override
     protected void initView() {
         super.initView();
-        image_show = credit_image_selectors;
         fill_LinearLayout("其它",creditowner,credit_image_selectors);
     }
 

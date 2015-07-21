@@ -29,7 +29,6 @@ public class CreditLoanActivity extends LoanActivity {
     @Override
     protected void initView() {
         super.initView();
-        image_show = credit_image_selectors;
         fill_LinearLayout("信用贷",creditowner,credit_image_selectors);
     }
 
