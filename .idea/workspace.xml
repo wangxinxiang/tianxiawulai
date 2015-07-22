@@ -89,8 +89,8 @@
       <file leaf-file-name="LoanActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/example/txwl_first/LoanActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.25686592" vertical-offset="6189" max-vertical-offset="10419">
-              <caret line="299" column="27" selection-start-line="299" selection-start-column="24" selection-end-line="299" selection-end-column="27" />
+            <state vertical-scroll-proportion="0.44264942" vertical-offset="6396" max-vertical-offset="10557">
+              <caret line="313" column="60" selection-start-line="313" selection-start-column="60" selection-end-line="313" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -774,12 +774,12 @@
       <workItem from="1437377869392" duration="9350000" />
       <workItem from="1437396101629" duration="13736000" />
       <workItem from="1437459740265" duration="16183000" />
-      <workItem from="1437481744765" duration="10132000" />
+      <workItem from="1437481744765" duration="10758000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="250469000" />
+    <option name="totallyTimeSpent" value="251095000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1458" height="870" extended-state="7" />
@@ -1368,8 +1368,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/example/txwl_first/LoanActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25686592" vertical-offset="6189" max-vertical-offset="10419">
-          <caret line="299" column="27" selection-start-line="299" selection-start-column="24" selection-end-line="299" selection-end-column="27" />
+        <state vertical-scroll-proportion="0.44264942" vertical-offset="6396" max-vertical-offset="10557">
+          <caret line="313" column="60" selection-start-line="313" selection-start-column="60" selection-end-line="313" selection-end-column="60" />
           <folding />
         </state>
       </provider>

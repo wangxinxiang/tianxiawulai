@@ -297,15 +297,21 @@ public class LoanActivity extends Activity implements AddItem {
                 right.setText(queryDetailResultBean.getCompanyname());
             } else if ("借款金额".equals(data1)) {
                 right.setText(queryDetailResultBean.getAccount());
-            } else if ("年利率".equals(data1)) {
-                right.setText(queryDetailResultBean.getAnnualrate());
+            } else if ("所在地区".equals(data1)) {
+                right.setText(queryDetailResultBean.getProvince() + queryDetailResultBean.getCity());
             } else if ("详细说明".equals(data1)) {
                 right.setText(queryDetailResultBean.getDescription());
+            } else if ("详细地址".equals(data1)) {
+                right.setText(queryDetailResultBean.getAddress());
+            } else if ("车牌号".equals(data1)) {
+                right.setText(queryDetailResultBean.getCarid());
+            } else if ("身份证号".equals(data1)) {
+                right.setText(queryDetailResultBean.getPersonid());
             }
 
             if ("年龄".equals(data1)) {
                 et_input_content.setInputType(InputType.TYPE_CLASS_NUMBER);
-                right.setText(queryDetailResultBean.getSex());
+                right.setText(queryDetailResultBean.getAge());
             }
             if ("借款日".equals(data1) || "还款日".equals(data1)) {
                 ll_detail.findViewById(R.id.btn_entry).setVisibility(View.GONE);
