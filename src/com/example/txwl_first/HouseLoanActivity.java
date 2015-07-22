@@ -27,7 +27,7 @@ public class HouseLoanActivity extends LoanActivity {
     @Override
     protected void initView() {
         super.initView();
-        fill_LinearLayout("房贷", houseowner, image_show);
+        fill_LinearLayout("房贷", houseowner, house_image_selectors);
     }
 
     @Override

@@ -75,7 +75,10 @@ public class QueryResultActivity extends Activity {
                     intent.putExtra("fromButton",QUERY_LISTVIEW_OTHER_ITEM);
                 }
                 intent.putExtra("registid", loanBeans.get(position).getRegistid());
-                startActivity(intent);
+                intent.putExtra("headImage", loanBeans.get(position).getOwneridimg());
+                intent.putExtra("contactname", loanBeans.get(position).getContactname());
+                intent.putExtra("data", loanBeans.get(position).getDate());
+                 startActivity(intent);
             }
         });
     }

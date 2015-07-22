@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
+import com.example.txwl_first.bean.QueryDetailResultBean;
 
 import java.util.PriorityQueue;
 
@@ -43,7 +44,7 @@ public class PersonalInfoActivity extends Activity implements AddItem {
      * paras data2 : 从服务端获取的字段，需要处理成数组
      */
     @Override
-    public void AddItems(LinearLayout linearLayout, String data1, String data2) {
+    public void AddItems(LinearLayout linearLayout, String data1, QueryDetailResultBean queryDetailResultBean) {
         RelativeLayout ll_detail = (RelativeLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_one, null);
         TextView left = (TextView) ll_detail.findViewById(R.id.left);
         TextView right = (TextView) ll_detail.findViewById(R.id.right);
@@ -52,7 +53,7 @@ public class PersonalInfoActivity extends Activity implements AddItem {
         right.setVisibility(View.VISIBLE);
 
         left.setText(data1);
-        right.setText(data2);
+//        right.setText(data2);
 
         if(data1.equals("头像")){
             right.setVisibility(View.GONE);
@@ -79,9 +80,11 @@ public class PersonalInfoActivity extends Activity implements AddItem {
     }
 
     @Override
-    public void fill_LinearLayout(String title_name, String[] owner, String[] selectors) {
+    public void fill_LinearLayout(String title_name, String[] owner, String[] selectors, QueryDetailResultBean queryDetailResultBean) {
 
     }
+
+
 
     private void initView() {
         ll_person_detail = (LinearLayout) findViewById(R.id.ll_person_detail);
@@ -98,12 +101,12 @@ public class PersonalInfoActivity extends Activity implements AddItem {
         ll_person_detail.removeAllViews();
         ll_my_loan_detail.removeAllViews();
 
-        for(int i = 0;i<person.length;i++){
-            AddItems(ll_my_loan_detail, person[i], "test");
-        }
-
-        for(int i = 0;i<company.length;i++){
-            AddItems(ll_person_detail,company[i],"test");
-        }
+//        for(int i = 0;i<person.length;i++){
+//            AddItems(ll_my_loan_detail, person[i], "test");
+//        }
+//
+//        for(int i = 0;i<company.length;i++){
+//            AddItems(ll_person_detail,company[i],"test");
+//        }
     }
 }

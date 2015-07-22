@@ -28,7 +28,7 @@ public class AddOldBeaterActivity extends LoanActivity{
     @Override
     protected void initView() {
         super.initView();
-        fill_LinearLayout("添加老赖",creditowner,image_show);
+        fill_LinearLayout("添加老赖",creditowner,credit_image_selectors);
     }
 
     @Override

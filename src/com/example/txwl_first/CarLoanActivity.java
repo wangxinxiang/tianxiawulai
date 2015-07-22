@@ -24,7 +24,7 @@ public class CarLoanActivity extends LoanActivity{
     @Override
     protected void initView() {
         super.initView();
-        fill_LinearLayout("车贷",carowner,image_show);
+        fill_LinearLayout("车贷",carowner,car_image_selectors);
     }
 
     @Override

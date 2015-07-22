@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://D:/Android_package/UniversalImageLoader(1)/UniversalImageLoader.iml" filepath="D:/Android_package/UniversalImageLoader(1)/UniversalImageLoader.iml" />
       <module fileurl="file://$PROJECT_DIR$/../slh_support/UniversalImageLoader/UniversalImageLoader.iml" filepath="$PROJECT_DIR$/../slh_support/UniversalImageLoader/UniversalImageLoader.iml" />
+      <module fileurl="file://D:/Android_package/UniversalImageLoader(1)/UniversalImageLoader.iml" filepath="D:/Android_package/UniversalImageLoader(1)/UniversalImageLoader.iml" />
       <module fileurl="file://$PROJECT_DIR$/txwl_first.iml" filepath="$PROJECT_DIR$/txwl_first.iml" />
     </modules>
   </component>

@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="@dimen/space_80" android:background="@color/white">
+              android:layout_height="@dimen/space_100" android:background="@color/white">
 
-    <ImageView android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
+    <ImageView android:layout_width="80dp"
+               android:layout_height="80dp"
                android:id="@+id/img_user_head"
                android:src="@drawable/car_head_image_pressed"
                android:padding="@dimen/space_10" android:layout_centerVertical="true"/>

@@ -15,6 +15,7 @@ import android.widget.*;
 import com.example.txwl_first.Util.Constant;
 import com.example.txwl_first.Util.DataVeri;
 import com.example.txwl_first.Util.TXWLApplication;
+import com.example.txwl_first.bean.QueryDetailResultBean;
 import com.example.txwl_first.business.LoaderBusiness;
 
 import java.io.File;
@@ -231,13 +232,13 @@ public class LoanActivity extends Activity implements AddItem {
         }
 
         for (int i = 0; i < owner.length; i++) {
-            AddItems(ll_person_detail, owner[i], "test");
+            AddItems(ll_person_detail, owner[i], null);
         }
 
     }
 
     @Override
-    public void fill_LinearLayout(String title_name, String[] owner, String[] selectors) {
+    public void fill_LinearLayout(String title_name, String[] owner, String[] selectors, QueryDetailResultBean queryDetailResultBean) {
         tv_title.setText(title_name);
         //如果处于显示状态
         tv_right.setText("举报");
@@ -251,11 +252,11 @@ public class LoanActivity extends Activity implements AddItem {
         });
 
         for (int i = 0; i < selectors.length; i++) {
-            AddHouse_Items(ll_my_loan_detail, selectors[i], image_show[i], car_owner_des_show[i], i);
+            AddHouse_Items(ll_my_loan_detail, selectors[i], image_show[i], car_owner_des_show[i]);
         }
 
         for (int i = 0; i < owner.length; i++) {
-            AddItems(ll_person_detail, owner[i], "test");
+            AddItems(ll_person_detail, owner[i], queryDetailResultBean);
         }
 
     }
@@ -269,7 +270,7 @@ public class LoanActivity extends Activity implements AddItem {
      * paras data2 : 从服务端获取的字段，需要处理成数组
      */
     @Override
-    public void AddItems(LinearLayout linearLayout, String data1, String data2) {
+    public void AddItems(LinearLayout linearLayout, String data1, QueryDetailResultBean queryDetailResultBean) {
         RelativeLayout ll_detail = (RelativeLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_one, null);
         TextView left = (TextView) ll_detail.findViewById(R.id.left);
         TextView right = (TextView) ll_detail.findViewById(R.id.right);
@@ -286,22 +287,39 @@ public class LoanActivity extends Activity implements AddItem {
             if ("性别".equals(data1)) {
                 rg_male_female.setVisibility(View.GONE);
                 right.setVisibility(View.VISIBLE);
+                right.setText(queryDetailResultBean.getSex());
+            }
+            if (data1.equals(houseowner[0]) || data1.equals(carowner[0]) || data1.equals(creditowner[0])) {
+                right.setText(queryDetailResultBean.getName());
+            } else if (data1.equals(houseowner[3]) || data1.equals(carowner[3]) || data1.equals(creditowner[3])) {
+                right.setText(queryDetailResultBean.getMobile());
+            } else if (data1.equals(houseowner[4]) || data1.equals(carowner[4]) || data1.equals(creditowner[4])) {
+                right.setText(queryDetailResultBean.getCompanyname());
+            } else if ("借款金额".equals(data1)) {
+                right.setText(queryDetailResultBean.getAccount());
+            } else if ("年利率".equals(data1)) {
+                right.setText(queryDetailResultBean.getAnnualrate());
+            } else if ("详细说明".equals(data1)) {
+                right.setText(queryDetailResultBean.getDescription());
             }
 
             if ("年龄".equals(data1)) {
                 et_input_content.setInputType(InputType.TYPE_CLASS_NUMBER);
+                right.setText(queryDetailResultBean.getSex());
             }
             if ("借款日".equals(data1) || "还款日".equals(data1)) {
                 ll_detail.findViewById(R.id.btn_entry).setVisibility(View.GONE);
+                right.setText("借款日".equals(data1) ? queryDetailResultBean.getLoanday() : queryDetailResultBean.getRepayday());
             }
             if ("借款金额".equals(data1)) {
                 et_input_content.setInputType(InputType.TYPE_CLASS_NUMBER);
-                right.setText(data2 + "元");
+                right.setText(queryDetailResultBean.getAccount() + "元");
             }
             if ("年利率".equals(data1)) {
                 et_input_content.setInputType(InputType.TYPE_CLASS_NUMBER);
-                right.setText(data2 + "％");
+                right.setText(queryDetailResultBean.getAnnualrate() + "％");
             }
+
         } else {
             if ("性别".equals(data1)) {
                 right.setVisibility(View.GONE);
@@ -310,11 +328,9 @@ public class LoanActivity extends Activity implements AddItem {
             }
             if (data1.equals("借款金额")) {
                 et_input_content.setInputType(InputType.TYPE_CLASS_NUMBER);
-                right.setText(data2 + "元");
             }
             if (data1.equals("年利率")) {
                 et_input_content.setInputType(InputType.TYPE_CLASS_NUMBER);
-                right.setText(data2 + "％");
             }
             if (data1.equals("借款日")) {
                 et_input_content.setVisibility(View.GONE);
@@ -368,7 +384,7 @@ public class LoanActivity extends Activity implements AddItem {
         });
     }
 
-    private void AddHouse_Items(LinearLayout layout, String house, String remark, String descrip_content, int position) {
+    private void AddHouse_Items(LinearLayout layout, String house, String remark, String descrip_content) {
         //如果处于显示状态
         RelativeLayout rl_item_five = (RelativeLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_five, null);
         ImageButton btn_photo = (ImageButton) rl_item_five.findViewById(R.id.btn_photo);

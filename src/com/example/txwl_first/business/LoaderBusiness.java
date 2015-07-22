@@ -4,6 +4,7 @@ import android.widget.ImageView;
 import com.example.txwl_first.R;
 import com.example.txwl_first.Util.AnimateFirstDisplayListener;
 import com.example.txwl_first.Util.TXWLApplication;
+import com.example.txwl_first.Util.Url;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -50,6 +51,7 @@ public class LoaderBusiness {
     public static void loadImage(String url , ImageView iv){
         DisplayImageOptions options = getInstance().getOptions();
         ImageLoadingListener animateFirstListener = getInstance().getAnimateFirstListener();
+        url = Url.URL + "UserImage/Thumbnail/" + url;
         getInstance().getImageLoader().displayImage(url, iv, options, animateFirstListener);
     }
 }

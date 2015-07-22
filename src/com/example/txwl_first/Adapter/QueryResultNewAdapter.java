@@ -58,16 +58,15 @@ public class QueryResultNewAdapter extends BaseAdapter {
         holderView.tv_own_user_name.setText(loanBeanlist.getName());
         holderView.tv_own_user_phone.setText(loanBeanlist.getMobile());
 
+        holderView.tv_debt_type.setText(loanBeanlist.getDate());
         switch (loanBeanlist.getStatus2()) {
             case "1":
-                holderView.tv_debt_type.setText(loanBeanlist.getDate());
+
                 break;
             case "2":
-                holderView.tv_debt_type.setText("已还款");
                 holderView.tv_debt_type.setTextColor(mContext.getResources().getColor(R.color.orange_text));
                 break;
             case "3":
-                holderView.tv_debt_type.setText("已进黑名单");
                 holderView.tv_debt_type.setTextColor(mContext.getResources().getColor(R.color.black));
                 holderView.tv_query_reward_num.setText(loanBeanlist.getRegistcompany() + loanBeanlist.getContactname() + "悬赏" + loanBeanlist.getRewardmoney() + "元催收");
                 holderView.tv_reward_phone.setText(loanBeanlist.getContactname() + "电话：" + loanBeanlist.getContactmobile());
@@ -96,16 +95,5 @@ public class QueryResultNewAdapter extends BaseAdapter {
         private TextView tv_query_reward_num;
     }
 
-    private String getLoan_type(String i) {
-        switch (i) {
-            case "1":
-                return "车贷";
-            case "2":
-                return "房贷";
-            case "3":
-                return "信用贷";
-            default:
-                return "其他";
-        }
-    }
+
 }
