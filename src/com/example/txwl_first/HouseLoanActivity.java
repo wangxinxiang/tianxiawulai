@@ -18,11 +18,6 @@ public class HouseLoanActivity extends LoanActivity {
         LocateDatePikerItem(10,paymenttime);
     }
 
-    @Override
-    protected void registToInternet() {
-        super.registToInternet();
-        LocateDatePikerItem(9,loan_datetime);
-    }
 
     @Override
     protected void initView() {

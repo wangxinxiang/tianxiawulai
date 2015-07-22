@@ -129,7 +129,7 @@ public class LoanDetailActivity extends LoanActivity{
         tv_user_phone_num.setText(queryDetailResultBean.getMobile());
         loan_type.setText(getLoan_type(queryDetailResultBean.getRegisttype()));
         tv_money_count.setText(queryDetailResultBean.getAccount());
-        tv_manager.setText("经办人" + getIntent().getStringExtra("contactname"));
+        tv_manager.setText("经办人" + getIntent().getStringExtra("realname"));
         tv_year.setText("利率:" +queryDetailResultBean.getAnnualrate() + "%");
         over_day.setText(getIntent().getStringExtra("data"));
     }

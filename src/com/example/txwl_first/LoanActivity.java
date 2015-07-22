@@ -15,13 +15,19 @@ import android.widget.*;
 import com.example.txwl_first.Util.Constant;
 import com.example.txwl_first.Util.DataVeri;
 import com.example.txwl_first.Util.TXWLApplication;
+import com.example.txwl_first.Util.Url;
 import com.example.txwl_first.bean.QueryDetailResultBean;
 import com.example.txwl_first.business.LoaderBusiness;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import org.apache.http.Header;
 
 import java.io.File;
 import java.util.Calendar;
 
 public class LoanActivity extends Activity implements AddItem {
+    protected boolean isSubmit = true;          //标示是否满足提交
 
     protected TextView tv_title, tv_right;
     protected ImageButton ibtn_title_back, ibtn_sub;
@@ -120,8 +126,10 @@ public class LoanActivity extends Activity implements AddItem {
             //检测车贷字段
             switch (i) {
                 case 0:
-                    if ("".equals(check_data_str[0]))
+                    if ("".equals(check_data_str[0])){
                         Toast.makeText(getApplicationContext(), "姓名不能为空", Toast.LENGTH_SHORT).show();
+
+                    }
                     break;
                 case 2:
                     if (!DataVeri.isNaN(check_data_str[2])) {
@@ -140,10 +148,13 @@ public class LoanActivity extends Activity implements AddItem {
             }
         }
 
+
+
     }
 
 
     protected StringBuffer getData() {
+        isSubmit = true;
         StringBuffer data = new StringBuffer();
         //循环遍历LinearLayout Item，获取子控件数据
         Log.d("ChildCount-->", "|" + ll_person_detail.getChildCount());
@@ -156,13 +167,23 @@ public class LoanActivity extends Activity implements AddItem {
                     for (int z = 0; z < ((LinearLayout) v).getChildCount(); z++) {
                         View vv = ((LinearLayout) v).getChildAt(z);
                         if ((vv instanceof TextView) && vv.getId() == R.id.right && vv.getVisibility() == View.VISIBLE) {
-                            data.append(((TextView) vv).getText() + ",");
+                            if ("".equals(((TextView) vv).getText())) {
+                                isSubmit = false;
+                            } else {
+                                data.append(((TextView) vv).getText() + ",");
+                                TXWLApplication.getInstance().showTextToast("数据不能为空");
+                            }
                         }
                     }
                 }
 
                 if (v instanceof EditText && v.getVisibility() == View.VISIBLE) {
-                    data.append(((EditText) v).getText() + ",");
+                    if ("".equals(((EditText) v).getText())) {
+                        isSubmit = false;
+                    } else {
+                        data.append(((EditText) v).getText() + ",");
+                        TXWLApplication.getInstance().showTextToast("数据不能为空");
+                    }
                 }
 
                 if (v instanceof RadioGroup) {
@@ -170,7 +191,13 @@ public class LoanActivity extends Activity implements AddItem {
                         for (int k = 0; k < ((RadioGroup) v).getChildCount(); k++) {
                             View vvv = ((RadioGroup) v).getChildAt(k);
                             if ((vvv instanceof RadioButton) && ((RadioButton) vvv).isChecked()) {
-                                data.append(((RadioButton) vvv).getText().toString() + ",");
+                                if ("".equals(((RadioButton) vvv).getText().toString())) {
+                                    isSubmit = false;
+                                } else {
+                                    data.append(((RadioButton) vvv).getText().toString() + ",");
+                                    TXWLApplication.getInstance().showTextToast("数据不能为空");
+                                }
+
                             }
                         }
                     }
@@ -183,9 +210,11 @@ public class LoanActivity extends Activity implements AddItem {
         for (int i = 0; i < ll_my_loan_detail.getChildCount(); i++) {
             RelativeLayout relativeLayout = (RelativeLayout) ll_my_loan_detail.getChildAt(i);
             EditText editText = (EditText) relativeLayout.getChildAt(1);
-            image_remark[i] = editText.getText().toString();
             if ("".equals(image_remark[i])) {
+                isSubmit = false;
                 TXWLApplication.getInstance().showTextToast("备注不能为空");
+            } else {
+                image_remark[i] = editText.getText().toString();
             }
         }
 
@@ -212,7 +241,6 @@ public class LoanActivity extends Activity implements AddItem {
     @Override
     public void fill_LinearLayout(String title_name, String[] owner, Integer[] selectors) {
         tv_title.setText(title_name);
-        //如果处于显示状态
         tv_right.setText("提交");
         tv_right.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,7 +252,9 @@ public class LoanActivity extends Activity implements AddItem {
                 checkData();
 
                 //TODO：联网上传接口数据
-                registToInternet();
+               if (isSubmit) {
+                   registToInternet();
+               }
             }
         });
         for (int i = 0; i < selectors.length; i++) {
@@ -240,7 +270,6 @@ public class LoanActivity extends Activity implements AddItem {
     @Override
     public void fill_LinearLayout(String title_name, String[] owner, String[] selectors, QueryDetailResultBean queryDetailResultBean) {
         tv_title.setText(title_name);
-        //如果处于显示状态
         tv_right.setText("举报");
         //跳转到举报界面
         tv_right.setOnClickListener(new View.OnClickListener() {
@@ -261,7 +290,40 @@ public class LoanActivity extends Activity implements AddItem {
 
     }
 
-    protected void registToInternet() {
+    private void registToInternet() {
+        String url = Url.REGISTER_URL;
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+
+        params.put("name", check_data_str[0]);
+        params.put("sex", check_data_str[1]);
+        params.put("age", check_data_str[2]);
+        params.put("mobile", check_data_str[3]);
+        params.put("companyname", check_data_str[4]);
+        int i = putParams(params);
+        params.put("account", check_data_str[i]);
+        params.put("loandate", check_data_str[i + 1]);
+        params.put("repaydate", check_data_str[i + 2]);
+        params.put("annualrate", check_data_str[i + 3]);
+        params.put("description", check_data_str[i + 4]);
+        params.put("userid", 1);
+
+        client.put(url, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                Log.d("LoanActivity ----->", new String(bytes));
+            }
+
+            @Override
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+
+            }
+        });
+
+    }
+
+    protected int putParams(RequestParams params) {
+        return 0;
     }
 
 

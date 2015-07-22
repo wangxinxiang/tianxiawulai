@@ -61,6 +61,16 @@ public class QueryResultItemBean {
     private String contactmobile;
     @SerializedName("rewardmoney")
     private String rewardmoney;
+    @SerializedName("realname")
+    private String realname;
+
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
+    }
 
     public String getUserid() {
         return userid;

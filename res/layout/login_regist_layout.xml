@@ -5,6 +5,7 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
         >
+    <include layout="@layout/title_include"/>
     <EditText android:layout_width="match_parent"
               android:layout_height="wrap_content" android:id="@+id/et_regist_mobile"
               android:background="@drawable/register_input_box"
@@ -17,7 +18,7 @@
 
     <RelativeLayout android:layout_width="match_parent"
                   android:id="@+id/rl_regist_check_code"
-                  android:layout_height="wrap_content">
+                  android:layout_height="wrap_content" android:visibility="gone">
 
     <EditText android:layout_width="match_parent"
               android:layout_height="wrap_content" android:id="@+id/et_check_code_number"
@@ -49,8 +50,9 @@
 
     <Button android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_pay_money"
-            android:gravity="center_vertical|center_horizontal" android:background="@drawable/btn_selector" android:text="@string/pay_btn"
+            android:id="@+id/btn_login_regist"
+            android:gravity="center_vertical|center_horizontal" android:background="@drawable/btn_selector"
+            android:text="@string/login_login"
             android:textSize="@dimen/textsize_24" android:textColor="@color/white"
             android:layout_margin="@dimen/space_10" android:padding="@dimen/space_16"/>
 
@@ -60,6 +62,6 @@
             android:gravity="center_vertical|center_horizontal" android:background="@color/lightgray" android:text="@string/login_regist"
             android:textSize="@dimen/textsize_24" android:textColor="@color/midblack"
             android:padding="@dimen/space_16" android:layout_marginLeft="@dimen/space_10"
-            android:layout_marginRight="@dimen/space_10"/>
+            android:layout_marginRight="@dimen/space_10" android:visibility="gone"/>
 </LinearLayout>
 

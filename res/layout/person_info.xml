@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/gray_bg">
+
+    <include layout="@layout/title_include"></include>
+
+    <ScrollView android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                      android:background="@color/gray_bg">
+            <LinearLayout style="@style/detail_linearLayout">
+                <TextView style="@style/detail_left"
+                          android:text="@string/headImage"/>
+                <ImageView android:layout_width="@dimen/space_60" android:layout_height="@dimen/space_60"
+                           android:id="@+id/detail_head"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/detail_linearLayout">
+                <TextView style="@style/detail_left"
+                          android:text="姓名"/>
+                <TextView style="@style/detail_right"
+                          android:id="@+id/detail_name"
+                          android:text="傅旭东"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/detail_linearLayout">
+                <TextView style="@style/detail_left"
+                          android:text="手机号"/>
+                <TextView style="@style/detail_right"
+                          android:id="@+id/detail_phone"
+                          android:text="傅旭东"/>
+            </LinearLayout>
+
+
+            <LinearLayout style="@style/detail_linearLayout"
+                    android:layout_marginTop="@dimen/space_5">
+                <TextView style="@style/detail_left"
+                          android:text="公司名称"/>
+                <TextView style="@style/detail_right"
+                          android:id="@+id/detail_company"
+                          android:text="傅旭东"/>
+            </LinearLayout>
+            <LinearLayout style="@style/detail_linearLayout">
+                <TextView style="@style/detail_left"
+                          android:text="电话"/>
+                <TextView style="@style/detail_right"
+                          android:id="@+id/detail_company_phone"
+                          android:text="傅旭东"/>
+            </LinearLayout>
+            <LinearLayout style="@style/detail_linearLayout">
+                <TextView style="@style/detail_left"
+                          android:text="所在地区"/>
+                <TextView style="@style/detail_right"
+                          android:id="@+id/detail_city"
+                          android:text="傅旭东"/>
+            </LinearLayout>
+            <LinearLayout style="@style/detail_linearLayout">
+                <TextView style="@style/detail_left"
+                          android:text="详细地址"/>
+                <TextView style="@style/detail_right"
+                          android:id="@+id/detail_address"
+                          android:text="傅旭东"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

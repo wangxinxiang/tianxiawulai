@@ -21,6 +21,8 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import com.example.txwl_first.Adapter.MyFragmentPagerAdapter;
+import com.example.txwl_first.Util.PreferenceUtils;
+import com.example.txwl_first.Util.TXWLApplication;
 import com.example.txwl_first.View.CustomScrollView;
 
 import java.util.ArrayList;
@@ -117,8 +119,16 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
         rl_myInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),PersonalInfoActivity.class);
-                startActivity(intent);
+                if (PreferenceUtils.getIsLogin()){
+                    Intent intent = new Intent(getActivity(),PersonalInfoActivity.class);
+                    startActivity(intent);
+                }else {
+                    TXWLApplication.getInstance().showTextToast("请登录后查看");
+//                    PreferenceUtils.getInstance().setIsLogin(true);
+                    Intent intent=new Intent(getActivity(),LoginActivity.class);
+                    startActivity(intent);
+
+                }
             }
         });
 

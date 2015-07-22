@@ -2,32 +2,37 @@ package com.example.txwl_first;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
-import com.example.txwl_first.bean.QueryDetailResultBean;
-
-import java.util.PriorityQueue;
+import com.example.txwl_first.Util.TXWLApplication;
+import com.example.txwl_first.Util.Url;
+import com.example.txwl_first.bean.GetPersonalInfoBean;
+import com.example.txwl_first.bean.PersonalInfoBean;
+import com.example.txwl_first.business.LoaderBusiness;
+import com.google.gson.GsonBuilder;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import org.apache.http.Header;
 
 /**
  * Created by licheng on 18/7/15.
  */
-public class PersonalInfoActivity extends Activity implements AddItem {
-    private TextView tv_title,tv_right;
-    private ImageButton ibtn_title_back,ibtn_sub;
-    private LinearLayout ll_my_loan_detail,ll_person_detail;
-
-    private final static String[] person = new String[]{"头像","姓名","手机号"};
-    private final static String[] company = new String[]{"公司名称","电话","所在地区","详细地址"};
-
+public class PersonalInfoActivity extends Activity{
+    private TextView tv_title,tv_right,detail_name,detail_phone,detail_company,detail_company_phone,detail_city,detail_address;
+    private ImageButton ibtn_title_back;
+    private ImageView detail_head;
+    private PersonalInfoBean personalInfoBean;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.detail_layout);
+        setContentView(R.layout.person_info);
         initView();
         setOnClickListener();
+        getInfo();
     }
 
     private void setOnClickListener() {
@@ -39,74 +44,55 @@ public class PersonalInfoActivity extends Activity implements AddItem {
         });
     }
 
-    /**
-     * paras data1 : 静态字段
-     * paras data2 : 从服务端获取的字段，需要处理成数组
-     */
-    @Override
-    public void AddItems(LinearLayout linearLayout, String data1, QueryDetailResultBean queryDetailResultBean) {
-        RelativeLayout ll_detail = (RelativeLayout) LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_one, null);
-        TextView left = (TextView) ll_detail.findViewById(R.id.left);
-        TextView right = (TextView) ll_detail.findViewById(R.id.right);
-        ImageButton btn_head_image = (ImageButton) ll_detail.findViewById(R.id.btn_entry);
-
-        right.setVisibility(View.VISIBLE);
-
-        left.setText(data1);
-//        right.setText(data2);
-
-        if(data1.equals("头像")){
-            right.setVisibility(View.GONE);
-            btn_head_image.setVisibility(View.VISIBLE);
-            //TODO；头像的地址需要单独设置
-            btn_head_image.setImageResource(R.drawable.defaul_head_image);
-            ll_detail.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(getApplicationContext(),"点击事件",Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-
-        linearLayout.addView(ll_detail);
-
-
-    }
-
-
-    @Override
-    public void fill_LinearLayout(String title_name, String[] owner, Integer[] selectors) {
-
-    }
-
-    @Override
-    public void fill_LinearLayout(String title_name, String[] owner, String[] selectors, QueryDetailResultBean queryDetailResultBean) {
-
-    }
-
-
-
     private void initView() {
-        ll_person_detail = (LinearLayout) findViewById(R.id.ll_person_detail);
-        ll_my_loan_detail = (LinearLayout) findViewById(R.id.ll_my_loan_detail);
         tv_title = (TextView) findViewById(R.id.tv_title);
         ibtn_title_back = (ImageButton) findViewById(R.id.ibtn_title_back);
-        ibtn_sub = (ImageButton) findViewById(R.id.ibtn_sub);
         ibtn_title_back.setVisibility(View.VISIBLE);
         tv_right = (TextView) findViewById(R.id.tv_right);
         tv_right.setVisibility(View.GONE);
         tv_title.setText("个人信息");
 
-        //清空布局
-        ll_person_detail.removeAllViews();
-        ll_my_loan_detail.removeAllViews();
+        detail_head = (ImageView) findViewById(R.id.detail_head);
+        detail_name = (TextView) findViewById(R.id.detail_name);
+        detail_phone = (TextView) findViewById(R.id.detail_phone);
+        detail_company = (TextView) findViewById(R.id.detail_company);
+        detail_company_phone = (TextView) findViewById(R.id.detail_company_phone);
+        detail_city = (TextView) findViewById(R.id.detail_city);
+        detail_address = (TextView) findViewById(R.id.detail_address);
+    }
 
-//        for(int i = 0;i<person.length;i++){
-//            AddItems(ll_my_loan_detail, person[i], "test");
-//        }
-//
-//        for(int i = 0;i<company.length;i++){
-//            AddItems(ll_person_detail,company[i],"test");
-//        }
+    private void getInfo() {
+        String url = Url.PERSONAL_URL;
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("userid", 1);
+        client.post(url, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                Log.d("PersonalInfoActivity-------->", new String(bytes));
+                try {
+                    GetPersonalInfoBean getPersonalInfoBean = new GsonBuilder().create().fromJson(new String(bytes), GetPersonalInfoBean.class);
+                    personalInfoBean = getPersonalInfoBean.getPersonalInfoBean();
+                    setData();
+                }catch (Exception e) {
+                    TXWLApplication.getInstance().showErrorConnected(e);
+                }
+            }
+
+            @Override
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                TXWLApplication.getInstance().showTextToast("网络错误");
+            }
+        });
+    }
+
+    private void setData() {
+        LoaderBusiness.loadImage(personalInfoBean.getHeadimage(), detail_head);
+        detail_name.setText(personalInfoBean.getRealname());
+        detail_phone.setText(personalInfoBean.getMobile());
+        detail_company.setText(personalInfoBean.getCompanyname());
+        detail_company_phone.setText(personalInfoBean.getPhone());
+        detail_city.setText(personalInfoBean.getProvince());
+        detail_address.setText(personalInfoBean.getAddress());
     }
 }

@@ -18,12 +18,7 @@ public class AddOldBeaterActivity extends LoanActivity{
     protected void setPaymentTime() {
         LocateDatePikerItem(9,paymenttime);
     }
-
-    @Override
-    protected void registToInternet() {
-        super.registToInternet();
-        LocateDatePikerItem(8,loan_datetime);
-    }
+    
 
     @Override
     protected void initView() {

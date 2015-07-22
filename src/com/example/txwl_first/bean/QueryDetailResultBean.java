@@ -34,6 +34,7 @@ import com.google.gson.annotations.SerializedName;
  userid         登记人用户id（如果是登录过的用户则需要填）
  registdate     登记时间
  status         登记者状态
+ realname   经办人
  */
 public class QueryDetailResultBean {
 
@@ -97,6 +98,7 @@ public class QueryDetailResultBean {
     private String registdate;
     @SerializedName("status")
     private String status;
+
 
     public String getRegistid() {
         return registid;

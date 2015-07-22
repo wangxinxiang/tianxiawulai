@@ -4,15 +4,16 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
         android:background="@color/white">
-    <ImageView android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
+    <ImageView android:layout_width="@dimen/item_image_height"
+               android:layout_height="@dimen/item_image_height"
                android:id="@+id/img_user_head"
                android:layout_gravity="center_vertical"
                android:src="@drawable/car_head_image_pressed"
-               android:padding="@dimen/space_10"/>
+               android:layout_margin="@dimen/space_10"/>
     <RelativeLayout android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/space_12">
+                    android:paddingTop="@dimen/space_12" android:paddingRight="@dimen/space_12"
+                    android:paddingBottom="@dimen/space_12">
         <TextView android:layout_width="wrap_content" android:id="@+id/tv_username" android:layout_height="wrap_content"
                   android:textSize="@dimen/textsize_16" android:layout_alignParentTop="true"
                   android:layout_alignParentLeft="true" android:layout_marginTop="-2dp"

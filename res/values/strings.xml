@@ -33,6 +33,7 @@
     <string name="regist_mobile_number">手机号</string>
     <string name="regist_password">密码</string>
     <string name="login_regist">注册</string>
+    <string name="login_login">登录</string>
     <string name="regist_check_code_number">验证码</string>
     <string name="regist_get_check_code">获取验证码</string>
     <string name="input_et_query">输入姓名/身份证/手机号</string>
@@ -52,5 +53,8 @@
     <string name="reward">悬赏</string>
     <string name="contact">联系人</string>
     <string name="mobilephone">电话</string>
+    <string name="headImage">电话</string>
+
+
 
 </resources>
