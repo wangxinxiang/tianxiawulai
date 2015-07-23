@@ -9,7 +9,8 @@
     <EditText android:layout_width="match_parent"
               android:layout_height="wrap_content" android:id="@+id/et_regist_mobile"
               android:background="@drawable/register_input_box"
-              android:textSize="@dimen/textsize_24"
+              android:textSize="@dimen/textsize_22"
+              android:textColor="@color/gray_text_deep"
               android:padding="@dimen/space_16" android:hint="@string/regist_mobile_number"
               android:layout_marginLeft="@dimen/space_10" android:layout_marginTop="@dimen/space_20"
               android:layout_marginRight="@dimen/space_10" android:inputType="number"/>
@@ -23,7 +24,8 @@
     <EditText android:layout_width="match_parent"
               android:layout_height="wrap_content" android:id="@+id/et_check_code_number"
               android:background="@drawable/register_input_box"
-              android:textSize="@dimen/textsize_24"
+              android:textSize="@dimen/textsize_22"
+              android:textColor="@color/gray_text_deep"
               android:padding="@dimen/space_16" android:hint="@string/regist_check_code_number"
               android:layout_toLeftOf="@+id/btn_get_check_code" android:layout_marginLeft="@dimen/space_10"
               android:layout_marginTop="@dimen/space_10" android:layout_marginBottom="@dimen/space_10"
@@ -35,7 +37,7 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:background="@drawable/btn_selector"
                 android:text="@string/regist_get_check_code"
-                android:textSize="@dimen/textsize_24" android:textColor="@color/white"
+                android:textSize="@dimen/textsize_22" android:textColor="@color/white"
                 android:layout_margin="@dimen/space_10" android:padding="@dimen/space_16"
                 android:layout_alignParentRight="true"/>
 
@@ -44,7 +46,8 @@
     <EditText android:layout_width="match_parent"
               android:layout_height="wrap_content" android:id="@+id/et_password"
               android:background="@drawable/register_input_box"
-              android:textSize="@dimen/textsize_24" android:layout_margin="@dimen/space_10"
+              android:textColor="@color/gray_text_deep"
+              android:textSize="@dimen/textsize_22" android:layout_margin="@dimen/space_10"
               android:padding="@dimen/space_16" android:hint="@string/regist_password"
               android:inputType="textPassword"/>
 
@@ -53,14 +56,14 @@
             android:id="@+id/btn_login_regist"
             android:gravity="center_vertical|center_horizontal" android:background="@drawable/btn_selector"
             android:text="@string/login_login"
-            android:textSize="@dimen/textsize_24" android:textColor="@color/white"
+            android:textSize="@dimen/textsize_22" android:textColor="@color/white"
             android:layout_margin="@dimen/space_10" android:padding="@dimen/space_16"/>
 
     <Button android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/btn_regist"
             android:gravity="center_vertical|center_horizontal" android:background="@color/lightgray" android:text="@string/login_regist"
-            android:textSize="@dimen/textsize_24" android:textColor="@color/midblack"
+            android:textSize="@dimen/textsize_22" android:textColor="@color/midblack"
             android:padding="@dimen/space_16" android:layout_marginLeft="@dimen/space_10"
             android:layout_marginRight="@dimen/space_10" android:visibility="gone"/>
 </LinearLayout>

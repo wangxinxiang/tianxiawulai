@@ -8,7 +8,11 @@ public class DataVeri {
     public static Boolean isNaN(String array){
         if(array.matches("^[0-9]*$"))
             return true;
-        else return false;
+        else
+        {
+            TXWLApplication.getInstance().showTextToast("只能输入纯数字");
+            return false;
+        }
     }
 
     public static Boolean isAge(String array){
@@ -18,8 +22,11 @@ public class DataVeri {
         }else {
             if(Integer.valueOf(array)>=16&&Integer.valueOf(array)<=110){
                 return true;
-            }else
+            }else{
+                TXWLApplication.getInstance().showTextToast("年龄输入有误");
                 return false;
+            }
+
         }
     }
 
@@ -29,20 +36,25 @@ public class DataVeri {
             TXWLApplication.getInstance().showTextToast("手机号不能为空");
             return false;
         }else {
-            if(array.matches("^((13[0-9])|(17[0-9])|(15[^4,\\\\D])|(18[0,5-9]))\\\\d{8}$")){
+            if(array.matches("^((13[0-9])|(17[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$")){
                 return true;
-            }else
+            }else{
+                TXWLApplication.getInstance().showTextToast("手机号格式错误");
                 return false;
+            }
+
         }
     }
 
     public static Boolean isIDNum(String array){
         if("".equals(array)){
+            TXWLApplication.getInstance().showTextToast("身份证号码不能为空");
             return false;
         }else {
             if(array.matches("/^(\\d{15}$|^\\d{18}$|^\\d{17}(\\d|X|x))$/")){
                 return true;
             }else {
+                TXWLApplication.getInstance().showTextToast("身份证号码格式错误");
                 return false;
             }
         }

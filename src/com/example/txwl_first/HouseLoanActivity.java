@@ -3,6 +3,8 @@ package com.example.txwl_first;
 import android.util.Log;
 import android.widget.Toast;
 import com.example.txwl_first.Util.DataVeri;
+import com.example.txwl_first.Util.TXWLApplication;
+import com.loopj.android.http.RequestParams;
 
 
 public class HouseLoanActivity extends LoanActivity {
@@ -28,15 +30,32 @@ public class HouseLoanActivity extends LoanActivity {
     @Override
     protected void checkData() {
         super.checkData();
-        for (int i = 0; i < check_data_str.length; i++) {
-            //检测房贷字段
-            switch (i) {
-                case 5:
-                    if (!DataVeri.isIDNum(check_data_str[5])) {
-                        Toast.makeText(getApplicationContext(), "身份号输入有误", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
+        for (int i = 0; i < 5; i++) {
+            if ("".equals(image_url[i])) {
+                isSubmit = false;
+                TXWLApplication.getInstance().showTextToast("图片不能为空");
             }
         }
+    }
+
+    @Override
+    protected int putParams(RequestParams params) {
+        params.put("personid", check_data_str[5]);
+        params.put("address", check_data_str[6]);
+        params.put("address", check_data_str[7]);
+        params.put("appearanceimg", image_url[0]);
+        params.put("goodsidimg", image_url[1]);
+        params.put("owneridimg", image_url[2]);
+        params.put("ownerheadimg", image_url[3]);
+        params.put("contractimg", image_url[4]);
+
+        params.put("appearancedesc", image_remark[0]);
+        params.put("goodsiddesc", image_remark[1]);
+        params.put("owneriddesc", image_remark[2]);
+        params.put("ownerheaddesc", image_remark[3]);
+        params.put("contractdesc", image_remark[4]);
+        params.put("registtype", 2 );
+
+        return 8;
     }
 }

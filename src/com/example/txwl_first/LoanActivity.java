@@ -168,10 +168,10 @@ public class LoanActivity extends Activity implements AddItem {
                         View vv = ((LinearLayout) v).getChildAt(z);
                         if ((vv instanceof TextView) && vv.getId() == R.id.right && vv.getVisibility() == View.VISIBLE) {
                             if ("".equals(((TextView) vv).getText())) {
+                                TXWLApplication.getInstance().showTextToast("数据不能为空");
                                 isSubmit = false;
                             } else {
                                 data.append(((TextView) vv).getText() + ",");
-                                TXWLApplication.getInstance().showTextToast("数据不能为空");
                             }
                         }
                     }
@@ -179,10 +179,10 @@ public class LoanActivity extends Activity implements AddItem {
 
                 if (v instanceof EditText && v.getVisibility() == View.VISIBLE) {
                     if ("".equals(((EditText) v).getText())) {
+                        TXWLApplication.getInstance().showTextToast("数据不能为空");
                         isSubmit = false;
                     } else {
                         data.append(((EditText) v).getText() + ",");
-                        TXWLApplication.getInstance().showTextToast("数据不能为空");
                     }
                 }
 
@@ -192,10 +192,10 @@ public class LoanActivity extends Activity implements AddItem {
                             View vvv = ((RadioGroup) v).getChildAt(k);
                             if ((vvv instanceof RadioButton) && ((RadioButton) vvv).isChecked()) {
                                 if ("".equals(((RadioButton) vvv).getText().toString())) {
+                                    TXWLApplication.getInstance().showTextToast("数据不能为空");
                                     isSubmit = false;
                                 } else {
                                     data.append(((RadioButton) vvv).getText().toString() + ",");
-                                    TXWLApplication.getInstance().showTextToast("数据不能为空");
                                 }
 
                             }
@@ -210,7 +210,7 @@ public class LoanActivity extends Activity implements AddItem {
         for (int i = 0; i < ll_my_loan_detail.getChildCount(); i++) {
             RelativeLayout relativeLayout = (RelativeLayout) ll_my_loan_detail.getChildAt(i);
             EditText editText = (EditText) relativeLayout.getChildAt(1);
-            if ("".equals(image_remark[i])) {
+            if ("".equals(editText.getText().toString())) {
                 isSubmit = false;
                 TXWLApplication.getInstance().showTextToast("备注不能为空");
             } else {
@@ -251,6 +251,7 @@ public class LoanActivity extends Activity implements AddItem {
                 //输入字段格式检查
                 checkData();
 
+                Log.d("registToInternet --->", "registToInternet" + isSubmit);
                 //TODO：联网上传接口数据
                if (isSubmit) {
                    registToInternet();
@@ -308,15 +309,21 @@ public class LoanActivity extends Activity implements AddItem {
         params.put("description", check_data_str[i + 4]);
         params.put("userid", 1);
 
+        Log.d("registToInternet_params---------->", params.toString());
         client.put(url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
                 Log.d("LoanActivity ----->", new String(bytes));
+                if ("登记成功".equals(new String(bytes))) {
+                   TXWLApplication.getInstance().showTextToast("登记成功");
+                }else {
+                    TXWLApplication.getInstance().showTextToast("登记失败");
+                }
             }
 
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-
+                TXWLApplication.getInstance().showTextToast("网络错误");
             }
         });
 
@@ -520,14 +527,13 @@ public class LoanActivity extends Activity implements AddItem {
                 if (data != null) {
                     //获取结果
                     int position = data.getIntExtra("from", -1);
-                    File imgFile = data.getParcelableExtra("img");
                     image_url[position] = data.getStringExtra("imgUrl");
+                    Log.d("onActivityResult ----->",  image_url[position]);
                     //设置图片
                     RelativeLayout childView = (RelativeLayout) ll_my_loan_detail.getChildAt(position);
                     ImageButton imageButton = (ImageButton) childView.getChildAt(0);
 
-                    Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getPath());
-                    imageButton.setImageBitmap(bitmap);
+                    LoaderBusiness.loadImage(image_url[position], imageButton);
                 }
 
         }

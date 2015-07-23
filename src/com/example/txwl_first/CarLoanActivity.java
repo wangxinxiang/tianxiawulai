@@ -8,8 +8,6 @@ import com.loopj.android.http.RequestParams;
  */
 public class CarLoanActivity extends LoanActivity{
 
-    private static int registtype = 1;
-
     @Override
     protected void setLoanTime() {
         LocateDatePikerItem(7,loan_datetime);
@@ -31,12 +29,13 @@ public class CarLoanActivity extends LoanActivity{
     protected void checkData() {
         super.checkData();
 
-        for (String url : image_url) {
-            if ("".equals(url)) {
+        for (int i = 0; i < 5; i++) {
+            if ("".equals(image_url[i])) {
                 isSubmit = false;
                 TXWLApplication.getInstance().showTextToast("图片不能为空");
             }
         }
+
     }
 
     @Override
@@ -53,7 +52,7 @@ public class CarLoanActivity extends LoanActivity{
         params.put("owneriddesc", image_remark[2]);
         params.put("ownerheaddesc", image_remark[3]);
         params.put("contractdesc", image_remark[4]);
-        params.put("registtype", registtype );
+        params.put("registtype", 1 );
 
         return 6;
     }

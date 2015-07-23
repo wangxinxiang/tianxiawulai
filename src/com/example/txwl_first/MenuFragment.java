@@ -148,7 +148,7 @@ public class MenuFragment extends Fragment {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Log.d(TAG, "联网成功");
-                Log.d(TAG + "onSuccess-->", new String(responseBody));//打印网络访问结果
+                Log.d(TAG + "  onSuccess-->", new String(responseBody));//打印网络访问结果
 
                 try {
                     blackListBean=new GsonBuilder().create().fromJson(new String(responseBody),BlackListBean.class);

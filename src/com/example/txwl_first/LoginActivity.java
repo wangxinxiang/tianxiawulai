@@ -3,14 +3,28 @@ package com.example.txwl_first;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
+import com.example.txwl_first.Util.DataVeri;
+import com.example.txwl_first.Util.PreferenceUtils;
+import com.example.txwl_first.Util.TXWLApplication;
+import com.example.txwl_first.Util.Url;
+import com.example.txwl_first.bean.GetPersonalInfoBean;
+import com.example.txwl_first.bean.MobileInfoBean;
+import com.google.gson.GsonBuilder;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import org.apache.http.Header;
 
 public class LoginActivity extends Activity implements View.OnClickListener{
+    private static String TAG="LoginActivity";
     private TextView tv_title;
     private ImageButton ibtn_title_back;
     private EditText et_regist_mobile,et_password;
     private Button btn_login_regist,btn_regist;
+    private GetPersonalInfoBean bean;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +79,57 @@ public class LoginActivity extends Activity implements View.OnClickListener{
     }
 
     private void getLogin() {
+        String mobile=null;
+        String userpwd=null;
 
+        mobile=et_regist_mobile.getText().toString().trim();
+        userpwd=et_password.getText().toString().trim();
+        if(DataVeri.isMobileNum(mobile)&&!("".equals(userpwd))){
+            AsyncHttpClient client=new AsyncHttpClient();
+            client.setTimeout(10000);
+
+            final RequestParams params = new RequestParams();
+            params.put("mobile",mobile);//手机号参数
+            params.put("userpwd",userpwd);//登录密码
+
+            client.post(Url.UserLogin_URL, params, new AsyncHttpResponseHandler() {
+
+                @Override
+                public void onStart() {
+                    super.onStart();
+                    Log.d(TAG, "开始联网");
+                }
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    Log.d(TAG, "联网成功");
+                    Log.d(TAG + "  onSuccess-->", new String(responseBody));//打印网络访问结果
+
+                    try {
+                        bean = new GsonBuilder().create().fromJson(new String(responseBody), GetPersonalInfoBean.class);
+                        if ((bean != null) && ("success".equals(bean.getStatus()))) {
+                            //网络请求成功
+                            TXWLApplication.getInstance().showTextToast("登录成功");
+                            //登录成功 应该实现跳转 到完善用户信息界面
+
+                            PreferenceUtils.getInstance().setUserID(bean.getPersonalInfoBean().getUserid());
+                            PreferenceUtils.getInstance().setIsLogin(true);//设置 已经登录标志位
+                            //写入 userId 查看个人信息要用
+                            finish();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "网络错误，请检查网络", Toast.LENGTH_LONG).show();
+                        }
+                    } catch (Exception e) {
+                        TXWLApplication.getInstance().showErrorConnected(e);
+                    }
+
+                }
+
+                @Override
+                public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                    Log.d(TAG, "联网失败");
+                }
+            });
+        }
     }
 }

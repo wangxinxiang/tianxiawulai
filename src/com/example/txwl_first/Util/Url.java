@@ -19,4 +19,13 @@ public class Url {
 
     public static String PERSONAL_URL = URL + "Default/UserGet";         //获取个人信息
 
+    public static String MobileValidateSend_URL = URL + "Default/MobileValidateSend";   //发送验证码
+
+    public static String UserRegist_URL = URL + "Default/UserRegist";         //用户注册
+
+    public static String UserLogin_URL = URL + "Default/UserLogin";         //用户登录
+
+    public static String PERSONAL_MODIFY_URL = URL + "Default/UserUpdate";          //修改个人信息
+
+
 }

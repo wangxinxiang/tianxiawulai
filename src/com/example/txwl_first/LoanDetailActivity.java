@@ -27,7 +27,6 @@ public class LoanDetailActivity extends LoanActivity{
     private void getDataFromInternet() {
         String registid = getIntent().getStringExtra("registid");
         String url = Url.QUERY_DETAIL_URL;
-
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("registid", registid);

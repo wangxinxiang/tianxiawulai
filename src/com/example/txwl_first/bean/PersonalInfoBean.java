@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class PersonalInfoBean {
     @SerializedName("userid")
-    private String userid;
+    private int userid;
     @SerializedName("username")
     private String username;
     @SerializedName("userpwd")
@@ -47,11 +47,11 @@ public class PersonalInfoBean {
     @SerializedName("companyname")
     private String companyname;
 
-    public String getUserid() {
+    public int getUserid() {
         return userid;
     }
 
-    public void setUserid(String userid) {
+    public void setUserid(int userid) {
         this.userid = userid;
     }
 
