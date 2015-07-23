@@ -98,7 +98,16 @@ public class QueryDetailResultBean {
     private String registdate;
     @SerializedName("status")
     private String status;
+    @SerializedName("realname")
+    private String realname;
 
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
+    }
 
     public String getRegistid() {
         return registid;

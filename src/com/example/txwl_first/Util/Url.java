@@ -32,4 +32,7 @@ public class Url {
     public static String GROUP_URL = URL + "Default/QueryTeamPerson";            //我的团队
 
     public static String ADD_GROUP_URL = URL + "Default/AddTeamPerson";         //添加团队成员
+
+    public static String GetMyInfo_URL = URL + "Default/GetMyInfo";             //我
+
 }

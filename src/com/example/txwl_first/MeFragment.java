@@ -23,7 +23,16 @@ import android.widget.*;
 import com.example.txwl_first.Adapter.MyFragmentPagerAdapter;
 import com.example.txwl_first.Util.PreferenceUtils;
 import com.example.txwl_first.Util.TXWLApplication;
+import com.example.txwl_first.Util.Url;
 import com.example.txwl_first.View.CustomScrollView;
+import com.example.txwl_first.bean.BlackListBean;
+import com.example.txwl_first.bean.GetMyInfoBean;
+import com.example.txwl_first.bean.GetMyInfoItemBean;
+import com.google.gson.GsonBuilder;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import org.apache.http.Header;
 
 import java.util.ArrayList;
 
@@ -65,9 +74,12 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
     private CustomScrollView mScrollView;
     private LinearLayout ll_indicate,ll_indicate_content;
 
+    private GetMyInfoBean bean;
+    private ArrayList<GetMyInfoItemBean> list;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG,"onCreateView");
+        Log.d(TAG, "onCreateView");
         rootview=(ViewGroup)inflater.inflate(R.layout.tab_me_fragment,container,false);
         resources = getResources();
         return rootview;
@@ -86,9 +98,60 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
         initViewPager();//初始化view 并在其中填充fragment
 
         new myAsyncTask().execute();//模拟耗时操作 完成后开始测量viewpager中子控件的高度
-        setHeadViewPager();//设置头部的各个值
+        if (PreferenceUtils.getIsLogin()){
+            //如果登录开始联网 获取个人信息数据
+            //只传id 获取所有数据
+            getHttpMyInfo(PreferenceUtils.getUserId(),"","");
+        }
 
 
+
+
+    }
+
+    private void getHttpMyInfo(int id,String key,String registtype) {
+        AsyncHttpClient client=new AsyncHttpClient();
+        client.setTimeout(10000);
+        //查询所有黑名单接口 目前没有参数上传
+        final RequestParams params = new RequestParams();
+        params.put("userid", id);//搜索内容
+        params.put("key", key);//搜索内容
+        params.put("registtype", registtype);//搜索内容
+
+        client.post(Url.GetMyInfo_URL, params, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.d(TAG, "开始联网");
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                Log.d(TAG, "联网成功");
+                Log.d(TAG + "  onSuccess-->", new String(responseBody));//打印网络访问结果
+
+                try {
+                    bean = new GsonBuilder().create().fromJson(new String(responseBody), GetMyInfoBean.class);
+                    if ((bean != null) && ("success".equals(bean.getStatus()))) {
+                        //网络请求成功
+                        setHeadViewPager(bean.getTotalcount(),bean.getTotalmoney(),bean.getBrokencount(),bean.getBrokenmoney(),
+                                bean.getRecallcount(),bean.getRecallmoney(),bean.getUnrecallcount(),bean.getUnrecallmoney());//设置头部的各个值
+
+                    } else {
+                        Toast.makeText(getActivity(), "网络错误，请检查网络", Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+                    TXWLApplication.getInstance().showErrorConnected(e);
+                }
+
+            }
+
+            @Override
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                Log.d(TAG, "联网失败");
+            }
+        });
     }
 
     private void initScroll() {
@@ -125,6 +188,7 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
                 }else {
                     TXWLApplication.getInstance().showTextToast("请登录后查看");
 //                    PreferenceUtils.getInstance().setIsLogin(true);
+                    //应该是startforsult启动 当登录成功返回 再开启联网获取数据
                     Intent intent=new Intent(getActivity(),LoginActivity.class);
                     startActivity(intent);
 
@@ -239,13 +303,14 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
         Log.d(TAG, "onDestroy");
     }
 
-    private void setHeadViewPager() {
+    private void setHeadViewPager(String totalcount,String totalmoney,String brokencount,String brokenmoney,
+                                  String recallcount,String recallmoney,String unrecallcount,String unrecallmoney) {
         //设置 从网络访问得到的字段
         tv_user_name.setText("用户名");
-        tv_total.setText(setRichText(tv_total, "0", "0"));
-        tv_violate.setText(setRichText(tv_violate, "0", "0"));
-        tv_reclaimed.setText(setRichText(tv_reclaimed, "0", "0"));
-        tv_reclaiming.setText(setRichText(tv_reclaiming, "0", "0"));
+        tv_total.setText(setRichText(tv_total, totalcount, totalmoney));
+        tv_violate.setText(setRichText(tv_violate, brokencount, brokenmoney));
+        tv_reclaimed.setText(setRichText(tv_reclaimed, recallcount, recallmoney));
+        tv_reclaiming.setText(setRichText(tv_reclaiming, unrecallcount, unrecallmoney));
 
     }
 

@@ -68,4 +68,18 @@ public class DataVeri {
             return false;
         }
     }
+
+    public static String getLoan_type(String i) {
+        switch (i) {
+            case "1":
+                return "车贷";
+            case "2":
+                return "房贷";
+            case "3":
+                return "信用贷";
+            default:
+                return "其他";
+        }
+    }
+
 }

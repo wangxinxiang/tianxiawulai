@@ -39,15 +39,15 @@ public class ViewPagerFragment extends Fragment{
         for (int i = 0; i < 30; i++) {
             list.add(mArgument);
         }
-        lv.setAdapter(new Me_ListViewAdapter(getActivity(), list));
-        //在绑定adapter后调用手动测量工具 设计listview高度
-        Utility_ForListView.setListViewHeightBasedOnChildren(lv);
-
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getActivity(), "点击了item模块", Toast.LENGTH_LONG).show();
-            }
-        });
+//        lv.setAdapter(new Me_ListViewAdapter(getActivity(), list));
+//        //在绑定adapter后调用手动测量工具 设计listview高度
+//        Utility_ForListView.setListViewHeightBasedOnChildren(lv);
+//
+//        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Toast.makeText(getActivity(), "点击了item模块", Toast.LENGTH_LONG).show();
+//            }
+//        });
     }
 }
