@@ -14,6 +14,8 @@ public class Url {
     public static String  QUERY_DETAIL_URL = URL + "Default/GetUserDetail";      //查询详细信息
 
     public static String  QueryAllBlackPerson_URL = URL + "Default/QueryAllBlackPerson";      //获取所有黑名单接口
+    public static String  QueryBlackPersonFromWay_URL = URL + "Default/QueryBlackPersonFromWay";
+     //根据手机号或者姓名或者身份证搜索黑名单信息
 
     public static String REGISTER_URL = URL + "Default/Regist";         //登记
 

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -53,9 +55,10 @@ public class PhotoActivity extends Activity{
         takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                Intent intent2 = new Intent("android.media.action.IMAGE_CAPTURE");
                 intent2.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(),
                         "img.jpg")));
+                intent2.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0);
                 startActivityForResult(intent2, 2);//采用ForResult打开
             }
         });
@@ -94,7 +97,7 @@ public class PhotoActivity extends Activity{
                 break;
             case 2:
                 if (resultCode == RESULT_OK) {
-                    Bitmap photo = data.getParcelableExtra("data");
+                    Bitmap photo = BitmapFactory.decodeFile(new File(Environment.getExternalStorageDirectory(), "img.jpg").getAbsolutePath());
                     String imgKey = TimeUtil.getFileKeyByNowDate();
                     setPicToView(photo, imgKey);
                     upLoadImg(imgKey);
