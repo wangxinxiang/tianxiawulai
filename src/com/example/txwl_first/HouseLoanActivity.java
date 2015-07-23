@@ -41,7 +41,7 @@ public class HouseLoanActivity extends LoanActivity {
     @Override
     protected int putParams(RequestParams params) {
         params.put("personid", check_data_str[5]);
-        params.put("address", check_data_str[6]);
+        params.put("province", check_data_str[6]);
         params.put("address", check_data_str[7]);
         params.put("appearanceimg", image_url[0]);
         params.put("goodsidimg", image_url[1]);

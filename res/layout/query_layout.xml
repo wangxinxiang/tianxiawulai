@@ -12,6 +12,7 @@
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/et_input"
               android:layout_above="@+id/btn_pay_money"
               android:background="@drawable/input_box_orange"
+              android:textColor="@color/black"
               android:hint="@string/input_et_query"
               android:textColorHint="@color/gray_text_search"
               android:textSize="@dimen/textsize_22" android:layout_margin="@dimen/space_14" android:ellipsize="end"

@@ -17,6 +17,7 @@
         <EditText android:layout_width="match_parent"
                   android:id="@+id/et_username"
                   android:background="@null"
+                  android:textColor="@color/black"
                   android:layout_height="wrap_content" android:padding="@dimen/space_14" android:singleLine="true"
                   android:ellipsize="end"/>
     </LinearLayout>
@@ -51,6 +52,7 @@
         <EditText android:layout_width="match_parent"
                   android:id="@+id/et_password"
                   android:background="@null"
+                  android:textColor="@color/black"
                   android:layout_height="wrap_content" android:padding="@dimen/space_14" android:singleLine="true"
                   android:ellipsize="end"/>
     </LinearLayout>

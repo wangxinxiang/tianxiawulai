@@ -34,7 +34,8 @@ public class AddOldBeaterActivity extends LoanActivity{
 
     @Override
     protected int putParams(RequestParams params) {
-        params.put("carid", check_data_str[5]);
+        params.put("province", check_data_str[5]);
+        params.put("address", check_data_str[6]);
         params.put("appearanceimg", image_url[0]);
         params.put("goodsidimg", image_url[1]);
         params.put("owneridimg", image_url[2]);
@@ -48,6 +49,6 @@ public class AddOldBeaterActivity extends LoanActivity{
         params.put("contractdesc", image_remark[4]);
         params.put("registtype", 5);
 
-        return 6;
+        return 7;
     }
 }
