@@ -46,6 +46,11 @@ public class MenuFragment extends Fragment {
     private ArrayList<BlackListItemBean> byAllList;
     private ArrayList<BlackListItemBean> byWayList;
 
+    private final static  String QUERY_LISTVIEW_CAR_ITEM="query_listview_car_item";
+    private final static  String QUERY_LISTVIEW_HOUSE_ITEM="query_listview_house_item";
+    private final static  String QUERY_LISTVIEW_CREDIT_ITEM="query_listview_credit_item";
+    private final static  String QUERY_LISTVIEW_OTHER_ITEM="query_listview_other_item";
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -192,6 +197,8 @@ public class MenuFragment extends Fragment {
         //查询所有黑名单接口 目前没有参数上传
         final RequestParams params = new RequestParams();
 //        params.put("opcode", "");//应该有一个一次网络请求 的数量
+        params.put("pageindex", 0);
+        params.put("pagesize", 20);
 
         client.post(Url.QueryAllBlackPerson_URL, params, new AsyncHttpResponseHandler() {
 
@@ -248,6 +255,27 @@ public class MenuFragment extends Fragment {
         adapter=new BlackListAdapter(getActivity(),list,resources);
         lv.setAdapter(adapter);
 
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), LoanDetailActivity.class);
+                if("1".equals(list.get(position).getRegisttype())){
+                    intent.putExtra("fromButton", QUERY_LISTVIEW_CAR_ITEM);
+                }
+                if ("2".equals(list.get(position).getRegisttype())){
+                    intent.putExtra("fromButton",QUERY_LISTVIEW_HOUSE_ITEM);
+                }
+                if ("3".equals(list.get(position).getRegisttype())){
+                    intent.putExtra("fromButton",QUERY_LISTVIEW_CREDIT_ITEM);
+                }
+                if ("4".equals(list.get(position).getRegisttype())){
+                    intent.putExtra("fromButton",QUERY_LISTVIEW_OTHER_ITEM);
+                }
+                intent.putExtra("registid", list.get(position).getRegistid());
+                intent.putExtra("headImage", list.get(position).getOwneridimg());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

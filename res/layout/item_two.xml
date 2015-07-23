@@ -7,9 +7,9 @@
 
     <ImageButton android:layout_width="60dp"
                  android:layout_height="60dp"
+                 android:layout_margin="@dimen/space_10"
                  android:id="@+id/btn_photo" android:background="@color/transparent"
-                 android:src="@drawable/btn_house_surface_selector" android:paddingLeft="@dimen/space_10"
-                 android:paddingTop="@dimen/space_10" android:paddingRight="@dimen/space_10"/>
+                 android:src="@drawable/btn_house_surface_selector" />
 
     <EditText android:layout_width="match_parent"
               android:layout_height="wrap_content"

@@ -75,7 +75,7 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
     private LinearLayout ll_indicate,ll_indicate_content;
 
     private GetMyInfoBean bean;
-    private ArrayList<GetMyInfoItemBean> list;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -97,13 +97,13 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
         initTextView();//初始化indicate的textview 并绑定点击事件
         initViewPager();//初始化view 并在其中填充fragment
 
-        new myAsyncTask().execute();//模拟耗时操作 完成后开始测量viewpager中子控件的高度
+
         if (PreferenceUtils.getIsLogin()){
             //如果登录开始联网 获取个人信息数据
             //只传id 获取所有数据
             getHttpMyInfo(PreferenceUtils.getUserId(),"","");
         }
-
+        new myAsyncTask().execute();//模拟耗时操作 完成后开始测量viewpager中子控件的高度
 
 
 
@@ -137,7 +137,6 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
                         //网络请求成功
                         setHeadViewPager(bean.getTotalcount(),bean.getTotalmoney(),bean.getBrokencount(),bean.getBrokenmoney(),
                                 bean.getRecallcount(),bean.getRecallmoney(),bean.getUnrecallcount(),bean.getUnrecallmoney());//设置头部的各个值
-
                     } else {
                         Toast.makeText(getActivity(), "网络错误，请检查网络", Toast.LENGTH_LONG).show();
                     }
@@ -411,23 +410,23 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
         fragment_other = new ViewPagerFragment();
 
         Bundle bundle_all = new Bundle();
-        bundle_all.putString("key", "all");
+        bundle_all.putString("key", "");
         fragment_all.setArguments(bundle_all);
 
         Bundle bundle_car = new Bundle();
-        bundle_car.putString("key", "car");
+        bundle_car.putString("key", "1");
         fragment_car.setArguments(bundle_car);
 
         Bundle bundle_house = new Bundle();
-        bundle_house.putString("key", "house");
+        bundle_house.putString("key", "2");
         fragment_house.setArguments(bundle_house);
 
         Bundle bundle_loan = new Bundle();
-        bundle_loan.putString("key", "loan");
+        bundle_loan.putString("key", "3");
         fragment_loan.setArguments(bundle_loan);
 
         Bundle bundle_other = new Bundle();
-        bundle_other.putString("key", "other");
+        bundle_other.putString("key", "4");
         fragment_other.setArguments(bundle_other);
 
         fragmentsList.add(fragment_all);
@@ -610,7 +609,7 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                Thread.sleep(10);
+                Thread.sleep(1500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

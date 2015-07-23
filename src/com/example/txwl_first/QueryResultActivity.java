@@ -76,8 +76,6 @@ public class QueryResultActivity extends Activity {
                 }
                 intent.putExtra("registid", loanBeans.get(position).getRegistid());
                 intent.putExtra("headImage", loanBeans.get(position).getOwneridimg());
-                intent.putExtra("realname", loanBeans.get(position).getRealname());
-                intent.putExtra("data", loanBeans.get(position).getDate());
                  startActivity(intent);
             }
         });

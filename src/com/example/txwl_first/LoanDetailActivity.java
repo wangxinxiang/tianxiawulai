@@ -22,7 +22,7 @@ import org.apache.http.Header;
  */
 public class LoanDetailActivity extends LoanActivity{
 
-
+private GetQueryDetailResultBean getQueryDetailResultBean;
 
     private void getDataFromInternet() {
         String registid = getIntent().getStringExtra("registid");
@@ -35,7 +35,7 @@ public class LoanDetailActivity extends LoanActivity{
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
                 Log.d("QueryDetailActivity -->" , new String(bytes));
                 try {
-                    GetQueryDetailResultBean getQueryDetailResultBean = new GsonBuilder().create().fromJson(new String(bytes), GetQueryDetailResultBean.class);
+                    getQueryDetailResultBean = new GsonBuilder().create().fromJson(new String(bytes), GetQueryDetailResultBean.class);
                     QueryDetailResultBean queryDetailResultBean = getQueryDetailResultBean.getQueryDetailResultBean();
                     getInfo(queryDetailResultBean);
                     addView(queryDetailResultBean);
@@ -130,7 +130,7 @@ public class LoanDetailActivity extends LoanActivity{
         tv_money_count.setText(queryDetailResultBean.getAccount());
         tv_manager.setText("经办人" + queryDetailResultBean.getRealname());
         tv_year.setText("利率:" +queryDetailResultBean.getAnnualrate() + "%");
-        over_day.setText(getIntent().getStringExtra("data"));
+        over_day.setText(getQueryDetailResultBean.getData());
     }
 
     private String getLoan_type(String i) {
