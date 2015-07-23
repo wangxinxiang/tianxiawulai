@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:background="@color/white"
+              android:layout_width="match_parent"
+              android:padding="@dimen/space_10"
+              android:gravity="center_vertical"
+              android:layout_height="wrap_content">
+
+    <com.example.txwl_first.View.RoundImageView android:layout_width="@dimen/space_60"
+                                                android:layout_height="@dimen/space_60"
+            android:src="@drawable/defaul_head_image"
+            android:id="@+id/group_item_headimage"/>
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_10"
+            android:id="@+id/group_item_name"
+            android:textSize="@dimen/textsize_16"
+            android:textColor="@color/black"
+            android:text="傅旭东"/>
+</LinearLayout>

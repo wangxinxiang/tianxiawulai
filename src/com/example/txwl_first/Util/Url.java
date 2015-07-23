@@ -29,5 +29,7 @@ public class Url {
 
     public static String PERSONAL_MODIFY_URL = URL + "Default/UserUpdate";          //修改个人信息
 
+    public static String GROUP_URL = URL + "Default/QueryTeamPerson";            //我的团队
 
+    public static String ADD_GROUP_URL = URL + "Default/AddTeamPerson";         //添加团队成员
 }

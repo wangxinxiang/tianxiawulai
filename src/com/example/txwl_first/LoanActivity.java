@@ -12,10 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
-import com.example.txwl_first.Util.Constant;
-import com.example.txwl_first.Util.DataVeri;
-import com.example.txwl_first.Util.TXWLApplication;
-import com.example.txwl_first.Util.Url;
+import com.example.txwl_first.Util.*;
 import com.example.txwl_first.bean.QueryDetailResultBean;
 import com.example.txwl_first.business.LoaderBusiness;
 import com.loopj.android.http.AsyncHttpClient;
@@ -307,15 +304,16 @@ public class LoanActivity extends Activity implements AddItem {
         params.put("repaydate", check_data_str[i + 2]);
         params.put("annualrate", check_data_str[i + 3]);
         params.put("description", check_data_str[i + 4]);
-        params.put("userid", 1);
+        params.put("userid", PreferenceUtils.getUserId());
 
         Log.d("registToInternet_params---------->", params.toString());
-        client.put(url, params, new AsyncHttpResponseHandler() {
+        client.post(url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
                 Log.d("LoanActivity ----->", new String(bytes));
-                if ("登记成功".equals(new String(bytes))) {
+                if (new String(bytes).contains("success")) {
                    TXWLApplication.getInstance().showTextToast("登记成功");
+                    finish();
                 }else {
                     TXWLApplication.getInstance().showTextToast("登记失败");
                 }

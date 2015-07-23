@@ -21,9 +21,9 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
 
-    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher"
+    <application android:label="@string/app_name" android:icon="@drawable/app_icon"
             android:name=".Util.TXWLApplication">
-        <activity android:name=".MainActivity"
+        <activity android:name=".WelcomeActivity"
                   android:label="@string/app_name" android:screenOrientation="portrait"
                   android:theme="@android:style/Theme.NoTitleBar.OverlayActionModes"
                   android:windowSoftInputMode="adjustPan">
@@ -47,5 +47,6 @@
 
         <activity android:name=".PhotoActivity" android:theme="@style/Theme.Translucent"/>
         <activity android:name=".AddOldBeaterActivity" android:theme="@android:style/Theme.Holo.NoActionBar"/>
+        <activity android:name=".MainActivity" android:theme="@android:style/Theme.Holo.NoActionBar"/>
     </application>
 </manifest>

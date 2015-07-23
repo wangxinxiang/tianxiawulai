@@ -36,7 +36,7 @@ public class DataVeri {
             TXWLApplication.getInstance().showTextToast("手机号不能为空");
             return false;
         }else {
-            if(array.matches("^((13[0-9])|(17[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$")){
+            if(array.matches("^((13[0-9])|(17[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$")){
                 return true;
             }else{
                 TXWLApplication.getInstance().showTextToast("手机号格式错误");
@@ -57,6 +57,15 @@ public class DataVeri {
                 TXWLApplication.getInstance().showTextToast("身份证号码格式错误");
                 return false;
             }
+        }
+    }
+
+    public static Boolean stringIsNull(String str, String name) {
+        if ("".equals(str)) {
+            TXWLApplication.getInstance().showTextToast(name + "不能为空");
+            return true;
+        } else {
+            return false;
         }
     }
 }

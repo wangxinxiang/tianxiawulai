@@ -33,7 +33,7 @@
               android:layout_height="wrap_content" android:textSize="@dimen/textsize_18"
               android:padding="@dimen/space_10" android:layout_centerVertical="true"
               android:textColor="@color/black" android:layout_alignParentRight="true" android:visibility="gone"
-              android:text="right" android:layout_gravity="center_vertical"/>
+              android:layout_gravity="center_vertical"/>
         <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
                      android:background="@color/transparent" android:src="@drawable/btn_entry_gray"
                      android:layout_gravity="center_vertical" android:paddingTop="@dimen/space_10"
