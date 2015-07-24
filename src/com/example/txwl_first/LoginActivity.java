@@ -6,10 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
-import com.example.txwl_first.Util.DataVeri;
-import com.example.txwl_first.Util.PreferenceUtils;
-import com.example.txwl_first.Util.TXWLApplication;
-import com.example.txwl_first.Util.Url;
+import com.example.txwl_first.Util.*;
 import com.example.txwl_first.bean.GetPersonalInfoBean;
 import com.example.txwl_first.bean.MobileInfoBean;
 import com.google.gson.GsonBuilder;
@@ -83,7 +80,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         String userpwd=null;
 
         mobile=et_regist_mobile.getText().toString().trim();
-        userpwd=et_password.getText().toString().trim();
+        userpwd= MD5.getMD5(et_password.getText().toString().trim());
         if(DataVeri.isMobileNum(mobile)&&!("".equals(userpwd))){
             AsyncHttpClient client=new AsyncHttpClient();
             client.setTimeout(10000);

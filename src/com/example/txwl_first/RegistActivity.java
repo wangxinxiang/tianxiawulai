@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import com.example.txwl_first.Util.DataVeri;
+import com.example.txwl_first.Util.MD5;
 import com.example.txwl_first.Util.TXWLApplication;
 import com.example.txwl_first.Util.Url;
 import com.example.txwl_first.bean.BlackListBean;
@@ -136,7 +137,7 @@ public class RegistActivity extends Activity implements View.OnClickListener{
 
         mobile=et_regist_mobile.getText().toString().trim();
         validatenum=et_check_code_number.getText().toString().trim();
-        userpwd=et_password.getText().toString().trim();
+        userpwd= MD5.getMD5(et_password.getText().toString().trim());
         if(DataVeri.isMobileNum(mobile)&&DataVeri.isNaN(validatenum)&&!("".equals(userpwd))){
             AsyncHttpClient client=new AsyncHttpClient();
             client.setTimeout(10000);
