@@ -59,6 +59,7 @@ public class QueryResultNewAdapter extends BaseAdapter {
         holderView.tv_own_user_phone.setText(loanBeanlist.getMobile());
 
         holderView.tv_debt_type.setText(loanBeanlist.getDate());
+        holderView.tv_debt_money.setText("欠" + loanBeanlist.getRegistcompany() + loanBeanlist.getAccount() + "元");
         switch (loanBeanlist.getStatus2()) {
             case "1":
 
@@ -70,10 +71,10 @@ public class QueryResultNewAdapter extends BaseAdapter {
                 holderView.tv_debt_type.setTextColor(mContext.getResources().getColor(R.color.black));
                 holderView.tv_query_reward_num.setText(loanBeanlist.getRegistcompany() + loanBeanlist.getContactname() + "悬赏" + loanBeanlist.getRewardmoney() + "元催收");
                 holderView.tv_reward_phone.setText(loanBeanlist.getContactname() + "电话：" + loanBeanlist.getContactmobile());
+                holderView.tv_debt_money.setText("恶意拖欠" + loanBeanlist.getRegistcompany() + loanBeanlist.getAccount() + "元");
                 break;
         }
 
-        holderView.tv_debt_money.setText(loanBeanlist.getDescription());
         holderView.tv_own_user_place.setText(loanBeanlist.getProvince());
 
         return convertView;

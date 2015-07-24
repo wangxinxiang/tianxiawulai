@@ -8,9 +8,10 @@
               android:gravity="center"
               android:background="@color/white">
 
-    <ImageView android:layout_width="60dp"
-               android:layout_height="60dp"
+    <ImageView android:layout_width="70dp"
+               android:layout_height="70dp"
                android:id="@+id/img_user_head"
+               android:scaleType="center"
                android:src="@drawable/btn_house_surface_selector"/>
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -25,10 +26,12 @@
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:id="@+id/tv_query_phone_num"
                       android:textColor="@color/gray_text"
+                      android:paddingLeft="@dimen/space_5"
                       android:text="15267309178"
                     android:layout_weight="1"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:id="@+id/tv_query_place"
+                      android:textColor="@color/gray_text"
                       android:text="浙江金华"/>
         </LinearLayout>
 
@@ -37,19 +40,22 @@
                 android:orientation="vertical">
             <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
                       android:id="@+id/tv_query_money_count"
+                      android:textColor="@color/gray_text"
                       android:text="欠xxx多少钱"/>
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:id="@+id/tv_query_reward_num"
-                    android:text="悬赏500元"/>
+                    android:textColor="@color/gray_text"/>
         </LinearLayout>
 
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
             <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:id="@+id/tv_reward_phone"
+                    android:textColor="@color/gray_text"
                     android:layout_weight="1"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:id="@+id/tv_query_over_day"
+                      android:textColor="@color/gray_text"
                     android:text="剩余5天"/>
         </LinearLayout>
 

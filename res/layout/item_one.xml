@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-              android:layout_width="match_parent"
+              android:layout_width="wrap_content"
               android:layout_height="@dimen/space_60" android:background="@color/white" android:id="@+id/item_one"
                 android:visibility="visible">
 
-    <TextView android:layout_width="match_parent" android:layout_height="1dp" android:id="@+id/tv_line"
-              android:layout_alignParentBottom="false" android:background="@color/gray_bg"
-              />
+    <!--<TextView android:layout_width="match_parent" android:layout_height="1dp" android:id="@+id/tv_line"-->
+              <!--android:layout_alignParentBottom="false" android:background="@color/white_line"-->
+              <!--/>-->
 
     <TextView android:layout_width="wrap_content"
               android:id="@+id/left"
@@ -31,8 +31,9 @@
     <TextView android:layout_width="wrap_content"
               android:id="@+id/right"
               android:layout_height="wrap_content" android:textSize="@dimen/textsize_18"
-              android:padding="@dimen/space_10" android:layout_centerVertical="true"
-              android:textColor="@color/black" android:layout_alignParentRight="true" android:visibility="gone"
+              android:padding="@dimen/space_10"
+              android:layout_marginLeft="@dimen/space_100"
+              android:textColor="@color/midblack"  android:visibility="gone"
               android:layout_gravity="center_vertical"/>
         <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
                      android:background="@color/transparent" android:src="@drawable/btn_entry_gray"
@@ -59,9 +60,9 @@
                      android:layout_marginRight="@dimen/space_7" android:checked="false"/>
         </RadioGroup>
 
-    <!--<TextView android:layout_width="match_parent" android:layout_height="1dp" android:id="@+id/tv_line"-->
-              <!--android:layout_alignParentBottom="false" android:background="@color/gray_bg"-->
-              <!--android:layout_below="@+id/left"/>-->
+    <TextView android:layout_width="match_parent" android:layout_height="1dp" android:id="@+id/tv_line"
+              android:layout_alignParentBottom="false" android:background="@color/black"
+              android:layout_below="@+id/left"/>
 
 
 </RelativeLayout>

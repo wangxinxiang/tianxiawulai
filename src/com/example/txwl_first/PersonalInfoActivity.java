@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import com.example.txwl_first.Util.Constant;
+import com.example.txwl_first.Util.PreferenceUtils;
 import com.example.txwl_first.Util.TXWLApplication;
 import com.example.txwl_first.Util.Url;
 import com.example.txwl_first.bean.GetPersonalInfoBean;
@@ -108,7 +109,7 @@ public class PersonalInfoActivity extends Activity {
         String url = Url.PERSONAL_URL;
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
-        params.put("userid", 1);
+        params.put("userid", PreferenceUtils.getUserId());
         client.post(url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
@@ -144,7 +145,7 @@ public class PersonalInfoActivity extends Activity {
         String url = Url.PERSONAL_MODIFY_URL;
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
-        params.put("userid", 1);
+        params.put("userid", PreferenceUtils.getUserId());
         params.put("address", detail_address.getText());
         params.put("province", detail_city.getText());
         params.put("companyname", detail_company.getText());
