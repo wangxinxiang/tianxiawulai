@@ -60,12 +60,15 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
+        Intent intent;
         switch (view.getId()){
             case R.id.ibtn_title_back:
+                intent=new Intent();
+                setResult(RESULT_CANCELED, intent);
                 finish();//点击返回 退出当前activity
                 break;
             case R.id.btn_regist:
-                Intent intent=new Intent(LoginActivity.this,RegistActivity.class);
+                intent=new Intent(LoginActivity.this,RegistActivity.class);
                 startActivity(intent);
                 break;
             case R.id.btn_login_regist:
@@ -80,7 +83,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         String userpwd=null;
 
         mobile=et_regist_mobile.getText().toString().trim();
-        userpwd= MD5.getMD5(et_password.getText().toString().trim());
+        userpwd= MD5.getMD5Lower(et_password.getText().toString().trim());
         if(DataVeri.isMobileNum(mobile)&&!("".equals(userpwd))){
             AsyncHttpClient client=new AsyncHttpClient();
             client.setTimeout(10000);
@@ -108,13 +111,14 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                             //网络请求成功
                             TXWLApplication.getInstance().showTextToast("登录成功");
                             //登录成功 应该实现跳转 到完善用户信息界面
-
                             PreferenceUtils.getInstance().setUserID(bean.getPersonalInfoBean().getUserid());
                             PreferenceUtils.getInstance().setIsLogin(true);//设置 已经登录标志位
                             //写入 userId 查看个人信息要用
+                            Intent intent=new Intent();
+                            setResult(RESULT_OK, intent);
                             finish();
                         } else {
-                            Toast.makeText(LoginActivity.this, "网络错误，请检查网络", Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_LONG).show();
                         }
                     } catch (Exception e) {
                         TXWLApplication.getInstance().showErrorConnected(e);

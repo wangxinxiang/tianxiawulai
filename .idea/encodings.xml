@@ -9,9 +9,9 @@
     <file url="file://$PROJECT_DIR$/res/drawable/tab_me_selector.xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/res/drawable/tab_menu_selector.xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/res/drawable/tab_search_selector.xml" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/res/layout/blacklist_layout.xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/res/layout/join_blacklist_layout.xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/res/layout/report_layout.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/res/layout/tab_menu_fragment.xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/res/values/color.xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/res/values/dimens.xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/res/values/strings.xml" charset="UTF-8" />

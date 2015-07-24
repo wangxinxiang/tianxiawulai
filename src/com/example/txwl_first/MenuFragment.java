@@ -16,6 +16,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import com.example.txwl_first.Adapter.BlackListAdapter;
+import com.example.txwl_first.Util.PreferenceUtils;
 import com.example.txwl_first.Util.TXWLApplication;
 import com.example.txwl_first.Util.Url;
 import com.example.txwl_first.bean.BlackListBean;
@@ -55,7 +56,7 @@ public class MenuFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView");
-        view=inflater.inflate(R.layout.blacklist_layout,null);
+        view=inflater.inflate(R.layout.tab_menu_fragment,null);
         resources = getResources();
         return view;
     }
@@ -134,7 +135,13 @@ public class MenuFragment extends Fragment {
         tv_add_deadbeater.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AddOldBeaterActivity.class);
+                Intent intent;
+                if(PreferenceUtils.getIsLogin()){
+                    intent = new Intent(getActivity(), AddOldBeaterActivity.class);
+                }else {
+                    TXWLApplication.getInstance().showTextToast("登录用户才能添加老赖");
+                    intent =new Intent(getActivity(),LoginActivity.class);
+                }
                 startActivity(intent);
             }
         });

@@ -1,5 +1,6 @@
 package com.example.txwl_first;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -8,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import com.example.txwl_first.Util.TXWLApplication;
 
 
 /*
@@ -37,28 +39,26 @@ public class MainActivity extends FragmentActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume");
-    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode){
+            case RESULT_OK:
+                if (meFragment!=null){
+                    Log.d(TAG + "onActivityResult", "onSuccess login");
+                    FragmentTransaction ft=fragmentManager.beginTransaction();
+                    ft.remove(meFragment);
+                    meFragment=null;
+                    ft.commit();
+                    setSelect(3);
+                }
+//                TXWLApplication.getInstance().showTextToast("登录成功");
+                break;
+            case RESULT_CANCELED:
+                Log.d(TAG+"onActivityResult","canceled login");
+                break;
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause");
-    }
+        }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop");
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy");
     }
 
     private void setSelect(int position) {
@@ -99,8 +99,10 @@ public class MainActivity extends FragmentActivity {
                 if (meFragment==null){
                     meFragment=new MeFragment();
                     transaction.add(R.id.content,meFragment);
+                    Log.d("meFragment","add");
                 }else{
                     transaction.show(meFragment);
+                    Log.d("meFragment", "show");
                 }
                 break;
 
@@ -157,4 +159,29 @@ public class MainActivity extends FragmentActivity {
         ((RadioButton)radioGroup.findViewById(R.id.rbtn_search)).setChecked(true);//设置默认选中search按钮
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop");
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy");
+    }
 }
