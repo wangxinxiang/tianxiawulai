@@ -76,6 +76,7 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
     private LinearLayout ll_indicate,ll_indicate_content;
 
     private GetMyInfoBean bean;
+    public static final int REQUSET = 1; //请求码
 
 
     @Override
@@ -104,7 +105,8 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
             //只传id 获取所有数据
             getHttpMyInfo(PreferenceUtils.getUserId(),"","");
         }
-        new myAsyncTask().execute();//模拟耗时操作 完成后开始测量viewpager中子控件的高度
+        mScrollView.scrollTo(0, 0);
+//        new myAsyncTask().execute();//模拟耗时操作 完成后开始测量viewpager中子控件的高度
 
 
 
@@ -143,9 +145,11 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
                         for (ViewPagerFragment fragment : fragmentsList) {
                             fragment.initListView(bean);
                         }
+                        resetViewPagerHeight(0);
 
                     } else {
-                        Toast.makeText(getActivity(), "网络错误，请检查网络", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getActivity(), "网络错误，请检查网络", Toast.LENGTH_LONG).show();
+                        TXWLApplication.getInstance().showTextToast(bean.getMsg());
                     }
                 } catch (Exception e) {
                     TXWLApplication.getInstance().showErrorConnected(e);
@@ -190,13 +194,13 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
             public void onClick(View view) {
                 if (PreferenceUtils.getIsLogin()){
                     Intent intent = new Intent(getActivity(),PersonalInfoActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent,REQUSET);
                 }else {
                     TXWLApplication.getInstance().showTextToast("请登录后查看");
 //                    PreferenceUtils.getInstance().setIsLogin(true);
                     //应该是startforsult启动 当登录成功返回 再开启联网获取数据
                     Intent intent=new Intent(getActivity(),LoginActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent,REQUSET);
 
                 }
             }
@@ -245,21 +249,20 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
         et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if(actionId== EditorInfo.IME_ACTION_SEARCH){
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     //隐藏软键盘
-                    if(textView.length()==0||textView.equals("")){
-                        Toast.makeText(getActivity(),getActivity().toString()+"输入框为空",Toast.LENGTH_LONG).show();
+                    if (textView.length() == 0 || textView.equals("")) {
+                        Toast.makeText(getActivity(), getActivity().toString() + "输入框为空", Toast.LENGTH_LONG).show();
                         return true;
-                    }
-                    else {
-                        ((InputMethodManager)et_search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
+                    } else {
+                        ((InputMethodManager) et_search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
                                 .hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
                                         InputMethodManager.HIDE_NOT_ALWAYS);
                         //实现跳转
 //                    Intent intent=new Intent();
 //                    intent.setClass(getActivity(),)
 //                    startActivity(intent);
-                        Toast.makeText(getActivity(),getActivity().toString()+"点击了软键盘的搜索",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), getActivity().toString() + "点击了软键盘的搜索", Toast.LENGTH_LONG).show();
                         return true;
                     }
 
@@ -271,47 +274,17 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
         tv_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),MyGroupActivity.class);
+                Intent intent = new Intent(getActivity(), MyGroupActivity.class);
                 startActivity(intent);
             }
         });
 
     }
 
-    @Override
-      public void onStart() {
-        super.onStart();
-        Log.d(TAG,"onStart");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume");
-
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d(TAG, "oPause");
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.d(TAG, "onDestroyView");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy");
-    }
-
     private void setHeadViewPager(String totalcount,String totalmoney,String brokencount,String brokenmoney,
                                   String recallcount,String recallmoney,String unrecallcount,String unrecallmoney) {
         //设置 从网络访问得到的字段
+
         tv_user_name.setText("用户名");
         tv_total.setText(setRichText(tv_total, totalcount, totalmoney));
         tv_violate.setText(setRichText(tv_violate, brokencount, brokenmoney));
@@ -417,7 +390,7 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
         fragment_other = new ViewPagerFragment();
 
         Bundle bundle_all = new Bundle();
-        bundle_all.putString("key", "");
+        bundle_all.putString("key", "0");
         fragment_all.setArguments(bundle_all);
 
         Bundle bundle_car = new Bundle();
@@ -590,6 +563,7 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
 
         @Override
         public void onPageScrollStateChanged(int arg0) {
+
         }
     }
 
@@ -630,6 +604,36 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG,"onStart");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume");
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "oPause");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d(TAG, "onDestroyView");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy");
+    }
 
 
 }

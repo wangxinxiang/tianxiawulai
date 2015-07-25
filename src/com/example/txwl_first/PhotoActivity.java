@@ -119,24 +119,45 @@ public class PhotoActivity extends Activity{
         FileOutputStream b = null;
         File file = new File(path);
         file.mkdirs();// 创建文件夹
-        String fileName =path +imgKey + "img.jpg";//图片名字
-        try {
-            b = new FileOutputStream(fileName);
-            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文件
+        String fileName = path + imgKey + "img.jpg";//图片名字
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                //关闭流
-                b.flush();
-                b.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        int options = 80;//个人喜欢从80开始,
+        mBitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);
+        while (baos.toByteArray().length / 1024 > 100) {
+            baos.reset();
+            options -= 10;
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);
         }
+        try {
+            FileOutputStream fos = new FileOutputStream(fileName);
+            fos.write(baos.toByteArray());
+            fos.flush();
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+//        try {
+//            b = new FileOutputStream(fileName);
+//            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文件
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                //关闭流
+//                b.flush();
+//                b.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
     }
+
 
 
     //上传头像

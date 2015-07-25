@@ -17,6 +17,7 @@
                           android:layout_weight="1"
                           android:text="@string/headImage"/>
                 <ImageView android:layout_width="@dimen/space_60" android:layout_height="@dimen/space_60"
+                           android:scaleType="center"
                            android:id="@+id/detail_head"/>
             </LinearLayout>
 

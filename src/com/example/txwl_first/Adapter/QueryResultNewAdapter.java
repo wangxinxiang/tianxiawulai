@@ -109,15 +109,15 @@ public class QueryResultNewAdapter extends BaseAdapter {
 
         SpannableStringBuilder builder=new SpannableStringBuilder();
 
-        if ("".equals(one)||one.length()==0||one==null){
+        if (one==null ||"".equals(one)||one.length()==0){
             one=" ";
         }
 
-        if ("".equals(two)||two.length()==0||two==null){
+        if (two==null || "".equals(two)||two.length()==0){
             two=" ";
         }
 
-        if ("".equals(three)||three.length()==0||three==null){
+        if (three==null || "".equals(three)||three.length()==0){
             three=" ";
         }
         int start;

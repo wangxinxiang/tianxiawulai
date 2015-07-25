@@ -8,6 +8,10 @@
                     android:padding="@dimen/space_10"
                     android:layout_height="@dimen/space_100"
                     android:background="@color/white">
+        <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                  android:textColor="@color/gray_text" android:textSize="@dimen/textsize_24"
+                 android:gravity="center" android:id="@+id/tv_show_null" android:visibility="gone"
+                />
     <ImageView android:layout_width="60dp"
                android:layout_height="60dp"
                android:id="@+id/img_user_head"

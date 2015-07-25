@@ -5,6 +5,8 @@ public class BlackListBean {
 
     @SerializedName("code")
     private String code;
+    @SerializedName("recordcount")
+    private String recordcount;
     @SerializedName("msg")
     private String msg;
     @SerializedName("opcode")
@@ -15,6 +17,14 @@ public class BlackListBean {
     private String status;
     @SerializedName("list")
     private BlackListItemBean[] blackListItemBeans;
+
+    public String getRecordcount() {
+        return recordcount;
+    }
+
+    public void setRecordcount(String recordcount) {
+        this.recordcount = recordcount;
+    }
 
     public String getCode() {
         return code;

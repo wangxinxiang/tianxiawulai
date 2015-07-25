@@ -125,7 +125,6 @@ public class LoanActivity extends Activity implements AddItem {
                 case 0:
                     if ("".equals(check_data_str[0])){
                         isSubmit = false;
-
                     }
                     break;
                 case 2:
@@ -313,6 +312,7 @@ public class LoanActivity extends Activity implements AddItem {
                 Log.d("LoanActivity ----->", new String(bytes));
                 if (new String(bytes).contains("success")) {
                    TXWLApplication.getInstance().showTextToast("登记成功");
+                    setResult(Constant.LOGIN_CHANGE);
                     finish();
                 }else {
                     TXWLApplication.getInstance().showTextToast("登记失败");

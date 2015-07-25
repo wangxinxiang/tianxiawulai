@@ -49,46 +49,44 @@ public class EditFragment extends Fragment implements View.OnClickListener{
         //如果已经登录 直接进入登记界面 否则跳转到登录界面
             case R.id.btn_house_loan:
                 if (isLogin()){
-                    intent.setClass(getActivity(),HouseLoanActivity.class);
-                    startActivity(intent);
+                    intent.setClass(getActivity(), HouseLoanActivity.class);
                 }else {
                     TXWLApplication.getInstance().showTextToast("登录用户才能登记信息");
-                    intent.setClass(getActivity(),LoginActivity.class);
-                        startActivityForResult(intent,REQUSET);
+                    intent.setClass(getActivity(), LoginActivity.class);
+
                 }
+                startActivityForResult(intent,REQUSET);
                 break;
 
             case R.id.btn_car_loan:
                 if (isLogin()){
-                    intent.setClass(getActivity(),CarLoanActivity.class);
-                    startActivity(intent);
+                    intent.setClass(getActivity(), CarLoanActivity.class);
                 }else {
                     TXWLApplication.getInstance().showTextToast("登录用户才能登记信息");
                     intent.setClass(getActivity(), LoginActivity.class);
-                    startActivityForResult(intent, REQUSET);
                 }
+                startActivityForResult(intent, REQUSET);
                 break;
 
             case R.id.btn_credit_loan:
                 if (isLogin()){
-                    intent.setClass(getActivity(),CreditLoanActivity.class);
-                    startActivity(intent);
+                    intent.setClass(getActivity(), CreditLoanActivity.class);
                 }else {
                     TXWLApplication.getInstance().showTextToast("登录用户才能登记信息");
                     intent.setClass(getActivity(), LoginActivity.class);
-                    startActivityForResult(intent, REQUSET);
                 }
+                startActivityForResult(intent, REQUSET);
                 break;
 
             case R.id.btn_other_loan:
                 if (isLogin()){
                     intent.setClass(getActivity(),OtherLoanActivity.class);
-                    startActivity(intent);
                 }else {
                     TXWLApplication.getInstance().showTextToast("登录用户才能登记信息");
                     intent.setClass(getActivity(), LoginActivity.class);
-                    startActivityForResult(intent, REQUSET);
+
                 }
+                startActivityForResult(intent, REQUSET);
                 break;
         }
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -22,6 +23,8 @@ import com.example.txwl_first.Util.Url;
 import com.example.txwl_first.bean.BlackListBean;
 import com.example.txwl_first.bean.BlackListItemBean;
 import com.google.gson.GsonBuilder;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -47,11 +50,20 @@ public class MenuFragment extends Fragment {
     private ArrayList<BlackListItemBean> byAllList;
     private ArrayList<BlackListItemBean> byWayList;
 
+    private PullToRefreshListView mPullRefreshListView;
+    private ListView actualListView;
+    private int pi=1;
+    private int ps=20;
+    private boolean httpFirst=true;
+    private boolean pullUp=false;
+    private boolean pullDown=false;
+
     private final static  String QUERY_LISTVIEW_CAR_ITEM="query_listview_car_item";
     private final static  String QUERY_LISTVIEW_HOUSE_ITEM="query_listview_house_item";
     private final static  String QUERY_LISTVIEW_CREDIT_ITEM="query_listview_credit_item";
     private final static  String QUERY_LISTVIEW_OTHER_ITEM="query_listview_other_item";
 
+    public static final int REQUSET = 1; //请求码
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -142,7 +154,7 @@ public class MenuFragment extends Fragment {
                     TXWLApplication.getInstance().showTextToast("登录用户才能添加老赖");
                     intent =new Intent(getActivity(),LoginActivity.class);
                 }
-                startActivity(intent);
+                startActivityForResult(intent,REQUSET);
             }
         });
     }
@@ -202,10 +214,10 @@ public class MenuFragment extends Fragment {
         AsyncHttpClient client=new AsyncHttpClient();
         client.setTimeout(10000);
         //查询所有黑名单接口 目前没有参数上传
-        final RequestParams params = new RequestParams();
+        RequestParams params = new RequestParams();
 //        params.put("opcode", "");//应该有一个一次网络请求 的数量
-        params.put("pageindex", 0);
-        params.put("pagesize", 20);
+        params.put("pageindex", pi);
+        params.put("pagesize", ps);
 
         client.post(Url.QueryAllBlackPerson_URL, params, new AsyncHttpResponseHandler() {
 
@@ -225,13 +237,45 @@ public class MenuFragment extends Fragment {
                     if ((blackListBean!=null)&&("success".equals(blackListBean.getStatus()))){
                         //网络请求成功
                         int size=blackListBean.getBlackListItemBeans().length;
-                        byAllList.clear();
-                        for (int i = 0  ; i < size ; i++) {
-                            byAllList.add(blackListBean.getBlackListItemBeans()[i]);//添加list里面的item项目 到arraylist
+                        if (httpFirst){
+                            //第一次联网
+                            httpFirst=false;
+                            byAllList.clear();
+                            for (int i = 0  ; i < size ; i++) {
+                                byAllList.add(blackListBean.getBlackListItemBeans()[i]);//添加list里面的item项目 到arraylist
+                            }
+                            list.clear();
+                            list.addAll(byAllList);
+                            Log.d("conunt",blackListBean.getRecordcount());
+                            adapter.notifyDataSetChanged();
+                        }else {
+                            if (pullDown){
+                                //下拉 数据清空 放入新的网络请求数据
+                                byAllList.clear();
+                                pullDown=false;
+                                for (int i = 0; i < size; i++) {
+                                    byAllList.add(blackListBean.getBlackListItemBeans()[i]);//添加list里面的item项目 到arraylist
+                                }
+                                list.clear();
+                                list.addAll(byAllList);
+                                mPullRefreshListView.onRefreshComplete();
+                                adapter.notifyDataSetChanged();
+                            }if(pullUp){
+                                //上拉 加载更多 在原有数据上添加 新的网络请求数据
+                                pullUp=false;
+                                if (size==0){
+                                    TXWLApplication.getInstance().showTextToast("已经加载全部内容");
+                                }
+                                for (int i = 0; i < size; i++) {
+                                    byAllList.add(blackListBean.getBlackListItemBeans()[i]);//添加list里面的item项目 到arraylist
+                                }
+                                list.clear();
+                                list.addAll(byAllList);
+                                mPullRefreshListView.onRefreshComplete();
+                                adapter.notifyDataSetChanged();
+                            }
                         }
-                        list.clear();
-                        list.addAll(byAllList);
-                        adapter.notifyDataSetChanged();
+
                     }else {
                         Toast.makeText(getActivity(),"网络错误，请检查网络",Toast.LENGTH_LONG).show();
                     }
@@ -254,15 +298,45 @@ public class MenuFragment extends Fragment {
         et_search= (EditText) view.findViewById(R.id.et_search);
         ibtn_search= (ImageButton) view.findViewById(R.id.ibtn_search);
 
+        mPullRefreshListView= (PullToRefreshListView)view.findViewById(R.id.lv_blacklist);
+        mPullRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
 
-        lv= (ListView) view.findViewById(R.id.lv_blacklist);
+        actualListView=mPullRefreshListView.getRefreshableView();
+
         list=new ArrayList<BlackListItemBean>();
         byAllList = new ArrayList<BlackListItemBean>();
         byWayList=new ArrayList<BlackListItemBean>();
         adapter=new BlackListAdapter(getActivity(),list,resources);
-        lv.setAdapter(adapter);
+        actualListView.setAdapter(adapter);
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mPullRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                String label = DateUtils.formatDateTime(getActivity(), System.currentTimeMillis(),
+                        DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
+                refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+                //下拉刷新
+                Log.d("onPullDownToRefresh","下拉");
+                pi = 1;
+                pullDown = true;
+                getHttpByQueryAllBlackPerson();
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+                String label = DateUtils.formatDateTime(getActivity(), System.currentTimeMillis(),
+                        DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
+                refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+                //上拉刷新
+                Log.d("onPullUpToRefresh","上拉");
+                pi++;
+                pullUp = true;
+                getHttpByQueryAllBlackPerson();
+
+            }
+        });
+
+        actualListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), LoanDetailActivity.class);

@@ -62,8 +62,9 @@ public class LoginActivity extends Activity implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.ibtn_title_back:
-                finish();//点击返回 退出当前activity
                 setResult(Constant.LOGIN_FAILE);
+                finish();//点击返回 退出当前activity
+                //登录没有完成就退出 需要返回处理
                 break;
             case R.id.btn_regist:
                 Intent intent=new Intent(LoginActivity.this,RegistActivity.class);

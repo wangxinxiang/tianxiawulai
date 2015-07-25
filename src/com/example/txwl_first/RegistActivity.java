@@ -167,7 +167,8 @@ public class RegistActivity extends Activity implements View.OnClickListener{
                             TXWLApplication.getInstance().showTextToast("注册成功");
                             finish();
                         } else {
-                            Toast.makeText(RegistActivity.this, "网络错误，请检查网络", Toast.LENGTH_LONG).show();
+//                            Toast.makeText(RegistActivity.this, "网络错误，请检查网络", Toast.LENGTH_LONG).show();
+                            TXWLApplication.getInstance().showTextToast(bean.getMsg());
                         }
                     } catch (Exception e) {
                         TXWLApplication.getInstance().showErrorConnected(e);

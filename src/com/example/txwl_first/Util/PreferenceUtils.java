@@ -2,6 +2,7 @@ package com.example.txwl_first.Util;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 /**
  * Created by Administrator on 2015/7/22 0022.
@@ -47,10 +48,12 @@ public class PreferenceUtils {
     //设置登录用户名
     public void setUserName(String userName){
         editor.putString("userName", userName);
+        Log.d("PreferenceUtils-->setUserName",userName);
         editor.commit();
     }
 
     public static String getUserName(){
+        Log.d("PreferenceUtils-->getUserName",sp.getString("userName", ""));
         return sp.getString("userName", "");
     }
 

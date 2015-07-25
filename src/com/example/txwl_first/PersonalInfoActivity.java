@@ -10,10 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
-import com.example.txwl_first.Util.Constant;
-import com.example.txwl_first.Util.PreferenceUtils;
-import com.example.txwl_first.Util.TXWLApplication;
-import com.example.txwl_first.Util.Url;
+import com.example.txwl_first.Util.*;
 import com.example.txwl_first.bean.GetPersonalInfoBean;
 import com.example.txwl_first.bean.PersonalInfoBean;
 import com.example.txwl_first.business.LoaderBusiness;
@@ -169,6 +166,11 @@ public class PersonalInfoActivity extends Activity {
         headImage = "";
     }
 
+    private boolean checkData() {
+
+        return true;
+    }
+
     private void modifyInfo() {
         String url = Url.PERSONAL_MODIFY_URL;
         AsyncHttpClient client = new AsyncHttpClient();
@@ -178,18 +180,39 @@ public class PersonalInfoActivity extends Activity {
         params.put("province", detail_city.getText());
         params.put("companyname", detail_company.getText());
         params.put("headimage", headImage);
-        params.put("mobile", detail_phone.getText());
+
+        if (DataVeri.isMobileNum(detail_phone.getText().toString())) {
+            params.put("mobile", detail_phone.getText());
+        } else {
+            return;
+        }
+
         params.put("realname", detail_name.getText());
+        params.put("phone", detail_company_phone.getText());
+
         client.post(url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
                 Log.d("modifyInfo-------->", new String(bytes));
-                if (new String(bytes).contains("success")) {
-                    TXWLApplication.getInstance().showTextToast("修改成功");
+//                if (new String(bytes).contains("success")) {
+//                    TXWLApplication.getInstance().showTextToast("修改成功");
+//                    PreferenceUtils.getInstance().setUserName(personalInfoBean.getRealname());
+//                    PreferenceUtils.getInstance().setUserHeadImage(personalInfoBean.getHeadimage());
+//                    setResult(Constant.LOGIN_CHANGE);
+//                    finish();
+//                } else {
+//                    TXWLApplication.getInstance().showTextToast("修改失败");
+//                }
+
+                try {
+                    GetPersonalInfoBean getPersonalInfoBean = new GsonBuilder().create().fromJson(new String(bytes), GetPersonalInfoBean.class);
+                    personalInfoBean = getPersonalInfoBean.getPersonalInfoBean();
                     PreferenceUtils.getInstance().setUserName(personalInfoBean.getRealname());
                     PreferenceUtils.getInstance().setUserHeadImage(personalInfoBean.getHeadimage());
-                } else {
-                    TXWLApplication.getInstance().showTextToast("修改失败");
+                    setResult(Constant.LOGIN_CHANGE);
+                    finish();
+                } catch (Exception e) {
+                    TXWLApplication.getInstance().showErrorConnected(e);
                 }
             }
 

@@ -68,17 +68,17 @@ public class ViewPagerFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), LoanDetailActivity.class);
                 intent.putExtra("registid", list.get(i).getRegistid());
-                if("1".equals(list.get(i).getRegisttype())){
+                if ("1".equals(list.get(i).getRegisttype())) {
                     intent.putExtra("fromButton", QUERY_LISTVIEW_CAR_ITEM);
                 }
-                if ("2".equals(list.get(i).getRegisttype())){
-                    intent.putExtra("fromButton",QUERY_LISTVIEW_HOUSE_ITEM);
+                if ("2".equals(list.get(i).getRegisttype())) {
+                    intent.putExtra("fromButton", QUERY_LISTVIEW_HOUSE_ITEM);
                 }
-                if ("3".equals(list.get(i).getRegisttype())){
-                    intent.putExtra("fromButton",QUERY_LISTVIEW_CREDIT_ITEM);
+                if ("3".equals(list.get(i).getRegisttype())) {
+                    intent.putExtra("fromButton", QUERY_LISTVIEW_CREDIT_ITEM);
                 }
-                if ("4".equals(list.get(i).getRegisttype())){
-                    intent.putExtra("fromButton",QUERY_LISTVIEW_OTHER_ITEM);
+                if ("4".equals(list.get(i).getRegisttype())) {
+                    intent.putExtra("fromButton", QUERY_LISTVIEW_OTHER_ITEM);
                 }
                 intent.putExtra("headImage", list.get(i).getOwneridimg());
                 startActivity(intent);
@@ -87,71 +87,20 @@ public class ViewPagerFragment extends Fragment {
         });
     }
 
-    private void getHttpMyInfo(int id, String key, String registtype) {
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.setTimeout(10000);
-        //查询所有黑名单接口 目前没有参数上传
-        final RequestParams params = new RequestParams();
-        params.put("userid", id);//搜索内容
-        params.put("key", key);//搜索内容
-        params.put("registtype", registtype);//搜索内容
-
-        client.post(Url.GetMyInfo_URL, params, new AsyncHttpResponseHandler() {
-
-            @Override
-            public void onStart() {
-                super.onStart();
-                Log.d(TAG, "开始联网");
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                Log.d(TAG, "联网成功");
-                Log.d(TAG + "  onSuccess-->", new String(responseBody));//打印网络访问结果
-
-                try {
-                    bean = new GsonBuilder().create().fromJson(new String(responseBody), GetMyInfoBean.class);
-                    if ((bean != null) && ("success".equals(bean.getStatus())) && bean.getRegistinfolist().length != 0) {
-                        //网络请求成功
-//                        int size=bean.getRegistinfolist().length;
-//                        for (int i = 0; i < size; i++) {
-//                            list.add(bean.getRegistinfolist()[i]);//添加list里面的item项目 到arraylist
-//                        }
-//                        adapter.notifyDataSetChanged();
-                        TXWLApplication.getInstance().showTextToast("没数据");
-                    } else if (bean.getRegistinfolist().length == 0) {
-//                         GetMyInfoItemBean test=new GetMyInfoItemBean();
-//
-//                        test.setName("test");
-//                        test.setMobile("test");
-//                        test.setRegistname("test");
-//                        test.setAccount("test");
-//                        test.setRegisttype("1");
-//                        test.setAnnualrate("test");
-//                        test.setDate("test");
-//                        list.add(test);
-                        TXWLApplication.getInstance().showTextToast("没数据");
-
-                    } else {
-                        Toast.makeText(getActivity(), "网络错误，请检查网络", Toast.LENGTH_LONG).show();
-                    }
-                } catch (Exception e) {
-                    TXWLApplication.getInstance().showErrorConnected(e);
-                }
-
-            }
-
-            @Override
-            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-                Log.d(TAG, "联网失败");
-            }
-        });
-    }
 
     public void initListView(GetMyInfoBean bean) {
         for (int i = 0; i < bean.getRegistinfolist().length; i++) {
-            list.add(bean.getRegistinfolist()[i]);//添加list里面的item项目 到arraylist
+            if ("0".equals(mArgument)){
+                // 0标识为 是全部界面 需要显示所有数据
+                list.add(bean.getRegistinfolist()[i]);//添加list里面的item项目 到arraylist
+            }else if (mArgument.equals(bean.getRegistinfolist()[i].getRegisttype())){
+                list.add(bean.getRegistinfolist()[i]);//添加list里面的item项目 到arraylistLog
+            }
+//            list.add(bean.getRegistinfolist()[i]);//添加list里面的item项目 到arraylist
         }
         adapter.notifyDataSetChanged();
+        //更新adapter后 需要重新测量展示listview
+        Utility_ForListView.setListViewHeightBasedOnChildren(lv);
+        lv.setFocusable(false);//设置焦点为false 防止父级scrollview 初始化不是顶点位置显示
     }
 }

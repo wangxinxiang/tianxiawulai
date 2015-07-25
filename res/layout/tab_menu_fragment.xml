@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:ptr="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:background="@color/gray_bg"
               android:layout_width="fill_parent"
@@ -38,9 +39,16 @@
                   android:layout_alignParentRight="true" android:padding="@dimen/space_7"/>
 
     </RelativeLayout>
-    <ListView
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/lv_blacklist"/>
+            android:layout_height="match_parent"
+            android:id="@+id/lv_blacklist"
+            android:background="@null"
+            android:cacheColorHint="@color/transparent"
+            android:divider="@color/transparent"
+            android:listSelector="@color/transparent"
+            ptr:ptrAnimationStyle="flip"
+            ptr:ptrHeaderBackground="@color/gray_bg"
+            ptr:ptrHeaderTextColor="@color/gray_text_deep"/>
 </LinearLayout>
 
