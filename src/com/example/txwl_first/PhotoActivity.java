@@ -154,6 +154,7 @@ public class PhotoActivity extends Activity{
             RequestParams params = new RequestParams();
             try {
                 params.put("img", file);
+                Log.d("upLoadImg --->", file.toString());
             } catch (Exception e) {
                 e.printStackTrace();
             }

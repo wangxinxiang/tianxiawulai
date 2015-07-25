@@ -124,22 +124,22 @@ public class LoanActivity extends Activity implements AddItem {
             switch (i) {
                 case 0:
                     if ("".equals(check_data_str[0])){
-                        Toast.makeText(getApplicationContext(), "姓名不能为空", Toast.LENGTH_SHORT).show();
+                        isSubmit = false;
 
                     }
                     break;
                 case 2:
                     if (!DataVeri.isNaN(check_data_str[2])) {
-                        Toast.makeText(getApplicationContext(), "年龄输入有误", Toast.LENGTH_SHORT).show();
+                        isSubmit = false;
                     } else {
                         if (!DataVeri.isAge(check_data_str[2])) {
-                            Toast.makeText(getApplicationContext(), "年龄输入有误", Toast.LENGTH_SHORT).show();
+                            isSubmit = false;
                         }
                     }
                     break;
                 case 3:
                     if (!DataVeri.isMobileNum(check_data_str[3])) {
-                        Toast.makeText(getApplicationContext(), "手机号输入有误", Toast.LENGTH_SHORT).show();
+                        isSubmit = false;
                     }
                     break;
             }
