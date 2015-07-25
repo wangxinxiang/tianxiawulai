@@ -81,7 +81,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         String userpwd=null;
 
         mobile=et_regist_mobile.getText().toString().trim();
-        userpwd=et_password.getText().toString().trim();
+        userpwd=MD5.getMD5Lower(et_password.getText().toString().trim());
         if(DataVeri.isMobileNum(mobile)&&!("".equals(userpwd))){
             AsyncHttpClient client=new AsyncHttpClient();
             client.setTimeout(10000);

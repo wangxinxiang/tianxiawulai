@@ -1,5 +1,6 @@
 package com.example.txwl_first;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -34,6 +35,11 @@ public class ViewPagerFragment extends Fragment {
     private ArrayList<GetMyInfoItemBean> list;
     private Me_ListViewAdapter adapter;
 
+    private final static  String QUERY_LISTVIEW_CAR_ITEM="query_listview_car_item";
+    private final static  String QUERY_LISTVIEW_HOUSE_ITEM="query_listview_house_item";
+    private final static  String QUERY_LISTVIEW_CREDIT_ITEM="query_listview_credit_item";
+    private final static  String QUERY_LISTVIEW_OTHER_ITEM="query_listview_other_item";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.viewpager_listview_fragment, null);
@@ -60,7 +66,23 @@ public class ViewPagerFragment extends Fragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getActivity(), "点击了item模块", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getActivity(), LoanDetailActivity.class);
+                intent.putExtra("registid", list.get(i).getRegistid());
+                if("1".equals(list.get(i).getRegisttype())){
+                    intent.putExtra("fromButton", QUERY_LISTVIEW_CAR_ITEM);
+                }
+                if ("2".equals(list.get(i).getRegisttype())){
+                    intent.putExtra("fromButton",QUERY_LISTVIEW_HOUSE_ITEM);
+                }
+                if ("3".equals(list.get(i).getRegisttype())){
+                    intent.putExtra("fromButton",QUERY_LISTVIEW_CREDIT_ITEM);
+                }
+                if ("4".equals(list.get(i).getRegisttype())){
+                    intent.putExtra("fromButton",QUERY_LISTVIEW_OTHER_ITEM);
+                }
+                intent.putExtra("headImage", list.get(i).getOwneridimg());
+                startActivity(intent);
+
             }
         });
     }
