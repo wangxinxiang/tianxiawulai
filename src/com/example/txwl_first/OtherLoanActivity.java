@@ -43,20 +43,17 @@ public class OtherLoanActivity extends LoanActivity {
 
     @Override
     protected int putParams(RequestParams params) {
-        params.put("carid", check_data_str[5]);
-        params.put("appearanceimg", image_url[0]);
-        params.put("goodsidimg", image_url[1]);
-        params.put("owneridimg", image_url[2]);
-        params.put("ownerheadimg", image_url[3]);
-        params.put("contractimg", image_url[4]);
+        params.put("province", check_data_str[5]);
+        params.put("address", check_data_str[6]);
+        params.put("owneridimg", image_url[0]);
+        params.put("ownerheadimg", image_url[1]);
+        params.put("contractimg", image_url[2]);
 
-        params.put("appearancedesc", image_remark[0]);
-        params.put("goodsiddesc", image_remark[1]);
-        params.put("owneriddesc", image_remark[2]);
-        params.put("ownerheaddesc", image_remark[3]);
-        params.put("contractdesc", image_remark[4]);
+        params.put("owneriddesc", image_remark[0]);
+        params.put("ownerheaddesc", image_remark[1]);
+        params.put("contractdesc", image_remark[2]);
         params.put("registtype", 3 );
 
-        return 6;
+        return 7;
     }
 }

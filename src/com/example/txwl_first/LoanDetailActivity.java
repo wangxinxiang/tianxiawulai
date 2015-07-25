@@ -1,5 +1,8 @@
 package com.example.txwl_first;
 
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -47,7 +50,7 @@ private GetQueryDetailResultBean getQueryDetailResultBean;
 
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-                TXWLApplication.getInstance().showTextToast("网络错误");
+                TXWLApplication.getInstance().showTextToast("请求失败");
             }
         });
 
@@ -114,6 +117,7 @@ private GetQueryDetailResultBean getQueryDetailResultBean;
     }
 
     private void setTopItem(QueryDetailResultBean queryDetailResultBean) {
+
         ImageView headImg = (ImageView) findViewById(R.id.img_user_head);
         TextView name = (TextView) findViewById(R.id.tv_username);
         TextView tv_user_phone_num = (TextView) findViewById(R.id.tv_user_phone_num);
@@ -122,15 +126,35 @@ private GetQueryDetailResultBean getQueryDetailResultBean;
         TextView tv_manager = (TextView) findViewById(R.id.tv_manager);
         TextView tv_year = (TextView) findViewById(R.id.tv_year);
         TextView over_day = (TextView) findViewById(R.id.over_day);
+        TextView tv_black_reward = (TextView) findViewById(R.id.tv_black_reward);
 
         LoaderBusiness.loadImage(getIntent().getStringExtra("headImage"), headImg);
         name.setText(queryDetailResultBean.getName());
         tv_user_phone_num.setText(queryDetailResultBean.getMobile());
         loan_type.setText(getLoan_type(queryDetailResultBean.getRegisttype()));
-        tv_money_count.setText(queryDetailResultBean.getAccount());
+        tv_money_count.setText(connetText(1,queryDetailResultBean.getAccount(), "", ""));
         tv_manager.setText("经办人" + queryDetailResultBean.getRealname());
         tv_year.setText("利率:" +queryDetailResultBean.getAnnualrate() + "%");
         over_day.setText(getQueryDetailResultBean.getData());
+        switch (getIntent().getStringExtra("status2")) {
+            case "1":
+                over_day.setText(connetText(0, getQueryDetailResultBean.getData(), "", ""));
+                break;
+            case "2":
+                over_day.setTextColor(getResources().getColor(R.color.orange_text));
+                break;
+            case "3":
+                //隐藏右边控件
+                tv_manager.setVisibility(View.GONE);
+                over_day.setVisibility(View.GONE);
+
+                tv_black_reward.setVisibility(View.VISIBLE);
+
+                tv_black_reward.setText(connetText(2, queryDetailResultBean.getRegistcompany(), queryDetailResultBean.getContactname(), queryDetailResultBean.getRewardaccount() ));
+                tv_year.setText(queryDetailResultBean.getContactname() + "电话：" + queryDetailResultBean.getContactmobile());
+                tv_money_count.setText("恶意拖欠" + queryDetailResultBean.getRegistcompany() + queryDetailResultBean.getAccount() + "元");
+                break;
+        }
     }
 
     private String getLoan_type(String i) {
@@ -144,5 +168,54 @@ private GetQueryDetailResultBean getQueryDetailResultBean;
             default:
                 return "其他";
         }
+    }
+
+    private SpannableStringBuilder connetText(int mode,String one,String two,String three) {
+        //mode 值为判断返回字段类型
+        //0  剩余天数
+        //1 为第2行 赏金字段
+
+        SpannableStringBuilder builder=new SpannableStringBuilder();
+
+        if ("".equals(one)||one.length()==0||one==null){
+            one=" ";
+        }
+        if ("".equals(two)||two.length()==0||two==null){
+            two=" ";
+        }
+
+        if ("".equals(three)||three.length()==0||three==null){
+            three=" ";
+        }
+
+        int start;
+        int end;
+        switch (mode){
+            case 0:
+                builder.append(one);
+                start = one.indexOf(":") + 1;
+                end = one.length() - 1;
+                builder.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.orange_text)), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                break;
+            case 1:
+                start= 5;
+                end=start+one.length() - 1;
+                builder.append("借款金额:");
+                builder.append(one);
+                builder.append("元");
+                builder.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.orange_text)),start,end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                break;
+            case 2:
+                start=one.length()+two.length()+2;
+                end=start+three.length();
+                builder.append(one);
+                builder.append(two);
+                builder.append("悬赏");
+                builder.append(three);
+                builder.append("元催收");
+                builder.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.orange_text)), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                break;
+        }
+        return builder;
     }
 }

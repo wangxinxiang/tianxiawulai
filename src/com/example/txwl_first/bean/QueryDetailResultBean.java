@@ -34,7 +34,11 @@ import com.google.gson.annotations.SerializedName;
  userid         登记人用户id（如果是登录过的用户则需要填）
  registdate     登记时间
  status         登记者状态
+ registcompany 登记人所属公司
  realname   经办人
+ rewardaccount 悬赏金额
+ contactname 悬赏姓名
+ contactmobile 悬赏人手机号码
  */
 public class QueryDetailResultBean {
 
@@ -62,10 +66,10 @@ public class QueryDetailResultBean {
     private String address;
     @SerializedName("account")
     private String account;
-    @SerializedName("repayday")
-    private String repayday;
-    @SerializedName("loanday")
-    private String loanday;
+    @SerializedName("repaydate")
+    private String repaydate;
+    @SerializedName("loandate")
+    private String loandate;
     @SerializedName("annualrate")
     private String annualrate;
     @SerializedName("description")
@@ -100,6 +104,46 @@ public class QueryDetailResultBean {
     private String status;
     @SerializedName("realname")
     private String realname;
+    @SerializedName("rewardaccount")
+    private String rewardaccount;
+    @SerializedName("contactname")
+    private String contactname;
+    @SerializedName("contactmobile")
+    private String contactmobile;
+    @SerializedName("registcompany")
+    private String registcompany;
+
+    public String getRegistcompany() {
+        return registcompany;
+    }
+
+    public void setRegistcompany(String registcompany) {
+        this.registcompany = registcompany;
+    }
+
+    public String getRewardaccount() {
+        return rewardaccount;
+    }
+
+    public void setRewardaccount(String rewardaccount) {
+        this.rewardaccount = rewardaccount;
+    }
+
+    public String getContactname() {
+        return contactname;
+    }
+
+    public void setContactname(String contactname) {
+        this.contactname = contactname;
+    }
+
+    public String getContactmobile() {
+        return contactmobile;
+    }
+
+    public void setContactmobile(String contactmobile) {
+        this.contactmobile = contactmobile;
+    }
 
     public String getRealname() {
         return realname;
@@ -205,20 +249,20 @@ public class QueryDetailResultBean {
         this.account = account;
     }
 
-    public String getRepayday() {
-        return repayday;
+    public String getRepaydate() {
+        return repaydate;
     }
 
-    public void setRepayday(String repayday) {
-        this.repayday = repayday;
+    public void setRepaydate(String repaydate) {
+        this.repaydate = repaydate;
     }
 
-    public String getLoanday() {
-        return loanday;
+    public String getLoandate() {
+        return loandate;
     }
 
-    public void setLoanday(String loanday) {
-        this.loanday = loanday;
+    public void setLoandate(String loandate) {
+        this.loandate = loandate;
     }
 
     public String getAnnualrate() {

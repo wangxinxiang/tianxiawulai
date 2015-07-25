@@ -54,8 +54,8 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
     private TextView tv_total,tv_violate,tv_reclaimed,tv_reclaiming;//四个统计模块的控件
 
     private ViewPager mPager;
-    private ArrayList<Fragment> fragmentsList;
-    private Fragment fragment_all,fragment_car,fragment_house,fragment_loan,fragment_other;
+    private ArrayList<ViewPagerFragment> fragmentsList;
+    private ViewPagerFragment fragment_all,fragment_car,fragment_house,fragment_loan,fragment_other;
     private ImageView ivBottomLine;//下划线
     private int screenW;//屏幕宽度
     private int iv_x;
@@ -75,7 +75,6 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
     private LinearLayout ll_indicate,ll_indicate_content;
 
     private GetMyInfoBean bean;
-    public static final int REQUSET = 1; //请求码
 
 
     @Override
@@ -138,6 +137,9 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
                         //网络请求成功
                         setHeadViewPager(bean.getTotalcount(),bean.getTotalmoney(),bean.getBrokencount(),bean.getBrokenmoney(),
                                 bean.getRecallcount(),bean.getRecallmoney(),bean.getUnrecallcount(),bean.getUnrecallmoney());//设置头部的各个值
+                        for (ViewPagerFragment fragment : fragmentsList) {
+                            fragment.initListView(bean);
+                        }
                     } else {
                         Toast.makeText(getActivity(), "网络错误，请检查网络", Toast.LENGTH_LONG).show();
                     }
@@ -182,16 +184,15 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
         rl_myInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent;
                 if (PreferenceUtils.getIsLogin()){
-                    intent = new Intent(getActivity(),PersonalInfoActivity.class);
+                    Intent intent = new Intent(getActivity(),PersonalInfoActivity.class);
                     startActivity(intent);
                 }else {
                     TXWLApplication.getInstance().showTextToast("请登录后查看");
 //                    PreferenceUtils.getInstance().setIsLogin(true);
                     //应该是startforsult启动 当登录成功返回 再开启联网获取数据
-                    intent=new Intent(getActivity(),LoginActivity.class);
-                    startActivityForResult(intent, REQUSET);
+                    Intent intent=new Intent(getActivity(),LoginActivity.class);
+                    startActivity(intent);
 
                 }
             }
@@ -403,7 +404,7 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
 
     private void initViewPager() {
         mPager = (ViewPager)rootview.findViewById(R.id.viewPager);
-        fragmentsList = new ArrayList<Fragment>();
+        fragmentsList = new ArrayList<>();
 
         fragment_all = new ViewPagerFragment();
         fragment_car = new ViewPagerFragment();
@@ -439,7 +440,7 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
 
         mPager.setAdapter(new MyFragmentPagerAdapter(getChildFragmentManager(), fragmentsList));
         //嵌套在父fragment中的子fragment 得到fragment管理器 必须用getChildFragmentManager
-//        mPager.setOffscreenPageLimit(3);//设定加载数量
+        mPager.setOffscreenPageLimit(5);//设定加载数量
         mPager.setOnPageChangeListener(new MyOnPageChangeListener());
         mPager.setCurrentItem(0);
     }

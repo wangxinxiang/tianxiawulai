@@ -75,6 +75,18 @@ public class PreferenceUtils {
         return sp.getInt("userId", 0);
     }
 
+    //设置登录用户名
+    public void setUserHeadImage(String headImage){
+        editor.putString("headImage", headImage);
+        editor.commit();
+    }
 
+    public static String getUserHeadImage(){
+        return sp.getString("headImage", "");
+    }
 
+    public boolean clear() {
+        editor.clear();
+        return editor.commit();
+    }
 }

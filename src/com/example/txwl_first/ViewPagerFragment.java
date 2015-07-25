@@ -24,8 +24,8 @@ import java.util.ArrayList;
 
 
 //viewpage中填充的 专门放置listview的fragment
-public class ViewPagerFragment extends Fragment{
-    private String TAG="ViewPagerFragment--";
+public class ViewPagerFragment extends Fragment {
+    private String TAG = "ViewPagerFragment--";
     private String mArgument;
     public static final String ARGUMENT = "key";
     private View view;
@@ -36,25 +36,25 @@ public class ViewPagerFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view=inflater.inflate(R.layout.viewpager_listview_fragment,null);
+        view = inflater.inflate(R.layout.viewpager_listview_fragment, null);
         return view;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        lv= (ListView) view.findViewById(R.id.lv_viewpager);
+        lv = (ListView) view.findViewById(R.id.lv_viewpager);
         Bundle bundle = getArguments();
         if (bundle != null)
             mArgument = bundle.getString(ARGUMENT);
-        TAG+=mArgument;
-        if (PreferenceUtils.getIsLogin()){
+        TAG += mArgument;
+        if (PreferenceUtils.getIsLogin()) {
             //如果登录开始联网 获取个人信息数据
             //只传id 获取所有数据
-            getHttpMyInfo(PreferenceUtils.getUserId(),"",mArgument);
+            getHttpMyInfo(PreferenceUtils.getUserId(), "", mArgument);
         }
-        list=new ArrayList<GetMyInfoItemBean>();
-        adapter=new Me_ListViewAdapter(getActivity(),list);
+        list = new ArrayList<GetMyInfoItemBean>();
+        adapter = new Me_ListViewAdapter(getActivity(), list);
         lv.setAdapter(adapter);
         //在绑定adapter后调用手动测量工具 设计listview高度
         Utility_ForListView.setListViewHeightBasedOnChildren(lv);
@@ -67,8 +67,8 @@ public class ViewPagerFragment extends Fragment{
         });
     }
 
-    private void getHttpMyInfo(int id,String key,String registtype) {
-        AsyncHttpClient client=new AsyncHttpClient();
+    private void getHttpMyInfo(int id, String key, String registtype) {
+        AsyncHttpClient client = new AsyncHttpClient();
         client.setTimeout(10000);
         //查询所有黑名单接口 目前没有参数上传
         final RequestParams params = new RequestParams();
@@ -91,7 +91,7 @@ public class ViewPagerFragment extends Fragment{
 
                 try {
                     bean = new GsonBuilder().create().fromJson(new String(responseBody), GetMyInfoBean.class);
-                    if ((bean != null) && ("success".equals(bean.getStatus()))&&bean.getRegistinfolist().length!=0) {
+                    if ((bean != null) && ("success".equals(bean.getStatus())) && bean.getRegistinfolist().length != 0) {
                         //网络请求成功
 //                        int size=bean.getRegistinfolist().length;
 //                        for (int i = 0; i < size; i++) {
@@ -99,7 +99,7 @@ public class ViewPagerFragment extends Fragment{
 //                        }
 //                        adapter.notifyDataSetChanged();
                         TXWLApplication.getInstance().showTextToast("没数据");
-                    }else if(bean.getRegistinfolist().length==0){
+                    } else if (bean.getRegistinfolist().length == 0) {
 //                         GetMyInfoItemBean test=new GetMyInfoItemBean();
 //
 //                        test.setName("test");
@@ -112,8 +112,7 @@ public class ViewPagerFragment extends Fragment{
 //                        list.add(test);
                         TXWLApplication.getInstance().showTextToast("没数据");
 
-                    }
-                    else {
+                    } else {
                         Toast.makeText(getActivity(), "网络错误，请检查网络", Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e) {
@@ -127,5 +126,12 @@ public class ViewPagerFragment extends Fragment{
                 Log.d(TAG, "联网失败");
             }
         });
+    }
+
+    public void initListView(GetMyInfoBean bean) {
+        for (int i = 0; i < bean.getRegistinfolist().length; i++) {
+            list.add(bean.getRegistinfolist()[i]);//添加list里面的item项目 到arraylist
+        }
+        adapter.notifyDataSetChanged();
     }
 }

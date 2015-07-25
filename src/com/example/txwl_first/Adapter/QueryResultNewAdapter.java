@@ -1,6 +1,10 @@
 package com.example.txwl_first.Adapter;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +21,12 @@ public class QueryResultNewAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<QueryResultItemBean> loanBeans = new ArrayList<>();
     private HolderView holderView;
+    private Resources resources;
 
-    public QueryResultNewAdapter(Context context, ArrayList<QueryResultItemBean> loanBeanArrayList) {
+    public QueryResultNewAdapter(Context context, ArrayList<QueryResultItemBean> loanBeanArrayList, Resources resources) {
         super();
         this.mContext = context;
+        this.resources = resources;
         this.loanBeans = loanBeanArrayList;
     }
 
@@ -62,14 +68,14 @@ public class QueryResultNewAdapter extends BaseAdapter {
         holderView.tv_debt_money.setText("欠" + loanBeanlist.getRegistcompany() + loanBeanlist.getAccount() + "元");
         switch (loanBeanlist.getStatus2()) {
             case "1":
-
+                holderView.tv_debt_type.setText(connetText(0, loanBeanlist.getDate(), "", ""));
                 break;
             case "2":
                 holderView.tv_debt_type.setTextColor(mContext.getResources().getColor(R.color.orange_text));
                 break;
             case "3":
                 holderView.tv_debt_type.setTextColor(mContext.getResources().getColor(R.color.black));
-                holderView.tv_query_reward_num.setText(loanBeanlist.getRegistcompany() + loanBeanlist.getContactname() + "悬赏" + loanBeanlist.getRewardmoney() + "元催收");
+                holderView.tv_query_reward_num.setText(connetText(1, loanBeanlist.getRegistcompany(), loanBeanlist.getContactname(), loanBeanlist.getRewardmoney() ));
                 holderView.tv_reward_phone.setText(loanBeanlist.getContactname() + "电话：" + loanBeanlist.getContactmobile());
                 holderView.tv_debt_money.setText("恶意拖欠" + loanBeanlist.getRegistcompany() + loanBeanlist.getAccount() + "元");
                 break;
@@ -96,5 +102,45 @@ public class QueryResultNewAdapter extends BaseAdapter {
         private TextView tv_query_reward_num;
     }
 
+    private SpannableStringBuilder connetText(int mode,String one,String two,String three) {
+        //mode 值为判断返回字段类型
+        //0  剩余天数
+        //1 为第2行 赏金字段
+
+        SpannableStringBuilder builder=new SpannableStringBuilder();
+
+        if ("".equals(one)||one.length()==0||one==null){
+            one=" ";
+        }
+
+        if ("".equals(two)||two.length()==0||two==null){
+            two=" ";
+        }
+
+        if ("".equals(three)||three.length()==0||three==null){
+            three=" ";
+        }
+        int start;
+        int end;
+        switch (mode){
+            case 0:
+                builder.append(one);
+                start = one.indexOf(":") + 1;
+                end = one.length() - 1;
+                builder.setSpan(new ForegroundColorSpan(resources.getColor(R.color.orange_text)), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                break;
+            case 1:
+                start=one.length()+two.length()+2;
+                end=start+three.length();
+                builder.append(one);
+                builder.append(two);
+                builder.append("悬赏");
+                builder.append(three);
+                builder.append("元催收");
+                builder.setSpan(new ForegroundColorSpan(resources.getColor(R.color.orange_text)),start,end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                break;
+        }
+        return builder;
+    }
 
 }

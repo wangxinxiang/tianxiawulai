@@ -34,7 +34,7 @@ public class PersonalInfoActivity extends Activity {
     private ImageView detail_head;
     private PersonalInfoBean personalInfoBean;
     private String headImage;
-
+    private LinearLayout ll_quit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +82,31 @@ public class PersonalInfoActivity extends Activity {
                 startActivityForResult(intent, Constant.GETPHOTO);
             }
         });
+
+        ll_quit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(PersonalInfoActivity.this);
+                builder.setMessage("确认退出吗？");
+                builder.setTitle("提示");
+                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        PreferenceUtils.getInstance().clear();
+                        dialog.dismiss();
+                        setResult(Constant.LOGIN_CHANGE);
+                        finish();
+                    }
+                });
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.create().show();
+            }
+        });
     }
 
     private void initView() {
@@ -100,6 +125,7 @@ public class PersonalInfoActivity extends Activity {
         detail_company_phone = (TextView) findViewById(R.id.detail_company_phone);
         detail_city = (TextView) findViewById(R.id.detail_city);
         detail_address = (TextView) findViewById(R.id.detail_address);
+        ll_quit = (LinearLayout) findViewById(R.id.ll_quit);
     }
 
     /**
@@ -118,6 +144,8 @@ public class PersonalInfoActivity extends Activity {
                     GetPersonalInfoBean getPersonalInfoBean = new GsonBuilder().create().fromJson(new String(bytes), GetPersonalInfoBean.class);
                     personalInfoBean = getPersonalInfoBean.getPersonalInfoBean();
                     setData();
+                    PreferenceUtils.getInstance().setUserName(personalInfoBean.getRealname());
+                    PreferenceUtils.getInstance().setUserHeadImage(personalInfoBean.getHeadimage());
                 } catch (Exception e) {
                     TXWLApplication.getInstance().showErrorConnected(e);
                 }
@@ -156,7 +184,13 @@ public class PersonalInfoActivity extends Activity {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
                 Log.d("modifyInfo-------->", new String(bytes));
-
+                if (new String(bytes).contains("success")) {
+                    TXWLApplication.getInstance().showTextToast("修改成功");
+                    PreferenceUtils.getInstance().setUserName(personalInfoBean.getRealname());
+                    PreferenceUtils.getInstance().setUserHeadImage(personalInfoBean.getHeadimage());
+                } else {
+                    TXWLApplication.getInstance().showTextToast("修改失败");
+                }
             }
 
             @Override

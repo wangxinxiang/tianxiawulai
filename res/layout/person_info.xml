@@ -67,7 +67,14 @@
                           android:text="傅旭东"/>
             </LinearLayout>
 
-
+            <LinearLayout style="@style/detail_linearLayout"
+                    android:id="@+id/ll_quit">
+                <TextView style="@style/detail_left"
+                          android:layout_weight="1"
+                          android:text="退出登录"/>
+                <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:src="@drawable/btn_entry_gray"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

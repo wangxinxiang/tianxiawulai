@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import com.example.txwl_first.Util.Constant;
 import com.example.txwl_first.Util.TXWLApplication;
 
 
@@ -42,21 +43,25 @@ public class MainActivity extends FragmentActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (resultCode){
-            case RESULT_OK:
+            case Constant.LOGIN_CHANGE:
                 if (meFragment!=null){
                     Log.d(TAG + "onActivityResult", "onSuccess login");
                     FragmentTransaction ft=fragmentManager.beginTransaction();
                     ft.remove(meFragment);
                     meFragment=null;
                     ft.commit();
-                    setSelect(3);
+                    setSelect(2);
+                    RadioButton button = (RadioButton) radioGroup.findViewById(R.id.rbtn_menu);
+                    button.setChecked(true);
                 }
 //                TXWLApplication.getInstance().showTextToast("登录成功");
                 break;
-            case RESULT_CANCELED:
+            case Constant.LOGIN_FAILE:
                 Log.d(TAG+"onActivityResult","canceled login");
+//                setSelect(3);
+//                RadioButton button = (RadioButton) radioGroup.findViewById(R.id.rbtn_me);
+//                button.setChecked(true);true
                 break;
-
         }
 
     }
@@ -138,7 +143,7 @@ public class MainActivity extends FragmentActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.rbtn_search:
-                       setSelect(0);
+                        setSelect(0);
                         break;
                     case R.id.rbtn_edit:
                         setSelect(1);

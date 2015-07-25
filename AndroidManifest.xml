@@ -45,7 +45,7 @@
         <activity android:name=".OtherLoanActivity" android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
         <activity android:name=".LoanDetailActivity" android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
 
-        <activity android:name=".PhotoActivity" android:theme="@style/Theme.Translucent"/>
+        <activity android:name=".PhotoActivity" android:theme="@style/Transparent"/>
         <activity android:name=".AddOldBeaterActivity" android:theme="@android:style/Theme.Holo.NoActionBar"/>
         <activity android:name=".MainActivity" android:theme="@android:style/Theme.Holo.NoActionBar"/>
     </application>

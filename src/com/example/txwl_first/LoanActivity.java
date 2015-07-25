@@ -365,7 +365,7 @@ public class LoanActivity extends Activity implements AddItem {
             } else if ("借款金额".equals(data1)) {
                 right.setText(queryDetailResultBean.getAccount());
             } else if ("所在地区".equals(data1)) {
-                right.setText(queryDetailResultBean.getProvince() + queryDetailResultBean.getCity());
+                right.setText(queryDetailResultBean.getProvince());
             } else if ("详细说明".equals(data1)) {
                 right.setText(queryDetailResultBean.getDescription());
             } else if ("详细地址".equals(data1)) {
@@ -382,7 +382,7 @@ public class LoanActivity extends Activity implements AddItem {
             }
             if ("借款日".equals(data1) || "还款日".equals(data1)) {
                 ll_detail.findViewById(R.id.btn_entry).setVisibility(View.GONE);
-                right.setText("借款日".equals(data1) ? queryDetailResultBean.getLoanday() : queryDetailResultBean.getRepayday());
+                right.setText("借款日".equals(data1) ? queryDetailResultBean.getLoandate().substring(0, 10) : queryDetailResultBean.getRepaydate().substring(0, 10));
             }
             if ("借款金额".equals(data1)) {
                 et_input_content.setInputType(InputType.TYPE_CLASS_NUMBER);

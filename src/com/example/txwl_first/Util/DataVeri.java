@@ -82,4 +82,7 @@ public class DataVeri {
         }
     }
 
+//    public static String getMoneyFromDouble(String account) {
+//
+//    }
 }

@@ -76,6 +76,7 @@ public class QueryResultActivity extends Activity {
                 }
                 intent.putExtra("registid", loanBeans.get(position).getRegistid());
                 intent.putExtra("headImage", loanBeans.get(position).getOwneridimg());
+                intent.putExtra("status2", loanBeans.get(position).getStatus2());
                  startActivity(intent);
             }
         });
@@ -95,7 +96,7 @@ public class QueryResultActivity extends Activity {
         tv_right.setVisibility(View.GONE);
         tv_title.setText("查询结果");
 
-        adapter = new QueryResultNewAdapter(QueryResultActivity.this,loanBeans);
+        adapter = new QueryResultNewAdapter(QueryResultActivity.this,loanBeans, getResources());
         lv_query.setAdapter(adapter);
     }
 

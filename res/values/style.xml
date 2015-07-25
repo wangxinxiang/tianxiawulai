@@ -29,7 +29,7 @@
 
     <!--设置半透明主题-->
     <style name="Theme.Translucent" parent="android:style/Theme.Translucent">
-        <item name="android:colorForeground">@color/gray_text</item>
+        <item name="android:colorForeground">@color/orange_text</item>
         <item name="android:windowNoTitle">true</item>
     </style>
     
@@ -56,6 +56,15 @@
         <item name="android:gravity">right</item>
         <item name="android:layout_weight">1</item>
         <item name="android:background">@null</item>
+    </style>
+
+    <style name="Transparent" parent="android:Theme.Dialog">
+        <item name="android:windowFrame">@null</item><!--边框-->
+        <item name="android:windowIsFloating">false</item><!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">true</item><!--半透明-->
+        <item name="android:windowNoTitle">true</item><!--无标题-->
+        <item name="android:windowBackground">@android:color/transparent</item><!--背景透明-->
+        <item name="android:backgroundDimEnabled">true</item><!--模糊-->
     </style>
 
 </resources>
