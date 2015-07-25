@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:myapp="http://schemas.android.com/apk/res/com.example.txwl_first"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -24,17 +25,21 @@
                              android:layout_height="wrap_content"
                              android:background="@color/gray_tab"
                              android:id="@+id/rl_myInfo"
-                             android:orientation="horizontal">
-                   <ImageView android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:id="@+id/img_headimage"
-                              android:src="@drawable/defaul_head_image"
-                              android:padding="@dimen/space_12"
-                              android:layout_alignParentLeft="true"/>
+                             android:orientation="horizontal"
+                       android:padding="@dimen/space_12">
+                   <com.example.txwl_first.View.RoundImageView
+                           android:layout_width="@dimen/item_image_height"
+                           android:layout_height="@dimen/item_image_height"
+                           android:id="@+id/img_headimage"
+                           android:src="@drawable/defaul_head_image"
+                           myapp:border_thickness="@dimen/space_1"
+                           myapp:border_outside_color="@color/white_line"
+                           android:layout_alignParentLeft="true"/>
                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                              android:id="@+id/tv_user_name"
                            android:text="@string/user_name_tv" android:textColor="@color/white"
                              android:singleLine="true" android:ellipsize="end"
+                             android:layout_marginLeft="@dimen/space_10"
                            android:textSize="@dimen/textsize_18" android:layout_centerVertical="true"
                              android:layout_toRightOf="@+id/img_headimage"
                              android:layout_toLeftOf="@+id/ibtn_entry"/>
@@ -49,7 +54,7 @@
                   <RelativeLayout android:layout_width="fill_parent"
                                   android:layout_height="wrap_content"
                                   android:id="@+id/rl_search"
-                          android:background="@color/white"
+                                  android:background="@color/white"
                                   android:focusableInTouchMode="true" >
                       <RelativeLayout android:layout_width="wrap_content"
                                       android:layout_height="wrap_content" android:id="@+id/rl_edit_search"
@@ -59,30 +64,29 @@
                                       android:layout_marginBottom="@dimen/space_8"
                                       android:layout_toLeftOf="@+id/textView">
                           <EditText android:layout_width="match_parent"
+                                    android:padding="@dimen/space_14"
                                     android:layout_height="wrap_content" android:id="@+id/et_search" android:hint="@string/search_hint"
-                                    android:background="@drawable/search_input_box" android:textColorHint="@color/gray_text_search"
+                                    android:background="@drawable/shape_edit_search" android:textColorHint="@color/gray_text_search"
                                     android:textSize="@dimen/textsize_16" android:textColor="@color/gray_text_deep"
-                                  android:singleLine="true" android:imeOptions="actionSearch"/>
+                                  android:singleLine="true" android:imeOptions="actionSearch"
+                                    android:layout_alignParentTop="true" android:layout_alignParentBottom="true"/>
                           <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
                                        android:id="@+id/ibtn_clear"
+                                       android:padding="@dimen/space_8"
                                        android:background="@color/transparent" android:src="@drawable/close_normal"
                                        android:layout_alignParentRight="true" android:layout_alignWithParentIfMissing="false"
                                        android:layout_centerVertical="true" android:layout_margin="@dimen/space_7"
                                        android:visibility="gone"/>
                       </RelativeLayout>
-                      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+
+                      <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
                               android:text="@string/search_btn"
-                                android:gravity="center_vertical"
-                                android:textSize="@dimen/textsize_16"
                                 android:background="@color/orange_main"
                                 android:layout_centerVertical="true"
-                                android:id="@+id/textView" android:padding="@dimen/space_7"
-                                android:layout_alignParentTop="true"
-                                android:layout_alignParentRight="true"
+                                android:id="@+id/textView"
                                 android:textColor="@color/white"
-                                android:layout_marginTop="@dimen/space_8"
-                                android:layout_marginRight="@dimen/space_8" android:paddingLeft="@dimen/space_14"
-                                android:paddingRight="@dimen/space_14"/>
+                                android:layout_marginRight="@dimen/space_8"
+                              android:layout_alignParentRight="true"/>
                   </RelativeLayout>
                     <LinearLayout android:layout_width="fill_parent"
                                   android:layout_height="wrap_content"

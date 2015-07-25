@@ -63,28 +63,32 @@ private GetQueryDetailResultBean getQueryDetailResultBean;
     }
 
     private void addView(QueryDetailResultBean queryDetailResultBean) {
+        String title_name = getIntent().getStringExtra("title_name");
+        if (title_name == null) {
+            title_name = "详情";
+        }
         //动态填充两个LinearLayout布局
         switch (from_button){
             //从接口获取网络数据填充
             case "query_listview_car_item":
                 layout_item_three.setVisibility(View.VISIBLE);
                 image_show = car_owner_show;
-                fill_LinearLayout("详情",carowner,car_own_images_show, queryDetailResultBean);
+                fill_LinearLayout(title_name,carowner,car_own_images_show, queryDetailResultBean);
                 break;
             case "query_listview_house_item":
                 layout_item_three.setVisibility(View.VISIBLE);
                 image_show = house_owner_show;
-                fill_LinearLayout("详情",houseowner,car_own_images_show, queryDetailResultBean);
+                fill_LinearLayout(title_name,houseowner,car_own_images_show, queryDetailResultBean);
                 break;
             case "query_listview_credit_item":
                 layout_item_three.setVisibility(View.VISIBLE);
                 image_show = credit_owner_show;
-                fill_LinearLayout("详情",creditowner,car_own_images_show, queryDetailResultBean);
+                fill_LinearLayout(title_name,creditowner,car_own_images_show, queryDetailResultBean);
                 break;
             case "query_listview_other_item":
                 layout_item_three.setVisibility(View.VISIBLE);
                 image_show = credit_owner_show;
-                fill_LinearLayout("详情",creditowner,car_own_images_show, queryDetailResultBean);
+                fill_LinearLayout(title_name,creditowner,car_own_images_show, queryDetailResultBean);
                 break;
         }
     }
@@ -136,7 +140,7 @@ private GetQueryDetailResultBean getQueryDetailResultBean;
         tv_manager.setText("经办人" + queryDetailResultBean.getRealname());
         tv_year.setText("利率:" +queryDetailResultBean.getAnnualrate() + "%");
         over_day.setText(getQueryDetailResultBean.getData());
-        switch (getIntent().getStringExtra("status2")) {
+        switch (queryDetailResultBean.getStatus()) {
             case "1":
                 over_day.setText(connetText(0, getQueryDetailResultBean.getData(), "", ""));
                 break;
@@ -149,6 +153,10 @@ private GetQueryDetailResultBean getQueryDetailResultBean;
                 over_day.setVisibility(View.GONE);
 
                 tv_black_reward.setVisibility(View.VISIBLE);
+
+                tv_money_count.setTextColor(getResources().getColor(R.color.midblack));
+                tv_black_reward.setTextColor(getResources().getColor(R.color.midblack));
+                tv_year.setTextColor(getResources().getColor(R.color.midblack));
 
                 tv_black_reward.setText(connetText(2, queryDetailResultBean.getRegistcompany(), queryDetailResultBean.getContactname(), queryDetailResultBean.getRewardaccount() ));
                 tv_year.setText(queryDetailResultBean.getContactname() + "电话：" + queryDetailResultBean.getContactmobile());
@@ -199,7 +207,7 @@ private GetQueryDetailResultBean getQueryDetailResultBean;
                 break;
             case 1:
                 start= 5;
-                end=start+one.length() - 1;
+                end=start+one.length();
                 builder.append("借款金额:");
                 builder.append(one);
                 builder.append("元");

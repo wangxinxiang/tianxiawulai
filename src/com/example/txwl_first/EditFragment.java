@@ -29,7 +29,7 @@ public class EditFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view=inflater.inflate(R.layout.registration_layout,null);
+        view=inflater.inflate(R.layout.tab_edit_fragment,null);
         Log.d(TAG, "onCreateView");
         return view;
     }

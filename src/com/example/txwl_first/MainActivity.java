@@ -7,10 +7,14 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import com.example.txwl_first.Util.Constant;
 import com.example.txwl_first.Util.TXWLApplication;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /*
@@ -26,16 +30,24 @@ public class MainActivity extends FragmentActivity {
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
     private RadioGroup radioGroup;
+
+    /**
+     * 是否退出标志位
+     */
+    private static Boolean isQuit = false;
+    /**
+     * 计时器
+     */
+    private final Timer timer = new Timer();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG,"onCreate");
+        Log.d(TAG, "onCreate");
         setContentView(R.layout.main_activity);
-
+        TXWLApplication.getInstance().addActivity(this);
         initView();
         initListener();
         setSelect(0);//设置默认启动界面 为第一个 查询界面
-
 
     }
 
@@ -50,8 +62,8 @@ public class MainActivity extends FragmentActivity {
                     ft.remove(meFragment);
                     meFragment=null;
                     ft.commit();
-                    setSelect(2);
-                    RadioButton button = (RadioButton) radioGroup.findViewById(R.id.rbtn_menu);
+                    setSelect(3);
+                    RadioButton button = (RadioButton) radioGroup.findViewById(R.id.rbtn_me);
                     button.setChecked(true);
                 }
 //                TXWLApplication.getInstance().showTextToast("登录成功");
@@ -164,6 +176,29 @@ public class MainActivity extends FragmentActivity {
         ((RadioButton)radioGroup.findViewById(R.id.rbtn_search)).setChecked(true);//设置默认选中search按钮
     }
 
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    // 双击推出程序
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (isQuit == false) {
+                isQuit = true;
+                TXWLApplication.getInstance().showTextToast("再按一次退出");
+                TimerTask task = null;
+                task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        isQuit = false;
+                    }
+                };
+                timer.schedule(task, 2000);
+            } else {
+                TXWLApplication.getInstance().exit();//遍历activity管理器 挨个finish
+            }
+        }
+        return true;
+    }
 
     @Override
     protected void onResume() {

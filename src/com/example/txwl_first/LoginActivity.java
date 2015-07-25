@@ -111,6 +111,8 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                             //登录成功 应该实现跳转 到完善用户信息界面
 
                             PreferenceUtils.getInstance().setUserID(bean.getPersonalInfoBean().getUserid());
+                            PreferenceUtils.getInstance().setUserName(bean.getPersonalInfoBean().getRealname());
+                            PreferenceUtils.getInstance().setUserHeadImage(bean.getPersonalInfoBean().getHeadimage());
                             PreferenceUtils.getInstance().setIsLogin(true);//设置 已经登录标志位
 
                             setResult(Constant.LOGIN_CHANGE);

@@ -47,6 +47,7 @@
 
         <activity android:name=".PhotoActivity" android:theme="@style/Transparent"/>
         <activity android:name=".AddOldBeaterActivity" android:theme="@android:style/Theme.Holo.NoActionBar"/>
-        <activity android:name=".MainActivity" android:theme="@android:style/Theme.Holo.NoActionBar"/>
+        <activity android:name=".MainActivity" android:theme="@android:style/Theme.Holo.NoActionBar"
+                  android:windowSoftInputMode="adjustPan"/>
     </application>
 </manifest>

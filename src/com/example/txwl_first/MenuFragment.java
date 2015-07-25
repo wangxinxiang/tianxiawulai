@@ -280,6 +280,7 @@ public class MenuFragment extends Fragment {
                 }
                 intent.putExtra("registid", list.get(position).getRegistid());
                 intent.putExtra("headImage", list.get(position).getOwneridimg());
+                intent.putExtra("title_name", list.get(position).getName());
                 startActivity(intent);
             }
         });

@@ -47,18 +47,16 @@ public class ViewPagerFragment extends Fragment {
         Bundle bundle = getArguments();
         if (bundle != null)
             mArgument = bundle.getString(ARGUMENT);
-        TAG += mArgument;
-        if (PreferenceUtils.getIsLogin()) {
-            //如果登录开始联网 获取个人信息数据
-            //只传id 获取所有数据
-            getHttpMyInfo(PreferenceUtils.getUserId(), "", mArgument);
-        }
+//        if (PreferenceUtils.getIsLogin()) {
+//            //如果登录开始联网 获取个人信息数据
+//            //只传id 获取所有数据
+//            getHttpMyInfo(PreferenceUtils.getUserId(), "", mArgument);
+//        }
         list = new ArrayList<GetMyInfoItemBean>();
         adapter = new Me_ListViewAdapter(getActivity(), list);
         lv.setAdapter(adapter);
         //在绑定adapter后调用手动测量工具 设计listview高度
         Utility_ForListView.setListViewHeightBasedOnChildren(lv);
-
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

@@ -11,6 +11,7 @@ import com.example.txwl_first.R;
 import com.example.txwl_first.Util.DataVeri;
 import com.example.txwl_first.bean.GetMyInfoItemBean;
 import com.example.txwl_first.bean.GetPersonalInfoBean;
+import com.example.txwl_first.business.LoaderBusiness;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class Me_ListViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if(convertView==null){
-            convertView=mInflater.inflate(R.layout.item_three_new,null);
+            convertView=mInflater.inflate(R.layout.item_fragment_me,null);
             viewHolder=new ViewHolder();
             viewHolder.img_user_head= (ImageView) convertView.findViewById(R.id.img_user_head);
             viewHolder.tv_username= (TextView) convertView.findViewById(R.id.tv_username);
@@ -57,7 +58,7 @@ public class Me_ListViewAdapter extends BaseAdapter {
             viewHolder= (ViewHolder) convertView.getTag();
         }
         GetMyInfoItemBean item=mDatas.get(position);
-
+        LoaderBusiness.loadImage(item.getOwneridimg(),viewHolder.img_user_head);
         viewHolder.tv_username.setText(item.getName());
         viewHolder.tv_user_phone_num.setText(item.getMobile());
         viewHolder.loan_type.setText(DataVeri.getLoan_type(item.getRegisttype()));

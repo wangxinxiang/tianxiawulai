@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:padding="@dimen/space_10"
-              android:layout_height="@dimen/space_100" android:background="@color/white">
+              android:layout_height="match_parent" >
 
+    <RelativeLayout android:layout_width="wrap_content"
+                    android:padding="@dimen/space_10"
+                    android:layout_height="@dimen/space_100"
+                    android:background="@color/white">
     <ImageView android:layout_width="60dp"
                android:layout_height="60dp"
                android:id="@+id/img_user_head"
@@ -37,18 +40,13 @@
                     android:layout_centerVertical="true">
 
         <TextView android:layout_width="wrap_content" android:id="@+id/tv_money_count" android:layout_height="wrap_content"
-                  android:textColor="@color/gray_text" android:text="借款金额：100000元"/>
+                  android:textColor="@color/gray_text" android:text="借款金额：100000元"
+                  android:layout_toLeftOf="@+id/tv_manager" android:layout_alignParentLeft="true"/>
 
         <TextView android:layout_width="wrap_content" android:id="@+id/tv_manager" android:layout_height="wrap_content"
                   style="@style/item_three_tv_right"
                   android:text="经办人阳阳"/>
 
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:id="@+id/tv_black_reward"
-                android:text="悬赏"
-                android:visibility="gone"
-                android:textColor="@color/gray_text"
-                android:layout_below="@id/tv_money_count"/>
     </RelativeLayout>
 
 
@@ -63,5 +61,5 @@
                   style="@style/item_three_tv_right" android:text="剩余5天"/>
 
     </RelativeLayout>
-
-</RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

@@ -20,7 +20,8 @@
                            android:id="@+id/detail_head"/>
             </LinearLayout>
 
-            <LinearLayout style="@style/detail_linearLayout">
+            <LinearLayout style="@style/detail_linearLayout"
+                          android:focusableInTouchMode="true">
                 <TextView style="@style/detail_left"
                           android:text="姓名"/>
                 <EditText style="@style/detail_right"

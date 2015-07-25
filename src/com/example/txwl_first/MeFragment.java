@@ -28,6 +28,7 @@ import com.example.txwl_first.View.CustomScrollView;
 import com.example.txwl_first.bean.BlackListBean;
 import com.example.txwl_first.bean.GetMyInfoBean;
 import com.example.txwl_first.bean.GetMyInfoItemBean;
+import com.example.txwl_first.business.LoaderBusiness;
 import com.google.gson.GsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -135,11 +136,14 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
                     bean = new GsonBuilder().create().fromJson(new String(responseBody), GetMyInfoBean.class);
                     if ((bean != null) && ("success".equals(bean.getStatus()))) {
                         //网络请求成功
-                        setHeadViewPager(bean.getTotalcount(),bean.getTotalmoney(),bean.getBrokencount(),bean.getBrokenmoney(),
-                                bean.getRecallcount(),bean.getRecallmoney(),bean.getUnrecallcount(),bean.getUnrecallmoney());//设置头部的各个值
+                        setHeadViewPager(bean.getTotalcount(), bean.getTotalmoney(), bean.getBrokencount(), bean.getBrokenmoney(),
+                                bean.getRecallcount(), bean.getRecallmoney(), bean.getUnrecallcount(), bean.getUnrecallmoney());//设置头部的各个值
+                        LoaderBusiness.loadImage(PreferenceUtils.getUserHeadImage(), img_headimage);
+                        tv_user_name.setText(PreferenceUtils.getUserName());
                         for (ViewPagerFragment fragment : fragmentsList) {
                             fragment.initListView(bean);
                         }
+
                     } else {
                         Toast.makeText(getActivity(), "网络错误，请检查网络", Toast.LENGTH_LONG).show();
                     }
@@ -201,7 +205,7 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
         tv_total.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"点击了tv_total模块",Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(),"点击了tv_total模块",Toast.LENGTH_LONG).show();
             }
         });
 
