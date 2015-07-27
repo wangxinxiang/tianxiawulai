@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="@color/white"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <include
+            android:id="@+id/main_title"
+            layout="@layout/title_include"/>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:gravity="center_horizontal"
+                  android:paddingBottom="@dimen/space_35"
+                  android:background="@color/linegray">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_marginTop="@dimen/space_16"
+                  android:text="@string/confirm_recharge_name"
+                  android:textSize="@dimen/textsize_18"
+                  android:textColor="@color/dark"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:id="@+id/confirm_recharge_money"
+                  android:layout_marginTop="@dimen/space_14"
+                  android:textSize="@dimen/textsize_24"
+                  android:textColor="@color/dark"
+                  android:text="100"/>
+    </LinearLayout>
+
+
+    <Button android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:id="@+id/confirm_recharge_commit"
+            android:layout_margin="@dimen/space_14"
+            android:text="@string/confirm_recharge_commit"
+            android:textSize="@dimen/textsize_18"
+            android:background="@drawable/btn_selector"/>
+
+</LinearLayout>

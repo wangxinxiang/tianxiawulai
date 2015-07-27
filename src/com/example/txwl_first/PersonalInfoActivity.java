@@ -18,6 +18,7 @@ import com.google.gson.GsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.umeng.analytics.MobclickAgent;
 import org.apache.http.Header;
 
 import java.io.File;
@@ -26,6 +27,7 @@ import java.io.File;
  * Created by licheng on 18/7/15.
  */
 public class PersonalInfoActivity extends Activity {
+    private static final String TAG = "PersonalInfoActivity";
     private TextView tv_title, tv_right, detail_name, detail_phone, detail_company, detail_company_phone, detail_city, detail_address;
     private ImageButton ibtn_title_back;
     private ImageView detail_head;
@@ -40,6 +42,21 @@ public class PersonalInfoActivity extends Activity {
         initView();
         setOnClickListener();
         getInfo();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume");
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        Log.d(TAG, "onPause");
+
     }
 
     private void setOnClickListener() {

@@ -35,4 +35,12 @@ public class Url {
 
     public static String GetMyInfo_URL = URL + "Default/GetMyInfo";             //我
 
+    public static String ADD_BLACK_URL = URL + "Default/UpdateBlackPerson";       //添加黑名单
+
+
+
+
+    //贝付
+    public static String Partner="201505280955401925";
+
 }

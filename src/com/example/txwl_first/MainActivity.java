@@ -1,6 +1,9 @@
 package com.example.txwl_first;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -12,6 +15,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import com.example.txwl_first.Util.Constant;
 import com.example.txwl_first.Util.TXWLApplication;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,6 +28,8 @@ import java.util.TimerTask;
  */
 public class MainActivity extends FragmentActivity {
     private static String TAG="FragmentActivity";
+    private Context mContext;
+    private final  String mPageName = "FragmentActivity";
     public final static int num = 4 ;
 
     private Fragment meFragment,searchFragment,editFragment,menuFragment;
@@ -44,6 +51,17 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
         setContentView(R.layout.main_activity);
+        mContext = this;
+        MobclickAgent.setDebugMode(true);
+//      SDK在统计Fragment时，需要关闭Activity自带的页面统计，
+//		然后在每个页面中重新集成页面统计的代码(包括调用了 onResume 和 onPause 的Activity)。
+        MobclickAgent.openActivityDurationTrack(false);
+//		MobclickAgent.setAutoLocation(true);
+//		MobclickAgent.setSessionContinueMillis(1000);
+
+        MobclickAgent.updateOnlineConfig(this);
+        UmengUpdateAgent.update(this);
+
         TXWLApplication.getInstance().addActivity(this);
         initView();
         initListener();
@@ -200,15 +218,18 @@ public class MainActivity extends FragmentActivity {
         return true;
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume");
+        MobclickAgent.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPause(this);
         Log.d(TAG, "onPause");
     }
 
@@ -224,4 +245,7 @@ public class MainActivity extends FragmentActivity {
         super.onDestroy();
         Log.d(TAG, "onDestroy");
     }
+
+
+
 }

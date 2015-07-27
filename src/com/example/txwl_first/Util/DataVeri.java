@@ -11,13 +11,14 @@ import java.util.regex.Pattern;
  */
 public class DataVeri {
 
-    public static Boolean isNaN(String array) {
-        if (array.matches("^[0-9]*$"))
+    public static Boolean isNaN(String array, String name) {
+        if (array.matches("^[0-9]*$") || array.matches("\\d+\\.\\d+"))
             return true;
         else {
-            TXWLApplication.getInstance().showTextToast("只能输入纯数字");
+            TXWLApplication.getInstance().showTextToast(name + "只能输入纯数字");
             return false;
         }
+
     }
 
     public static Boolean isAge(String array) {
@@ -66,10 +67,18 @@ public class DataVeri {
     }
 
     public static Boolean stringIsNull(String str, String name) {
-        if ("".equals(str)) {
+        if (str==null || "".equals(str)) {
             TXWLApplication.getInstance().showTextToast(name + "不能为空");
             return true;
         } else {
+            return false;
+        }
+    }
+
+    public static boolean isBlank(String str){
+        if(str==null||"".equals(str)){
+            return true;
+        }else{
             return false;
         }
     }

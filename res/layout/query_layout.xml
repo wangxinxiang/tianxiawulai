@@ -27,7 +27,7 @@
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-              android:gravity="center"
+              android:gravity="center" android:id="@+id/tv_servison"
               android:layout_marginBottom="@dimen/space_10"
             android:text="@string/version"/>
 </RelativeLayout>

@@ -27,15 +27,16 @@
                           android:text="姓名"/>
                 <EditText style="@style/detail_right"
                           android:id="@+id/detail_name"
-                          android:text="傅旭东"/>
+                          />
             </LinearLayout>
 
             <LinearLayout style="@style/detail_linearLayout">
                 <TextView style="@style/detail_left"
                           android:text="手机号"/>
                 <EditText style="@style/detail_right"
+                          android:inputType="phone"
                           android:id="@+id/detail_phone"
-                          android:text="傅旭东"/>
+                          />
             </LinearLayout>
 
 
@@ -45,28 +46,28 @@
                           android:text="公司名称"/>
                 <EditText style="@style/detail_right"
                           android:id="@+id/detail_company"
-                          android:text="傅旭东"/>
+                          />
             </LinearLayout>
             <LinearLayout style="@style/detail_linearLayout">
                 <TextView style="@style/detail_left"
                           android:text="电话"/>
                 <EditText style="@style/detail_right"
                           android:id="@+id/detail_company_phone"
-                          android:text="傅旭东"/>
+                          />
             </LinearLayout>
             <LinearLayout style="@style/detail_linearLayout">
                 <TextView style="@style/detail_left"
                           android:text="所在地区"/>
                 <EditText style="@style/detail_right"
                           android:id="@+id/detail_city"
-                          android:text="傅旭东"/>
+                          />
             </LinearLayout>
             <LinearLayout style="@style/detail_linearLayout">
                 <TextView style="@style/detail_left"
                           android:text="详细地址"/>
                 <EditText style="@style/detail_right"
                           android:id="@+id/detail_address"
-                          android:text="傅旭东"/>
+                          />
             </LinearLayout>
 
             <LinearLayout style="@style/detail_linearLayout"

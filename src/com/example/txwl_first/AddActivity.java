@@ -5,10 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
-import com.example.txwl_first.Util.DataVeri;
-import com.example.txwl_first.Util.PreferenceUtils;
-import com.example.txwl_first.Util.TXWLApplication;
-import com.example.txwl_first.Util.Url;
+import com.example.txwl_first.Util.*;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -66,21 +63,21 @@ public class AddActivity extends Activity{
 
     private void getData() {
         isSubmit = true;
-        if ("".equals(et_username.getText().toString())) {
+        if ("".equals(et_username.getText().toString().trim())) {
             TXWLApplication.getInstance().showTextToast("姓名不能为空");
             isSubmit = false;
         } else {
-            data[0] = et_username.getText().toString();
+            data[0] = et_username.getText().toString().trim();
         }
 
-        if (DataVeri.isMobileNum(et_mobile_number.getText().toString())) {
-            data[1] = et_mobile_number.getText().toString();
+        if (DataVeri.isMobileNum(et_mobile_number.getText().toString().trim())) {
+            data[1] = et_mobile_number.getText().toString().trim();
         } else {
             isSubmit = false;
         }
 
-        if (!DataVeri.stringIsNull(et_password.getText().toString(), "密码")) {
-            data[2] = et_password.getText().toString();
+        if (!DataVeri.stringIsNull(et_password.getText().toString().trim(), "密码")) {
+            data[2] = MD5.getMD5Lower(et_password.getText().toString().trim());
         } else {
             isSubmit = false;
         }

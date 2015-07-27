@@ -67,7 +67,7 @@ public class BlackListAdapter extends BaseAdapter {
         holderView.tv_username.setText(item.getName());//设置用户名
         holderView.tv_user_phone_num.setText(item.getMobile());//手机号码
         holderView.tv_province.setText(item.getProvince());//地点
-        holderView.tv_descrip.setText(connetText(0,item.getCompanyname(),item.getAccount(),""));//项目描述
+        holderView.tv_descrip.setText(connetText(0,item.getCompanyname(),DataVeri.getMoneyFromDouble(item.getAccount()),""));//项目描述
         holderView.tv_reward.setText(connetText(1,item.getRegistcompany(),item.getContactname(),DataVeri.getMoneyFromDouble(item.getRewardmoney())));//赏金
         holderView.tv_contact.setText(connetText(2,item.getContactname(),item.getContactmobile(),""));//联系人电话
 //        holderView.tv_descrip.setText(connetText(0,"658小贷公司","10",""));//项目描述

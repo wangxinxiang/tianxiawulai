@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <include
+            android:id="@+id/main_title"
+            layout="@layout/title_include"/>
+
+    <ScrollView android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+            >
+
+        <RelativeLayout android:id="@+id/rl_main_content" android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/linegray"
+                        android:padding="@dimen/space_10">
+
+
+            <RelativeLayout android:id="@+id/rl_layout_name" android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_below="@+id/rl_bankcardnum" style="@style/rl_paycard"
+                            android:background="@color/white"
+                    >
+                <EditText android:id="@+id/et_user_name"
+                          style="@style/addBankCard_edit"
+                          android:text="黎城" android:paddingLeft="@dimen/space_100"/>
+                <TextView
+                        style="@style/addBankCard_text"
+                        android:text="持卡人姓名"
+                        android:id="@+id/textView3"
+                        />
+            </RelativeLayout>
+            <RelativeLayout android:id="@+id/rl_layout_phone" android:layout_width="fill_parent"
+                            android:layout_height="50dp"
+                            android:layout_below="@+id/rl_layout_card" style="@style/rl_paycard"
+
+                            android:background="@color/white"
+                    >
+                <EditText android:id="@+id/et_user_phone"
+                          android:hint="银行预留手机号"
+                          style="@style/addBankCard_edit"
+                          android:inputType="phone" android:text="18966045735"/>
+                <TextView
+                        style="@style/addBankCard_text"
+                        android:text="手机号"
+                        android:id="@+id/tv_bank_name"/>
+            </RelativeLayout>
+
+            <RelativeLayout android:id="@+id/rl_layout_card" android:layout_width="fill_parent"
+                            android:layout_height="50dp"
+                            android:layout_below="@+id/rl_layout_name" style="@style/rl_paycard"
+                            android:background="@color/white"
+                    >
+                <EditText android:id="@+id/et_user_card" style="@style/addBankCard_edit"
+                          android:singleLine="true"
+                          android:text="500236199311210651"/>
+                <TextView
+                        style="@style/addBankCard_text"
+                        android:text="身份证号"
+                        android:id="@+id/textViewzj"/>
+            </RelativeLayout>
+
+            <RelativeLayout android:id="@+id/rl_layout_ban" android:layout_width="fill_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/white" style="@style/rl_paycard"
+                            android:layout_below="@+id/rl_bank_name">
+                <EditText android:id="@+id/et_user_ban"
+                          android:hint="请输入储蓄卡号码" style="@style/addBankCard_edit"
+                          android:inputType="number"/>
+                <TextView
+                        style="@style/addBankCard_text"
+                        android:text="银行卡号"
+                        android:id="@+id/textView"/>
+            </RelativeLayout>
+
+            <RelativeLayout android:id="@+id/rl_bankcardnum" android:layout_width="fill_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/gray_bg" style="@style/rl_paycard"
+                            android:layout_below="@+id/rl_layout_ban"
+                            android:layout_marginTop="0dp" android:layout_centerInParent="true"
+                            android:gravity="center_horizontal">
+                <TextView
+                        style="@style/addBankCard_text"
+                        android:id="@+id/bankcardnum"
+                        android:padding="1dp"
+                        android:layout_width="match_parent"
+                        android:gravity="center_horizontal" android:singleLine="true" android:textStyle="bold"/>
+            </RelativeLayout>
+
+            <RelativeLayout android:id="@+id/rl_layout_register" android:layout_width="fill_parent"
+                            android:layout_height="50dp"
+                            android:layout_below="@+id/rl_layout_tixing" style="@style/rl_paycard">
+
+                />
+                <Button android:id="@+id/ibtn_submit_next" android:layout_width="fill_parent"
+                        android:layout_height="@dimen/space_45"
+                        android:background="@drawable/btn_selector" android:text="提交"
+                        android:textSize="@dimen/textsize_16" android:textColor="@color/white"
+                        />
+            </RelativeLayout>
+
+            <RelativeLayout android:id="@+id/rl_bank_name" android:layout_width="fill_parent"
+                            android:layout_height="50dp"
+                            style="@style/rl_paycard"
+                            android:background="@color/white"
+                    >
+
+                <TextView
+                        style="@style/addBankCard_text"
+                        android:text="选择银行"
+                        android:id="@+id/tv_bank_name_name" android:ellipsize="marquee" android:singleLine="true"
+                        android:layout_toLeftOf="@+id/imageButton"/>
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/imageButton" android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true" android:background="@color/transparent"
+                        android:src="@drawable/item_entry" android:padding="@dimen/space_14"/>
+            </RelativeLayout>
+
+            <RelativeLayout android:id="@+id/rl_layout_vericode" android:layout_width="fill_parent"
+                            android:layout_height="50dp"
+                            style="@style/rl_paycard" android:layout_below="@id/rl_layout_phone"
+                            android:background="@color/linegray"
+                    >
+
+                <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                                android:id="@+id/rl_vericode"
+                                android:background="@color/white" android:layout_toLeftOf="@+id/btn_vericode"
+                                android:layout_marginRight="@dimen/space_10">
+                    <EditText android:id="@+id/et_vericode"
+                              style="@style/addBankCard_edit"
+                              android:inputType="number"
+                              android:singleLine="true"
+                              android:layout_marginLeft="0dp"
+
+                              android:background="@color/transparent"/>
+                    <TextView
+                            style="@style/addBankCard_text"
+                            android:text="验证码"
+                            android:id="@+id/textView6"
+                            />
+                </RelativeLayout>
+
+                <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/btn_vericode" android:layout_centerVertical="true"
+                        android:gravity="center_vertical"
+                        android:layout_alignParentRight="true"
+                        android:background="@color/orange_text"
+                        android:src="@drawable/item_entry"
+                        android:text="获取验证码"
+                        android:textColor="@color/white"
+                        android:paddingLeft="@dimen/space_7"
+                        android:paddingRight="@dimen/space_7" android:singleLine="false" android:ellipsize="marquee"/>
+            </RelativeLayout>
+
+            <RelativeLayout android:id="@+id/rl_layout_tixing" android:layout_width="fill_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/linegray" style="@style/rl_paycard"
+                            android:layout_below="@+id/rl_layout_vericode"
+                            android:layout_marginTop="@dimen/space_10" android:layout_centerInParent="true"
+                    >
+                <TextView
+                        style="@style/addBankCard_text"
+                        android:text="为验证卡号有效，确定时自动充值1元账户余额"
+                        android:id="@+id/textView7"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="@dimen/textsize_16" android:textColor="@color/gray"/>
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</LinearLayout>

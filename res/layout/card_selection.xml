@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/linegray">
+    <include
+            android:id="@+id/main_title"
+            layout="@layout/title_include"/>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/ll_card_select"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:layout_gravity="center"
+            android:gravity="center_vertical|center_horizontal">
+        <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/scrollView" android:layout_gravity="center_horizontal">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                          android:orientation="vertical"
+                          android:gravity="center_vertical|center_horizontal">
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:id="@+id/ll_card_list"
+                        android:layout_height="match_parent">
+                </LinearLayout>
+            </LinearLayout>
+
+        </ScrollView>
+    </LinearLayout>
+</LinearLayout>

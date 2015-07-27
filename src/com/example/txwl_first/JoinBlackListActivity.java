@@ -8,10 +8,9 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.*;
 import com.example.txwl_first.Util.DataVeri;
+import com.example.txwl_first.Util.PreferenceUtils;
 import com.example.txwl_first.Util.TXWLApplication;
 import com.example.txwl_first.Util.Url;
 import com.example.txwl_first.bean.GetQueryDetailResultBean;
@@ -21,13 +20,17 @@ import com.google.gson.GsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.umeng.analytics.MobclickAgent;
 import org.apache.http.Header;
 
 public class JoinBlackListActivity extends Activity{
+    private static final String TAG = "JoinBlackListActivity";
     private TextView tv_title,tv_right;
     private ImageButton ibtn_title_back,ibtn_sub;
     private QueryDetailResultBean queryDetailResultBean;
     private GetQueryDetailResultBean getQueryDetailResultBean;
+    private EditText et_contact, et_mobilephone, et_reward_money;
+    private Button btn_pay_money;
 
     ImageView headImg ;
     TextView name ;
@@ -56,6 +59,13 @@ public class JoinBlackListActivity extends Activity{
                 finish();
             }
         });
+
+        btn_pay_money.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addBlackPerson();
+            }
+        });
     }
 
     private void initView() {
@@ -79,6 +89,10 @@ public class JoinBlackListActivity extends Activity{
         over_day = (TextView) findViewById(R.id.over_day);
         tv_black_reward = (TextView) findViewById(R.id.tv_black_reward);
 
+        et_contact = (EditText) findViewById(R.id.et_contact);
+        et_mobilephone = (EditText) findViewById(R.id.et_mobilephone);
+        et_reward_money = (EditText) findViewById(R.id.et_reward_money);
+        btn_pay_money = (Button) findViewById(R.id.btn_pay_money);
     }
 
     private void setData() {
@@ -89,7 +103,7 @@ public class JoinBlackListActivity extends Activity{
         loan_type.setText(getLoan_type(queryDetailResultBean.getRegisttype()));
         tv_money_count.setText(connetText(1,queryDetailResultBean.getAccount(), "", ""));
         tv_manager.setText("经办人" + queryDetailResultBean.getRealname());
-        tv_year.setText("利率:" +queryDetailResultBean.getAnnualrate() + "%");
+        tv_year.setText("利率:" + queryDetailResultBean.getAnnualrate() + "%");
         over_day.setText(getQueryDetailResultBean.getData());
         switch (queryDetailResultBean.getStatus()) {
             case "1":
@@ -169,7 +183,7 @@ public class JoinBlackListActivity extends Activity{
                 builder.append("借款金额:");
                 builder.append(one);
                 builder.append("元");
-                builder.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.orange_text)),start,end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                builder.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.orange_text)), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 break;
             case 2:
                 start=one.length()+two.length()+2;
@@ -213,5 +227,44 @@ public class JoinBlackListActivity extends Activity{
             }
         });
 
+    }
+
+    private void addBlackPerson() {
+        String url = Url.ADD_BLACK_URL;
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("userid", PreferenceUtils.getUserId());
+        params.put("registid", queryDetailResultBean.getRegistid());
+        params.put("contactname", et_contact.getText());
+        params.put("contactmobile", et_mobilephone.getText());
+        params.put("reward", et_reward_money.getText());
+
+        client.post(url, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                Log.d("addBlackPerson ----->", new String(bytes));
+
+            }
+
+            @Override
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                TXWLApplication.getInstance().showTextToast("提交失败");
+            }
+        });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume");
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        Log.d(TAG, "onPause");
     }
 }

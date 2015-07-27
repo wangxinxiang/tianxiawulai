@@ -20,12 +20,14 @@ import com.google.gson.GsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.umeng.analytics.MobclickAgent;
 import org.apache.http.Header;
 
 import java.io.File;
 import java.util.Calendar;
 
 public class LoanActivity extends Activity implements AddItem {
+    private static String TAG="LoanActivity";
     protected boolean isSubmit = true;          //标示是否满足提交
 
     protected TextView tv_title, tv_right;
@@ -103,6 +105,15 @@ public class LoanActivity extends Activity implements AddItem {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d(TAG, "onResume");
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        Log.d(TAG, "onPause");
     }
 
     private void setOnClickListenser() {
@@ -130,13 +141,10 @@ public class LoanActivity extends Activity implements AddItem {
                     }
                     break;
                 case 2:
-                    if (!DataVeri.isNaN(check_data_str[2])) {
-                        isSubmit = false;
-                    } else {
                         if (!DataVeri.isAge(check_data_str[2])) {
                             isSubmit = false;
                         }
-                    }
+
                     break;
                 case 3:
                     if (!DataVeri.isMobileNum(check_data_str[3])) {
@@ -144,8 +152,14 @@ public class LoanActivity extends Activity implements AddItem {
                     }
                     break;
             }
-        }
 
+            if (i == (check_data_str.length - 2)) {
+                if (!DataVeri.isNaN(check_data_str[i], "年利率")) {
+                    isSubmit = false;
+                }
+            }
+
+        }
 
 
     }
@@ -281,8 +295,13 @@ public class LoanActivity extends Activity implements AddItem {
         if ("5".equals(queryDetailResultBean.getRegisttype())) {
             tv_right.setVisibility(View.GONE);
         } else if (getIntent().getBooleanExtra("addblack", false)) {
-            tv_right.setText("加入黑名单");
+            if ( "3".equals(queryDetailResultBean.getStatus())) {
+                tv_right.setVisibility(View.GONE);
+            }else {
+                tv_right.setText("加入黑名单");
+            }
         }
+
         //跳转到举报界面
         tv_right.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -2,6 +2,7 @@ package com.example.txwl_first;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,6 +20,7 @@ import com.google.gson.GsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.umeng.analytics.MobclickAgent;
 import org.apache.http.Header;
 
 import java.io.*;
@@ -29,6 +31,8 @@ import java.net.URL;
  * Created by wang on 2015/4/6.
  */
 public class PhotoActivity extends Activity{
+    private static final String TAG ="PhotoActivity" ;
+    private Context mContext;
     private TextView takePhoto,photoAlbum,cancel;
     private int from;
     private static String path= ImageUtils.path;     //sd路径
@@ -37,10 +41,26 @@ public class PhotoActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photo);
+        mContext=this;
         Intent intent1 = getIntent();
         from = intent1.getIntExtra("from", -1);
         init();
         initListener();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume");
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        Log.d(TAG, "onPause");
 
     }
 
@@ -79,6 +99,8 @@ public class PhotoActivity extends Activity{
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        TXWLProgressDialog.createDialog(mContext);
+        TXWLProgressDialog.setMessage("图片上传中...");
         switch (requestCode) {
             case 1:
                 if (resultCode == RESULT_OK) {
@@ -125,7 +147,7 @@ public class PhotoActivity extends Activity{
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         int options = 80;//个人喜欢从80开始,
         mBitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);
-        while (baos.toByteArray().length / 1024 > 100 && options > 0) {
+        while (baos.toByteArray().length / 1024 > 2000 && options > 0) {
             baos.reset();
             options -= 10;
             mBitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);
@@ -188,16 +210,20 @@ public class PhotoActivity extends Activity{
                         UpLoadImgBean upLoadImgBean = new GsonBuilder().create().fromJson(new String(bytes), UpLoadImgBean.class);
 
                         if (upLoadImgBean.getStatus().equals("success")) {
+
                             Intent intent = new Intent();
                             intent.putExtra("imgUrl", upLoadImgBean.getImgurl());
                             intent.putExtra("from", from);
                             intent.putExtra("img", file);
                             setResult(Constant.GETPHOTO, intent);
+                            TXWLProgressDialog.Dismiss();
                             finish();
                         } else {
+                            TXWLProgressDialog.Dismiss();
                             TXWLApplication.getInstance().showTextToast("获取图片失败");
                         }
                     }catch (Exception e) {
+                        TXWLProgressDialog.Dismiss();
                         TXWLApplication.getInstance().showErrorConnected(e);
                     }
 
@@ -205,7 +231,9 @@ public class PhotoActivity extends Activity{
 
                 @Override
                 public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                    TXWLProgressDialog.Dismiss();
                     TXWLApplication.getInstance().showTextToast("网络错误");
+
                 }
             });
 

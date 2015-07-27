@@ -67,4 +67,99 @@
         <item name="android:backgroundDimEnabled">true</item><!--模糊-->
     </style>
 
+    <!--自定义Dialog-->
+    <style name="progress_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@null</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <!-- 选择银行卡 -->
+    <style name="addBankCard_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/space_10</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/textsize_18</item>
+    </style>
+    <style name="addBankCard_edit">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/space_35</item>
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:paddingLeft">@dimen/space_80</item>
+        <item name="android:layout_marginRight">@dimen/space_10</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">@dimen/textsize_20</item>
+        <!--<item name="android:background">@drawable/qhb_editbox_input_selector</item>-->
+        <item name="android:textColorHint">@color/linegray</item>
+    </style>
+
+    <style name="rl_paycard">
+        <item name="android:layout_marginTop">@dimen/space_10</item>
+        <item name="android:layout_marginLeft">@dimen/space_10</item>
+        <item name="android:layout_marginRight">@dimen/space_10</item>
+        <item name="android:height">@dimen/space_50</item>
+    </style>
+
+
+    <!--支付方式第一栏金额-->
+    <style name="choice_pay">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/space_30</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="choice_pay_unit" parent="choice_pay">
+        <item name="android:textSize">@dimen/textsize_20</item>
+        <item name="android:text">@string/choice_pay_amount</item>
+    </style>
+    <style name="choice_pay_amount" parent="choice_pay">
+        <item name="android:textSize">@dimen/textsize_35</item>
+        <item name="android:layout_marginTop">@dimen/space_10</item>
+        <item name="android:text">@string/choice_pay_amount_default</item>
+        <item name="android:layout_marginBottom">@dimen/space_30</item>
+    </style>
+
+    <!--支付方式 选择栏-->
+    <style name="choice_pay_bar">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    <style name="choice_pay_bar_img" parent="choice_pay_bar">
+        <item name="android:src">@drawable/ebatong_icon</item>
+        <item name="android:layout_marginLeft">@dimen/space_2</item>
+    </style>
+    <style name="choice_pay_bar_tv" parent="choice_pay_bar">
+        <item name="android:text">@string/choice_pay_bar_name</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/textsize_18</item>
+        <item name="android:padding">0dp</item>
+    </style>
+    <style name="choice_pay_bar_ibtn" parent="choice_pay_bar">
+        <item name="android:src">@drawable/item_entry</item>
+    </style>
+
+    <!--充值成功-->
+    <style name="recharge_success_text">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">@dimen/textsize_16</item>
+        <item name="android:layout_margin">@dimen/space_10</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+    
+
 </resources>

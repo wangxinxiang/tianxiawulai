@@ -29,6 +29,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.umeng.analytics.MobclickAgent;
 import org.apache.http.Header;
 
 import java.util.ArrayList;
@@ -406,12 +407,14 @@ public class MenuFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume");
+        MobclickAgent.onPageStart(TAG); //统计页面
     }
 
     @Override
     public void onPause() {
         super.onPause();
         Log.d(TAG, "oPause");
+        MobclickAgent.onPageEnd(TAG);
     }
 
     @Override

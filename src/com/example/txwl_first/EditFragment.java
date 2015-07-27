@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.example.txwl_first.Util.PreferenceUtils;
 import com.example.txwl_first.Util.TXWLApplication;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by Administrator on 2015/7/8 0008.
@@ -123,12 +124,14 @@ public class EditFragment extends Fragment implements View.OnClickListener{
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume");
+        MobclickAgent.onPageStart(TAG); //统计页面
     }
 
     @Override
     public void onPause() {
         super.onPause();
         Log.d(TAG, "oPause");
+        MobclickAgent.onPageEnd(TAG);
     }
 
     @Override

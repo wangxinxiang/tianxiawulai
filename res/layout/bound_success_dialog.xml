@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/transparent"
+        >
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:orientation="vertical"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/ll_bound_success"
+                  android:background="@color/white"
+                  android:gravity="center_horizontal" android:layout_margin="@dimen/space_14">
+        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                   android:background="@color/transparent" android:src="@drawable/mark_tick"
+                   android:padding="20sp"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="绑定成功"
+                  android:textColor="@color/dark" android:textSize="@dimen/textsize_24"
+                />
+        <Button android:layout_width="200dp" android:layout_height="wrap_content"
+                android:background="@drawable/btn_selector" android:text="确定" android:textColor="@color/white"
+                android:layout_margin="@dimen/space_14" android:textSize="@dimen/textsize_20"
+                android:id="@+id/btn_bound_sucess"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

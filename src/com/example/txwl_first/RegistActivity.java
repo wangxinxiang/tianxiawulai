@@ -16,6 +16,7 @@ import com.google.gson.GsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.umeng.analytics.MobclickAgent;
 import org.apache.http.Header;
 
 /**
@@ -138,7 +139,8 @@ public class RegistActivity extends Activity implements View.OnClickListener{
         mobile=et_regist_mobile.getText().toString().trim();
         validatenum=et_check_code_number.getText().toString().trim();
         userpwd= MD5.getMD5Lower(et_password.getText().toString().trim());
-        if(DataVeri.isMobileNum(mobile)&&DataVeri.isNaN(validatenum)&&!("".equals(userpwd))){
+        if(DataVeri.isMobileNum(mobile)&&DataVeri.isNaN(validatenum,"验证码")&&!("".equals(userpwd))){
+
             AsyncHttpClient client=new AsyncHttpClient();
             client.setTimeout(10000);
 
@@ -183,5 +185,19 @@ public class RegistActivity extends Activity implements View.OnClickListener{
             });
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume");
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        Log.d(TAG, "onPause");
     }
 }

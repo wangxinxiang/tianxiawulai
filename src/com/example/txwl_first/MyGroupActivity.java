@@ -18,11 +18,13 @@ import com.google.gson.GsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.umeng.analytics.MobclickAgent;
 import org.apache.http.Header;
 
 import java.util.ArrayList;
 
 public class MyGroupActivity extends Activity{
+    private static final String TAG ="MyGroupActivity" ;
     private TextView tv_title,tv_right;
     private ImageButton ibtn_title_back,ibtn_sub,ibtn_add;
     private ArrayList<MyGroupBean> myGroupBeans = new ArrayList<>();
@@ -38,10 +40,21 @@ public class MyGroupActivity extends Activity{
         setOnClickListener();
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d(TAG, "onResume");
+        MobclickAgent.onResume(this);
         getGroupData();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        Log.d(TAG, "onPause");
+
     }
 
     private void setOnClickListener() {

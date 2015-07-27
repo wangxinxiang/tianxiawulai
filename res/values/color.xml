@@ -8,17 +8,21 @@
     <color name="orange_text">#FF7C3E</color>
     <color name="orange_main">#FF7C3E</color>
     <color name="transparent">#00000000</color>
+    <color name="gray">#FF888888</color>
     <color name="gray_text_search">#EDEDEE</color>
     <color name="gray_tab">#414141</color>
     <color name="gray_text_deep">#414141</color>
     <color name="gray_tab_text">#8F8F8F</color>
+    <color name="linegray">#f0f0f0</color>
 
     <color name="black">#000000</color>
+    <color name="dark">#000000</color>
     <color name="midblack">#191313</color>
     <color name="lightgray">#D4D5D5</color>
     <color name="item_left">#848484</color>
 
     <color name="main_blue">#00B5EE</color>
     <color name="main_red">#FF2B2B</color>
+    <color name="bg_red">#D43C34</color>
 
 </resources>

@@ -20,11 +20,13 @@ import com.google.gson.GsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.umeng.analytics.MobclickAgent;
 import org.apache.http.Header;
 
 import java.util.ArrayList;
 
 public class QueryResultActivity extends Activity {
+    private static final String TAG ="QueryResultActivity" ;
     private WebView webView;
 
     private String way;
@@ -48,6 +50,21 @@ public class QueryResultActivity extends Activity {
         getSearchData();
         initView();
         setOnClickListener();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume");
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        Log.d(TAG, "onPause");
+
     }
 
     private void setOnClickListener() {
