@@ -63,8 +63,9 @@ public class Me_ListViewAdapter extends BaseAdapter {
             viewHolder.tv_username.setText(item.getName());
             viewHolder.tv_user_phone_num.setText(item.getMobile());
             viewHolder.loan_type.setText(DataVeri.getLoan_type(item.getRegisttype()));
-            viewHolder.tv_money_count.setText("借款金额："+item.getAccount());
-            viewHolder.tv_manager.setText("经办人"+item.getRegistname());
+
+            viewHolder.tv_money_count.setText("借款金额："+DataVeri.getMoneyFromDouble(item.getAccount()));
+        viewHolder.tv_manager.setText("经办人"+item.getRegistname());
             viewHolder.tv_year.setText("利率："+item.getAnnualrate()+"%");
             viewHolder.over_day.setText(item.getDate());
         return convertView;

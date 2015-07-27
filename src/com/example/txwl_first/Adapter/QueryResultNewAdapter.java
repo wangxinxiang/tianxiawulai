@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.txwl_first.R;
+import com.example.txwl_first.Util.DataVeri;
 import com.example.txwl_first.bean.QueryResultItemBean;
 import com.example.txwl_first.business.LoaderBusiness;
 
@@ -65,7 +66,7 @@ public class QueryResultNewAdapter extends BaseAdapter {
         holderView.tv_own_user_phone.setText(loanBeanlist.getMobile());
 
         holderView.tv_debt_type.setText(loanBeanlist.getDate());
-        holderView.tv_debt_money.setText("欠" + loanBeanlist.getRegistcompany() + loanBeanlist.getAccount() + "元");
+        holderView.tv_debt_money.setText("欠" + loanBeanlist.getRegistcompany() + DataVeri.getMoneyFromDouble(loanBeanlist.getAccount()) + "元");
         switch (loanBeanlist.getStatus2()) {
             case "1":
                 holderView.tv_debt_type.setText(connetText(0, loanBeanlist.getDate(), "", ""));
@@ -75,9 +76,12 @@ public class QueryResultNewAdapter extends BaseAdapter {
                 break;
             case "3":
                 holderView.tv_debt_type.setTextColor(mContext.getResources().getColor(R.color.black));
-                holderView.tv_query_reward_num.setText(connetText(1, loanBeanlist.getRegistcompany(), loanBeanlist.getContactname(), loanBeanlist.getRewardmoney() ));
-                holderView.tv_reward_phone.setText(loanBeanlist.getContactname() + "电话：" + loanBeanlist.getContactmobile());
-                holderView.tv_debt_money.setText("恶意拖欠" + loanBeanlist.getRegistcompany() + loanBeanlist.getAccount() + "元");
+                if (!"5".equals(loanBeanlist.getRegisttype())) {
+                    holderView.tv_query_reward_num.setText(connetText(1, loanBeanlist.getRegistcompany(), loanBeanlist.getContactname(), loanBeanlist.getRewardmoney() ));
+                    holderView.tv_reward_phone.setText(loanBeanlist.getContactname() + "电话：" + loanBeanlist.getContactmobile());
+                }
+
+                holderView.tv_debt_money.setText("恶意拖欠" + loanBeanlist.getRegistcompany() + DataVeri.getMoneyFromDouble(loanBeanlist.getAccount()) + "元");
                 break;
         }
 
@@ -130,6 +134,7 @@ public class QueryResultNewAdapter extends BaseAdapter {
                 builder.setSpan(new ForegroundColorSpan(resources.getColor(R.color.orange_text)), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 break;
             case 1:
+                three = DataVeri.getMoneyFromDouble(three);
                 start=one.length()+two.length()+2;
                 end=start+three.length();
                 builder.append(one);

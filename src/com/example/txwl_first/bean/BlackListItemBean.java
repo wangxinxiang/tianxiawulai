@@ -11,7 +11,7 @@ mobile 手机号码
 province 地址
 companyname公司名称
 accout借款金额
-owneridimg 用户头像
+ownerheadimg 用户头像
 description 详细描述
 status2 用户状态
 registtype 登记类型:1 车贷 ,2 房贷,3 信用贷 4 其他
@@ -37,8 +37,8 @@ public class BlackListItemBean {
     @SerializedName("account")
     private String account;
 
-    @SerializedName("owneridimg")
-    private String owneridimg;
+    @SerializedName("ownerheadimg")
+    private String ownerheadimg;
     @SerializedName("description")
     private String description;
     @SerializedName("status2")
@@ -112,11 +112,11 @@ public class BlackListItemBean {
     }
 
     public String getOwneridimg() {
-        return owneridimg;
+        return ownerheadimg;
     }
 
     public void setOwneridimg(String owneridimg) {
-        this.owneridimg = owneridimg;
+        this.ownerheadimg = owneridimg;
     }
 
     public String getDescription() {

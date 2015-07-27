@@ -12,7 +12,7 @@ import com.google.gson.annotations.SerializedName;
  companyname公司名称
  accout借款金额
  repaydate 应该还款日期
- owneridimg 用户头像
+ ownerheadimg 用户头像
  description 详细描述
  status2 用户状态
  date 用户还款信息
@@ -41,8 +41,8 @@ public class QueryResultItemBean {
     private String account;
     @SerializedName("repaydate")
     private String repaydate;
-    @SerializedName("owneridimg")
-    private String owneridimg;
+    @SerializedName("ownerheadimg")
+    private String ownerheadimg;
     @SerializedName("description")
     private String description;
     @SerializedName("status2")
@@ -137,11 +137,11 @@ public class QueryResultItemBean {
     }
 
     public String getOwneridimg() {
-        return owneridimg;
+        return ownerheadimg;
     }
 
     public void setOwneridimg(String owneridimg) {
-        this.owneridimg = owneridimg;
+        this.ownerheadimg = owneridimg;
     }
 
     public String getDescription() {

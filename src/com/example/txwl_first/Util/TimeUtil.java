@@ -465,7 +465,8 @@ public class TimeUtil {
      * @return比较两个时间的大小
      */
     public static boolean compareTime(String time1,String time2) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date date1 = null;
         Date date2 = null;
 

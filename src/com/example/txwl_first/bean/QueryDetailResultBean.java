@@ -2,6 +2,8 @@ package com.example.txwl_first.bean;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2015/7/21.
  * registid 登记者ID
@@ -40,7 +42,7 @@ import com.google.gson.annotations.SerializedName;
  contactname 悬赏姓名
  contactmobile 悬赏人手机号码
  */
-public class QueryDetailResultBean {
+public class QueryDetailResultBean implements Serializable {
 
     @SerializedName("registid")
     private String registid;

@@ -188,7 +188,13 @@ public class PersonalInfoActivity extends Activity {
         }
 
         params.put("realname", detail_name.getText());
-        params.put("phone", detail_company_phone.getText());
+
+        if (DataVeri.isPhone(detail_company_phone.getText().toString())) {
+            params.put("phone", detail_company_phone.getText());
+        } else {
+            TXWLApplication.getInstance().showTextToast("电话号码格式不正确");
+            return;
+        }
 
         client.post(url, params, new AsyncHttpResponseHandler() {
             @Override

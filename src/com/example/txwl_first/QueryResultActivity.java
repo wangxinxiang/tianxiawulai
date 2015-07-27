@@ -71,7 +71,7 @@ public class QueryResultActivity extends Activity {
                 if ("3".equals(loanBeans.get(position).getRegisttype())){
                     intent.putExtra("fromButton",QUERY_LISTVIEW_CREDIT_ITEM);
                 }
-                if ("4".equals(loanBeans.get(position).getRegisttype())){
+                if ("4".equals(loanBeans.get(position).getRegisttype()) || "5".equals(loanBeans.get(position).getRegisttype())){
                     intent.putExtra("fromButton",QUERY_LISTVIEW_OTHER_ITEM);
                 }
                 intent.putExtra("registid", loanBeans.get(position).getRegistid());
@@ -112,16 +112,14 @@ public class QueryResultActivity extends Activity {
                 Log.d("QueryResult_url ------>", new String(bytes));
                 try {
                     QueryResultBean queryResultBean = new GsonBuilder().create().fromJson(new String(bytes), QueryResultBean.class);
-                    if (queryResultBean.getUrl() == null) {
-                        for (int j = 0; j < queryResultBean.getGetQueryResultListBean().length; j++) {
-                            loanBeans.add(queryResultBean.getGetQueryResultListBean()[j]);
+                        if (queryResultBean.getGetQueryResultListBean() == null) {
+                            TXWLApplication.getInstance().showTextToast("未查询到不良信用记录");
+                        } else {
+                            for (int j = 0; j < queryResultBean.getGetQueryResultListBean().length; j++) {
+                                loanBeans.add(queryResultBean.getGetQueryResultListBean()[j]);
+                            }
+                            adapter.notifyDataSetChanged();
                         }
-                        adapter.notifyDataSetChanged();
-                    } else {
-                        lv_query.setVisibility(View.GONE);
-                        webView.setVisibility(View.VISIBLE);
-                        webView.loadUrl(queryResultBean.getUrl());
-                    }
                 } catch (Exception e) {
                     TXWLApplication.getInstance().showErrorConnected(e);
                 }

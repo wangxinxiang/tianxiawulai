@@ -1,5 +1,6 @@
 package com.example.txwl_first;
 
+import com.example.txwl_first.Util.DataVeri;
 import com.example.txwl_first.Util.TXWLApplication;
 import com.loopj.android.http.RequestParams;
 
@@ -30,11 +31,17 @@ public class CarLoanActivity extends LoanActivity{
         super.checkData();
 
         for (int i = 0; i < 5; i++) {
-            if ("".equals(image_url[i])) {
+            if (image_url[i] == null || "".equals(image_url[i])) {
                 isSubmit = false;
                 TXWLApplication.getInstance().showTextToast("图片不能为空");
             }
         }
+
+        if (DataVeri.compare_date(check_data_str[7], check_data_str[8])) {
+            isSubmit = false;
+        }
+
+
 
     }
 

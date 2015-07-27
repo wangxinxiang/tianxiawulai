@@ -21,6 +21,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import com.example.txwl_first.Adapter.MyFragmentPagerAdapter;
+import com.example.txwl_first.Util.DataVeri;
 import com.example.txwl_first.Util.PreferenceUtils;
 import com.example.txwl_first.Util.TXWLApplication;
 import com.example.txwl_first.Util.Url;
@@ -51,6 +52,7 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
     private ImageView img_headimage;
     private TextView tv_user_name;
     private EditText et_search;
+    private Button btn_search;
     private ImageButton ibtn_clear;
     private TextView tv_total,tv_violate,tv_reclaimed,tv_reclaiming;//四个统计模块的控件
 
@@ -185,6 +187,7 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
         tv_right= (TextView) rootview.findViewById(R.id.tv_right);
         tv_right.setVisibility(View.VISIBLE);
         tv_right.setText("我的团队");
+
     }
 
     private void initListener() {
@@ -231,8 +234,12 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
                 //当有输入时 显示清空按钮 实现点击清空输入
                 if (editable.length() == 0 || et_search.equals("")) {
                     ibtn_clear.setVisibility(View.GONE);
+                    if (PreferenceUtils.getIsLogin()) {
+                        getHttpMyInfo(PreferenceUtils.getUserId(), "", "");
+                    }
                 } else {
                     ibtn_clear.setVisibility(View.VISIBLE);
+                    getHttpMyInfo(PreferenceUtils.getUserId(), editable.toString(), "");
                 }
             }
         });
@@ -242,6 +249,17 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
             public void onClick(View view) {
                 //清空输入框
                 et_search.setText("");
+            }
+        });
+
+        btn_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (et_search.getText().toString().trim().equals("")){
+                    TXWLApplication.getInstance().showTextToast("搜索关键字输入不能为空");
+                }else {
+                    getHttpMyInfo(PreferenceUtils.getUserId(),et_search.getText().toString().trim(),"");
+                }
             }
         });
 
@@ -286,10 +304,10 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
         //设置 从网络访问得到的字段
 
         tv_user_name.setText("用户名");
-        tv_total.setText(setRichText(tv_total, totalcount, totalmoney));
-        tv_violate.setText(setRichText(tv_violate, brokencount, brokenmoney));
-        tv_reclaimed.setText(setRichText(tv_reclaimed, recallcount, recallmoney));
-        tv_reclaiming.setText(setRichText(tv_reclaiming, unrecallcount, unrecallmoney));
+        tv_total.setText(setRichText(tv_total, totalcount, DataVeri.getMoneyFromDouble(totalmoney)));
+        tv_violate.setText(setRichText(tv_violate, brokencount, DataVeri.getMoneyFromDouble(brokenmoney)));
+        tv_reclaimed.setText(setRichText(tv_reclaimed, recallcount, DataVeri.getMoneyFromDouble(recallmoney)));
+        tv_reclaiming.setText(setRichText(tv_reclaiming, unrecallcount, DataVeri.getMoneyFromDouble(unrecallmoney)));
 
     }
 
@@ -341,6 +359,7 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
         tv_violate= (TextView) rootview.findViewById(R.id.tv_violate);
         tv_reclaimed= (TextView) rootview.findViewById(R.id.tv_reclaimed);
         tv_reclaiming= (TextView) rootview.findViewById(R.id.tv_reclaiming);
+        btn_search= (Button) rootview.findViewById(R.id.btn_search);
     }
 
     private void initTextView() {

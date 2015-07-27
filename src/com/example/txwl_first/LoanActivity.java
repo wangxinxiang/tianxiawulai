@@ -13,8 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
 import com.example.txwl_first.Util.*;
+import com.example.txwl_first.bean.FaileBean;
 import com.example.txwl_first.bean.QueryDetailResultBean;
 import com.example.txwl_first.business.LoaderBusiness;
+import com.google.gson.GsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -241,17 +243,25 @@ public class LoanActivity extends Activity implements AddItem {
         tv_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //遍历所有控件，获取数据
-                getData();
-                Log.d("遍历子控件", getData().toString());
-                //输入字段格式检查
-                checkData();
+                if (getIntent().getBooleanExtra("addblack", false)) {
+                    Intent intent = new Intent(LoanActivity.this, JoinBlackListActivity.class);
+                    startActivity(intent);
+                } else {
+                    //遍历所有控件，获取数据
+                    getData();
+                    Log.d("遍历子控件", getData().toString());
+                    if (isSubmit) {
+                        //输入字段格式检查
+                        checkData();
+                    }
 
-                Log.d("registToInternet --->", "registToInternet" + isSubmit);
-                //TODO：联网上传接口数据
-               if (isSubmit) {
-                   registToInternet();
-               }
+                    Log.d("registToInternet --->", "registToInternet" + isSubmit);
+                    //TODO：联网上传接口数据
+                    if (isSubmit) {
+                        registToInternet();
+                    }
+                }
+
             }
         });
         for (int i = 0; i < selectors.length; i++) {
@@ -268,12 +278,27 @@ public class LoanActivity extends Activity implements AddItem {
     public void fill_LinearLayout(String title_name, String[] owner, String[] selectors, QueryDetailResultBean queryDetailResultBean) {
         tv_title.setText(title_name);
         tv_right.setText("举报");
+        if ("5".equals(queryDetailResultBean.getRegisttype())) {
+            tv_right.setVisibility(View.GONE);
+        } else if (getIntent().getBooleanExtra("addblack", false)) {
+            tv_right.setText("加入黑名单");
+        }
         //跳转到举报界面
         tv_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
-                startActivity(intent);
+                if (getIntent().getBooleanExtra("addblack", false)) {
+                    Intent intent = new Intent(LoanActivity.this, JoinBlackListActivity.class);
+//                    Bundle bundle = new Bundle();
+                    intent.putExtra("headImage", getIntent().getStringExtra("headImage"));
+                    intent.putExtra("registid", queryDetailResultBean.getRegistid());
+//                    bundle.putSerializable("data", queryDetailResultBean);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
+                    startActivity(intent);
+                }
+
             }
         });
 
@@ -315,7 +340,12 @@ public class LoanActivity extends Activity implements AddItem {
                     setResult(Constant.LOGIN_CHANGE);
                     finish();
                 }else {
-                    TXWLApplication.getInstance().showTextToast("登记失败");
+                    try {
+                        FaileBean faileBean = new GsonBuilder().create().fromJson(new String(bytes), FaileBean.class);
+                        TXWLApplication.getInstance().showTextToast(faileBean.getMsg());
+                    } catch (Exception e) {
+                        TXWLApplication.getInstance().showErrorConnected(e);
+                    }
                 }
             }
 
@@ -363,7 +393,7 @@ public class LoanActivity extends Activity implements AddItem {
             } else if (data1.equals(houseowner[4]) || data1.equals(carowner[4]) || data1.equals(creditowner[4])) {
                 right.setText(queryDetailResultBean.getCompanyname());
             } else if ("借款金额".equals(data1)) {
-                right.setText(queryDetailResultBean.getAccount());
+                right.setText(DataVeri.getMoneyFromDouble(queryDetailResultBean.getAccount()));
             } else if ("所在地区".equals(data1)) {
                 right.setText(queryDetailResultBean.getProvince());
             } else if ("详细说明".equals(data1)) {
@@ -386,7 +416,7 @@ public class LoanActivity extends Activity implements AddItem {
             }
             if ("借款金额".equals(data1)) {
                 et_input_content.setInputType(InputType.TYPE_CLASS_NUMBER);
-                right.setText(queryDetailResultBean.getAccount() + "元");
+                right.setText( DataVeri.getMoneyFromDouble(queryDetailResultBean.getAccount()) + "元");
             }
             if ("年利率".equals(data1)) {
                 et_input_content.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -399,11 +429,11 @@ public class LoanActivity extends Activity implements AddItem {
                 et_input_content.setVisibility(View.GONE);
                 rg_male_female.setVisibility(View.VISIBLE);
             }
-            if (data1.equals("借款金额")) {
+            if (data1.equals("借款金额") ||data1.equals("手机号") ||data1.equals("年龄") || data1.equals("身份证")) {
                 et_input_content.setInputType(InputType.TYPE_CLASS_NUMBER);
             }
             if (data1.equals("年利率")) {
-                et_input_content.setInputType(InputType.TYPE_CLASS_NUMBER);
+                et_input_content.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
             }
             if (data1.equals("借款日")) {
                 et_input_content.setVisibility(View.GONE);
@@ -476,6 +506,11 @@ public class LoanActivity extends Activity implements AddItem {
         @Override
         public void onDateSet(DatePicker datePicker, int year, int month, int day) {
             loan_datetime = new StringBuffer().append(year + "-").append(month + 1 + "-").append(day).toString();
+            String currentTime = TimeUtil.getCurrentTime();
+            if (!TimeUtil.compareTime(currentTime, loan_datetime)) {
+                TXWLApplication.getInstance().showTextToast("借款时间要小于当前时间");
+                return;
+            }
             setLoanTime();
         }
     };

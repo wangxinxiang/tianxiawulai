@@ -23,6 +23,7 @@ import com.example.txwl_first.Util.Url;
 import com.example.txwl_first.bean.BlackListBean;
 import com.example.txwl_first.bean.BlackListItemBean;
 import com.google.gson.GsonBuilder;
+import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.loopj.android.http.AsyncHttpClient;
@@ -101,9 +102,19 @@ public class MenuFragment extends Fragment {
                 Log.d("et_search", "afterTextChanged");
                 //当有输入时 显示清空按钮 实现点击清空输入
                 if (editable.length() == 0 || et_search.equals("")) {
-                    ibtn_search.setVisibility(View.GONE);
+                    //输入为空 显示全部数据
+                    mPullRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
+                    if (byAllList.size()==0){
+                        getHttpByQueryAllBlackPerson();
+                    }else {
+                        list.clear();
+                        list.addAll(byAllList);
+                        adapter.notifyDataSetChanged();
+                    }
                 } else {
-                    ibtn_search.setVisibility(View.VISIBLE);
+                    //输入不为空
+                    getHttpByWayBlackPerson(editable.toString());
+                    mPullRefreshListView.setMode(PullToRefreshBase.Mode.DISABLED);
                 }
             }
         });
@@ -125,7 +136,7 @@ public class MenuFragment extends Fragment {
 //                    Intent intent=new Intent();
 //                    intent.setClass(getActivity(),)
 //                    startActivity(intent);
-                        Toast.makeText(getActivity(), getActivity().toString() + "点击了软键盘的搜索", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getActivity(), getActivity().toString() + "点击了软键盘的搜索", Toast.LENGTH_LONG).show();
                         getHttpByWayBlackPerson(et_search.getText().toString().trim());
                         return true;
                     }
@@ -138,8 +149,18 @@ public class MenuFragment extends Fragment {
         ibtn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "点击了搜索按钮", Toast.LENGTH_SHORT).show();
-                getHttpByWayBlackPerson(et_search.getText().toString().trim());
+//                Toast.makeText(getActivity(), "点击了搜索按钮", Toast.LENGTH_SHORT).show();
+                String way=et_search.getText().toString().trim();
+                if (way.equals("")){
+                    //点击搜索按钮时候 输入框为空
+                    TXWLApplication.getInstance().showTextToast("搜索关键字为空！");
+                }else {
+                    //输入框不为空
+                     getHttpByWayBlackPerson(way);
+                     mPullRefreshListView.setMode(PullToRefreshBase.Mode.DISABLED);
+                }
+
+
             }
         });
 
@@ -184,16 +205,25 @@ public class MenuFragment extends Fragment {
                     blackListBean = new GsonBuilder().create().fromJson(new String(responseBody), BlackListBean.class);
                     if ((blackListBean != null) && ("success".equals(blackListBean.getStatus()))) {
                         //网络请求成功
-                        byWayList.clear();
-                        int size = blackListBean.getBlackListItemBeans().length;
-                        for (int i = 0; i < size; i++) {
-                            byWayList.add(blackListBean.getBlackListItemBeans()[i]);//添加list里面的item项目 到arraylist
+                        int size= blackListBean.getBlackListItemBeans().length;
+                        if (size>0){
+                            //返回有数据 更新显示
+                            byWayList.clear();
+                            for (int i = 0; i < size; i++) {
+                                byWayList.add(blackListBean.getBlackListItemBeans()[i]);//添加list里面的item项目 到arraylist
+                            }
+                            list.clear();
+                            list.addAll(byWayList);
+                            adapter.notifyDataSetChanged();
+                        }else {
+                            //没有数据 提示没有搜索到结果
+                            TXWLApplication.getInstance().showTextToast("查找不到符合条件的信息");
+                            list.clear();
+                            adapter.notifyDataSetChanged();
                         }
-                        list.clear();
-                        list.addAll(byWayList);
-                        adapter.notifyDataSetChanged();
+
                     } else {
-                        Toast.makeText(getActivity(), "网络错误，请检查网络", Toast.LENGTH_LONG).show();
+                       TXWLApplication.getInstance().showTextToast(blackListBean.getMsg());
                     }
                 } catch (Exception e) {
                     TXWLApplication.getInstance().showErrorConnected(e);
@@ -308,6 +338,11 @@ public class MenuFragment extends Fragment {
         byWayList=new ArrayList<BlackListItemBean>();
         adapter=new BlackListAdapter(getActivity(),list,resources);
         actualListView.setAdapter(adapter);
+        ILoadingLayout endLabels = mPullRefreshListView.getLoadingLayoutProxy(
+                false, true);
+        endLabels.setPullLabel("上拉加载更多...");// 刚下拉时，显示的提示
+        endLabels.setRefreshingLabel("正在加载数据...");// 刷新时
+        endLabels.setReleaseLabel("放开以刷新...");// 下来达到一定距离时，显示的提示
 
         mPullRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
@@ -316,7 +351,7 @@ public class MenuFragment extends Fragment {
                         DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
                 refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
                 //下拉刷新
-                Log.d("onPullDownToRefresh","下拉");
+                Log.d("onPullDownToRefresh", "下拉");
                 pi = 1;
                 pullDown = true;
                 getHttpByQueryAllBlackPerson();
@@ -338,7 +373,8 @@ public class MenuFragment extends Fragment {
 
         actualListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
+                int position=i-1;
                 Intent intent = new Intent(getActivity(), LoanDetailActivity.class);
                 if("1".equals(list.get(position).getRegisttype())){
                     intent.putExtra("fromButton", QUERY_LISTVIEW_CAR_ITEM);

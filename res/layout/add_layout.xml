@@ -53,8 +53,9 @@
                   android:id="@+id/et_password"
                   android:background="@null"
                   android:textColor="@color/black"
+
                   android:layout_height="wrap_content" android:padding="@dimen/space_14" android:singleLine="true"
-                  android:ellipsize="end"/>
+                  android:ellipsize="end" android:inputType="textPassword"/>
     </LinearLayout>
 
     <Button android:layout_width="match_parent"

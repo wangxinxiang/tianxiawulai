@@ -31,10 +31,14 @@ public class HouseLoanActivity extends LoanActivity {
     protected void checkData() {
         super.checkData();
         for (int i = 0; i < 5; i++) {
-            if ("".equals(image_url[i])) {
+            if (image_url[i] == null  || "".equals(image_url[i])) {
                 isSubmit = false;
                 TXWLApplication.getInstance().showTextToast("图片不能为空");
             }
+        }
+
+        if (DataVeri.compare_date(check_data_str[9], check_data_str[10])) {
+            isSubmit = false;
         }
     }
 

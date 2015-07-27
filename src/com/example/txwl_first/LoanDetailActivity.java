@@ -36,14 +36,14 @@ private GetQueryDetailResultBean getQueryDetailResultBean;
         client.post(url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
-                Log.d("QueryDetailActivity -->" , new String(bytes));
+                Log.d("QueryDetailActivity -->", new String(bytes));
                 try {
                     getQueryDetailResultBean = new GsonBuilder().create().fromJson(new String(bytes), GetQueryDetailResultBean.class);
                     QueryDetailResultBean queryDetailResultBean = getQueryDetailResultBean.getQueryDetailResultBean();
                     getInfo(queryDetailResultBean);
                     addView(queryDetailResultBean);
                     setTopItem(queryDetailResultBean);
-                }catch (Exception e) {
+                } catch (Exception e) {
                     TXWLApplication.getInstance().showErrorConnected(e);
                 }
             }
@@ -110,6 +110,7 @@ private GetQueryDetailResultBean getQueryDetailResultBean;
                 break;
             case "3":
             case "4":
+            case "5":
                 car_own_images_show = new String[3];
                 car_own_images_show[0] = queryDetailResultBean.getOwneridimg();
                 car_owner_des_show[0] = queryDetailResultBean.getOwneriddesc();
@@ -158,9 +159,14 @@ private GetQueryDetailResultBean getQueryDetailResultBean;
                 tv_black_reward.setTextColor(getResources().getColor(R.color.midblack));
                 tv_year.setTextColor(getResources().getColor(R.color.midblack));
 
-                tv_black_reward.setText(connetText(2, queryDetailResultBean.getRegistcompany(), queryDetailResultBean.getContactname(), queryDetailResultBean.getRewardaccount() ));
-                tv_year.setText(queryDetailResultBean.getContactname() + "电话：" + queryDetailResultBean.getContactmobile());
-                tv_money_count.setText("恶意拖欠" + queryDetailResultBean.getRegistcompany() + queryDetailResultBean.getAccount() + "元");
+                if (!"5".equals(queryDetailResultBean.getRegisttype())) {
+                    tv_black_reward.setText(connetText(2, queryDetailResultBean.getRegistcompany(), queryDetailResultBean.getContactname(), queryDetailResultBean.getRewardaccount() ));
+                    tv_year.setText(queryDetailResultBean.getContactname() + "电话：" + queryDetailResultBean.getContactmobile());
+                } else {
+                    tv_black_reward.setVisibility(View.GONE);
+                    tv_year.setVisibility(View.GONE);
+                }
+                tv_money_count.setText("恶意拖欠" + queryDetailResultBean.getRegistcompany() + DataVeri.getMoneyFromDouble(queryDetailResultBean.getAccount()) + "元");
                 break;
         }
     }
@@ -208,6 +214,7 @@ private GetQueryDetailResultBean getQueryDetailResultBean;
                 break;
             case 1:
                 start= 5;
+                one = DataVeri.getMoneyFromDouble(one);
                 end=start+one.length();
                 builder.append("借款金额:");
                 builder.append(one);
@@ -216,6 +223,7 @@ private GetQueryDetailResultBean getQueryDetailResultBean;
                 break;
             case 2:
                 start=one.length()+two.length()+2;
+                three = DataVeri.getMoneyFromDouble(three);
                 end=start+three.length();
                 builder.append(one);
                 builder.append(two);

@@ -17,8 +17,8 @@ public class GetMyInfoItemBean {
     private String account;
     @SerializedName("repaydate")
     private String repaydate;
-    @SerializedName("owneridimg")
-    private String owneridimg;
+    @SerializedName("ownerheadimg")
+    private String ownerheadimg;
     @SerializedName("status2")
     private String status2;
     @SerializedName("date")
@@ -82,11 +82,11 @@ public class GetMyInfoItemBean {
     }
 
     public String getOwneridimg() {
-        return owneridimg;
+        return ownerheadimg;
     }
 
     public void setOwneridimg(String owneridimg) {
-        this.owneridimg = owneridimg;
+        this.ownerheadimg = owneridimg;
     }
 
     public String getStatus2() {

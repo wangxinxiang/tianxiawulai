@@ -125,7 +125,7 @@ public class PhotoActivity extends Activity{
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         int options = 80;//个人喜欢从80开始,
         mBitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);
-        while (baos.toByteArray().length / 1024 > 100) {
+        while (baos.toByteArray().length / 1024 > 100 && options > 0) {
             baos.reset();
             options -= 10;
             mBitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);

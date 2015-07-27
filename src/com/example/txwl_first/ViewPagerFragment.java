@@ -77,10 +77,11 @@ public class ViewPagerFragment extends Fragment {
                 if ("3".equals(list.get(i).getRegisttype())) {
                     intent.putExtra("fromButton", QUERY_LISTVIEW_CREDIT_ITEM);
                 }
-                if ("4".equals(list.get(i).getRegisttype())) {
+                if ("4".equals(list.get(i).getRegisttype()) || "5".equals(list.get(i).getRegisttype())) {
                     intent.putExtra("fromButton", QUERY_LISTVIEW_OTHER_ITEM);
                 }
                 intent.putExtra("headImage", list.get(i).getOwneridimg());
+                intent.putExtra("addblack", true);
                 startActivity(intent);
 
             }
@@ -89,6 +90,7 @@ public class ViewPagerFragment extends Fragment {
 
 
     public void initListView(GetMyInfoBean bean) {
+        list.clear();
         for (int i = 0; i < bean.getRegistinfolist().length; i++) {
             if ("0".equals(mArgument)){
                 // 0标识为 是全部界面 需要显示所有数据
