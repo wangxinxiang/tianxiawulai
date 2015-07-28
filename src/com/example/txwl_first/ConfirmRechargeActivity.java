@@ -21,8 +21,7 @@ import java.io.InputStream;
 public class ConfirmRechargeActivity extends Activity{
 
     private Button confirm_recharge_commit;
-    private String name,idcard,bankid,phone,et_vericode,billno,token,cz_money,recharge_money,topicID;
-    private String aim;
+    private String name,idcard,bankid,phone,et_vericode,billno,token,cz_money;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +40,6 @@ public class ConfirmRechargeActivity extends Activity{
 
     private void initView() {
 
-        aim = getIntent().getStringExtra("aim");
         name = getIntent().getStringExtra("name");
         idcard = getIntent().getStringExtra("idcard");
         bankid = getIntent().getStringExtra("bankid");
@@ -50,8 +48,6 @@ public class ConfirmRechargeActivity extends Activity{
         phone = getIntent().getStringExtra("phone");
         token = getIntent().getStringExtra("token");
         cz_money = getIntent().getStringExtra("cz_money");
-        recharge_money = getIntent().getStringExtra("recharge_money");
-        topicID = getIntent().getStringExtra("topicID");
 
         confirm_recharge_commit = (Button) findViewById(R.id.confirm_recharge_commit);
         TextView confirm_recharge_money = (TextView) findViewById(R.id.confirm_recharge_money);
@@ -73,7 +69,7 @@ public class ConfirmRechargeActivity extends Activity{
             @Override
             public void onClick(View view) {
                 TXWLProgressDialog.createDialog(ConfirmRechargeActivity.this);
-                TXWLProgressDialog.setMessage("充值中...");
+                TXWLProgressDialog.setMessage("支付中...");
                     new BeiFuPayHttpPost().execute(billno, token, et_vericode, cz_money);
             }
         });
@@ -107,7 +103,7 @@ public class ConfirmRechargeActivity extends Activity{
             fastpayBean.setAmount(params[3]);
             fastpayBean.setSign_type("MD5");
             fastpayBean.setSpFlag("QuickPay");
-            fastpayBean.setNotify_url("http://appnew.shilehui.com");
+//            fastpayBean.setNotify_url("http://appnew.shilehui.com");
             fastpayBean.setSavePciFlag("0");
             fastpayBean.setPayBatch("1");
             fastpayBean.setToken(params[1]);
@@ -141,10 +137,6 @@ public class ConfirmRechargeActivity extends Activity{
                 TXWLProgressDialog.Dismiss();
                 getPaymentOrderOk();
                 Intent intent = new Intent(ConfirmRechargeActivity.this, RechargeSuccessActivity.class);
-                intent.putExtra("aim",aim);
-                intent.putExtra("recipientsdisease",getIntent().getStringExtra("recipientsdisease"));
-                intent.putExtra("recipientsname",getIntent().getStringExtra("recipientsname"));
-                intent.putExtra("recharge_money",recharge_money);
                 intent.putExtra("cz_money",cz_money);
                 intent.putExtra("billno", billno);
                 startActivity(intent);

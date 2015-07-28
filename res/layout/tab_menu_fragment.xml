@@ -47,6 +47,7 @@
             android:cacheColorHint="@color/transparent"
             android:divider="@color/transparent"
             android:listSelector="@color/transparent"
+            android:dividerHeight="@dimen/space_1"
             ptr:ptrAnimationStyle="flip"
             ptr:ptrHeaderBackground="@color/gray_bg"
             ptr:ptrHeaderTextColor="@color/gray_text_deep"/>

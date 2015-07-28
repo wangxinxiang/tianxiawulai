@@ -73,5 +73,12 @@
         <activity android:name=".MainActivity" android:theme="@android:style/Theme.Holo.NoActionBar"
                   android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".JoinBlackListActivity" android:theme="@android:style/Theme.Holo.NoActionBar"/>
+        <activity android:name=".ChoiceBankCardActivity" android:theme="@android:style/Theme.Holo.NoActionBar"/>
+        <activity android:name=".ChoicePayModeActivity" android:theme="@android:style/Theme.Holo.NoActionBar"/>
+        <activity android:name=".VerificationActivity" android:theme="@android:style/Theme.Holo.NoActionBar"/>
+        <activity android:name=".AddBankCardActivity" android:theme="@android:style/Theme.Holo.NoActionBar"/>
+        <activity android:name=".BankSelectionActivity" android:theme="@android:style/Theme.Holo.NoActionBar"/>
+        <activity android:name=".RechargeSuccessActivity" android:theme="@android:style/Theme.Holo.NoActionBar"/>
+        <activity android:name=".ConfirmRechargeActivity" android:theme="@android:style/Theme.Holo.NoActionBar"/>
     </application>
 </manifest>

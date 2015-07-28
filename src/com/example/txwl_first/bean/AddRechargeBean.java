@@ -16,7 +16,53 @@ public class AddRechargeBean {
     @SerializedName("status")
     private String status;
     @SerializedName("recharge")
-    private AddRechargeItemBean[] recharge;
+    private AddRechargeItemBean recharge;
 
+    public String getCode() {
+        return code;
+    }
 
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public String getOpcode() {
+        return opcode;
+    }
+
+    public void setOpcode(String opcode) {
+        this.opcode = opcode;
+    }
+
+    public String getApprid() {
+        return apprid;
+    }
+
+    public void setApprid(String apprid) {
+        this.apprid = apprid;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public AddRechargeItemBean getRecharge() {
+        return recharge;
+    }
+
+    public void setRecharge(AddRechargeItemBean recharge) {
+        this.recharge = recharge;
+    }
 }

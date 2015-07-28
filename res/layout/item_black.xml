@@ -27,7 +27,7 @@
                   android:text="180XXXXXXXX" android:layout_alignParentTop="true"/>
         <TextView android:layout_width="wrap_content" android:id="@+id/tv_province" android:layout_height="wrap_content"
                   android:text="地点" android:layout_alignParentTop="true"
-                  android:gravity="right"
+                  android:gravity="right" android:singleLine="true"
                 android:layout_alignParentRight="true" android:layout_toRightOf="@+id/tv_user_phone_num"/>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/tv_descrip" android:layout_below="@id/tv_username"

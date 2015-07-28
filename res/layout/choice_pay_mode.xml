@@ -18,59 +18,6 @@
     </LinearLayout>
 
     <RelativeLayout
-            android:id="@+id/rl_acount_pay"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_10"
-            android:background="@color/white">
-        <CheckBox android:layout_width="wrap_content"
-                  android:id="@+id/acount_checkbox"
-                  android:layout_height="wrap_content"
-                  android:layout_centerVertical="true"
-                  android:layout_marginLeft="@dimen/space_20"
-                  android:button="@drawable/single_select_normal"
-                />
-        <TextView style="@style/choice_pay_bar_tv"
-                  android:text="账户余额"
-                  android:id="@+id/tv_account"
-                  android:layout_toRightOf="@+id/acount_checkbox" android:textSize="@dimen/textsize_18"/>
-        <TextView android:layout_width="wrap_content"
-                  android:id="@+id/tv_account_money"
-                  android:layout_alignParentRight="true"
-                  style="@style/choice_pay_bar_tv"
-                  android:text="0"
-                  android:layout_height="wrap_content" android:layout_centerVertical="true"
-                  android:padding="@dimen/space_20" android:textSize="@dimen/textsize_18"
-                  android:textColor="@color/gray"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-            android:id="@+id/rl_bankcard_pay"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_10"
-            android:background="@color/white">
-        <CheckBox android:layout_width="wrap_content"
-                  android:id="@+id/bankcar_checkbox"
-                  android:layout_height="wrap_content"
-                  android:layout_centerVertical="true"
-                  android:layout_marginLeft="@dimen/space_20"
-                  android:button="@drawable/single_select_normal"/>
-        <TextView style="@style/choice_pay_bar_tv"
-                  android:text="银行卡支付"
-                  android:id="@+id/tv_bankcard"
-                  android:layout_toRightOf="@+id/bankcar_checkbox" android:textSize="@dimen/textsize_18"/>
-        <TextView android:layout_width="wrap_content"
-                  android:id="@+id/tv_pay_money"
-                  android:layout_alignParentRight="true"
-                  style="@style/choice_pay_bar_tv"
-                  android:text="0"
-                  android:layout_height="wrap_content" android:layout_centerVertical="true"
-                  android:padding="@dimen/space_20" android:textSize="@dimen/textsize_20"
-                  android:textColor="@color/orange_text"/>
-    </RelativeLayout>
-
-    <RelativeLayout
             android:id="@+id/rl_choice_pay"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -87,10 +34,4 @@
                    android:layout_alignParentRight="true" android:padding="@dimen/space_20"/>
     </RelativeLayout>
 
-    <Button android:layout_width="match_parent"
-            android:text="完成"
-            android:id="@+id/btn_submit"
-            android:layout_height="wrap_content" android:background="@color/orange_text"
-            android:layout_margin="@dimen/space_20" android:textSize="@dimen/textsize_20"
-            android:padding="@dimen/space_10" android:textColor="@color/white"/>
 </LinearLayout>

@@ -238,12 +238,21 @@ public class JoinBlackListActivity extends Activity{
         params.put("contactname", et_contact.getText());
         params.put("contactmobile", et_mobilephone.getText());
         params.put("reward", et_reward_money.getText());
+        params.put("tip", 1);
 
         client.post(url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
                 Log.d("addBlackPerson ----->", new String(bytes));
-
+                if (new String(bytes).contains("success")) {
+                    TXWLApplication.getInstance().showTextToast("添加成功");
+                    Intent intent = new Intent(JoinBlackListActivity.this, ChoicePayModeActivity.class);
+                    intent.putExtra("tip", "1");
+                    intent.putExtra("registid", queryDetailResultBean.getRegistid());
+                    startActivity(intent);
+                } else {
+                    TXWLApplication.getInstance().showTextToast("添加失败");
+                }
             }
 
             @Override

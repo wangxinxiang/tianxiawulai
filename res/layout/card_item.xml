@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white" android:gravity="center_vertical|center_horizontal"
+            android:paddingLeft="@dimen/space_25"
+            android:paddingRight="@dimen/space_25" android:paddingTop="@dimen/space_16"
+            android:paddingBottom="@dimen/space_16" android:layout_marginTop="@dimen/space_10">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reposit_card"
+                android:textSize="@dimen/textsize_16"
+                android:textColor="@color/dark"
+                android:id="@+id/tv_bank_name"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/space_20"
+                android:text="@string/signs"
+                android:id="@+id/textView3" android:layout_toRightOf="@+id/tv_bank_name"
+                android:layout_marginLeft="@dimen/space_16"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:textSize="@dimen/textsize_16"
+                android:textColor="@color/dark"
+                android:id="@+id/tv_card_no" android:layout_toRightOf="@+id/textView3"/>
+    </RelativeLayout>
+</LinearLayout>

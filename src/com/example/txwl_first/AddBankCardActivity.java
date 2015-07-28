@@ -15,8 +15,11 @@ import com.example.txwl_first.Util.*;
 import com.example.txwl_first.beifu.BeiFuHttpPost;
 import com.example.txwl_first.beifu.FastPay2Return;
 import com.example.txwl_first.beifu.FastpayBean;
-import com.example.txwl_first.service.GetOrderNumService;
 import com.google.gson.GsonBuilder;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import org.apache.http.Header;
 
 import java.io.InputStream;
 
@@ -41,9 +44,8 @@ public class AddBankCardActivity extends Activity{
 
     private Button ibtn_submit_next, btn_vericode;
 
-    private String cz_money, token, billno;
-    private String name, idcard, bankid, phone, bankname,id;
-    private GetOrderNumService getOrderNumService;
+    private String cz_money, token, billno, registid;
+    private String name, idcard, bankid, phone, bankname;
 
     BeiFuHttpPost beiFuHttpPost;
 
@@ -57,7 +59,6 @@ public class AddBankCardActivity extends Activity{
 
         initView();
 
-        getOrderNumber();
 
         initListener();
 
@@ -73,7 +74,6 @@ public class AddBankCardActivity extends Activity{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Constant.ResultCode) {
             String bankname = data.getStringExtra("BankName");
-            id = data.getStringExtra("id");
             Log.d("BankName",bankname);
             tv_bank_name.setText(bankname);
         }
@@ -116,11 +116,7 @@ public class AddBankCardActivity extends Activity{
             @Override
             public void onClick(View view) {
                 if (verification()) {
-                    try{
-                        billno = getOrderNumService.getOrder();       //订单号
-                    }catch (Exception e){
 
-                    }
                     Log.d("billno -->", billno);
                     //获取验证码
                     beiFuHttpPost = new BeiFuHttpPost();
@@ -139,16 +135,13 @@ public class AddBankCardActivity extends Activity{
 
     }
 
-    //获取订单号接口
-    private void getOrderNumber() {
-        getOrderNumService = GetOrderNumService.getInstance();
-        getOrderNumService.getOrderNum(cz_money, AddBankCardActivity.this);
-//        billno=getOrderNumService.getOrder();
-    }
 
 
     private void initView() {
-        cz_money = getIntent().getStringExtra("recharge_money");
+        cz_money = getIntent().getStringExtra("tip");
+        registid = getIntent().getStringExtra("registid");
+        billno = getIntent().getStringExtra("billno");
+
         et_user_name = (EditText) findViewById(R.id.et_user_name);
         et_user_card = (EditText) findViewById(R.id.et_user_card);
         et_user_ban = (EditText) findViewById(R.id.et_user_ban);
@@ -244,33 +237,34 @@ public class AddBankCardActivity extends Activity{
 
     //绑定银行卡
     private void boundBankCard() {
-        Log.d("boundBankCard",id+" "+bankid+" "+idcard+" "+name+" "+phone+" "+bankname);
-//        String url = URL.getBoundUserCardURL(id, bankid, idcard, name, phone, bankname);
-//        DataWebService dataWebService = DataWebService.getInstance();
-//        Log.d("boundBankCard:",url);
-//        dataWebService.getData(url, new DataWebCallBack() {
-//            @Override
-//            public void onSuccess(String responseBody, String successMsg) {
-//                Log.d("boundBankCard-->", responseBody);
-//                String strBody = responseBody.substring(1,responseBody.length()-1);
-//                try {
-//                    ResultBean resultBean = new GsonBuilder().create().fromJson(strBody, ResultBean.class);
-//                    if("绑定成功".equals(resultBean.getResult().toString())){
-////                        TXWLApplication.getInstance().showTextToast("绑定接口传入服务端成功");
-//                        getPaymentOrderOk();
-//                    }else{
-//                        TXWLApplication.getInstance().showTextToast(resultBean.getResult());
-//                    }
-//                }catch (Exception ex) {
-//                    TXWLApplication.getInstance().showErrorConnected(ex);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(String responseBody, String failureMsg) {
-//                TXWLApplication.getInstance().showTextToast("网络错误");
-//            }
-//        });
+        Log.d("boundBankCard", bankid+" "+idcard+" "+name+" "+phone+" "+bankname);
+        String url = Url.AddBankInfo_URL;
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("userid", PreferenceUtils.getUserId());
+        params.put("accountname", name);
+        params.put("ID", idcard);
+        params.put("mobile", phone);
+        params.put("bankname", bankname);
+        params.put("banknumber", bankid);
+
+        client.post(url, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                Log.d("boundBankCard ------>", new String(bytes));
+                if (new String(bytes).contains("success")) {
+                    BoundSuccessFragmentDialog dialog = new BoundSuccessFragmentDialog();
+                    dialog.show(getFragmentManager(), "boundsuccess");
+                } else {
+                    TXWLApplication.getInstance().showTextToast("网络错误");
+                }
+            }
+
+            @Override
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                TXWLApplication.getInstance().showTextToast("网络错误");
+            }
+        });
 
     }
 
@@ -303,7 +297,7 @@ public class AddBankCardActivity extends Activity{
             fastpayBean.setAmount(params[3]);
             fastpayBean.setSign_type("MD5");
             fastpayBean.setSpFlag("QuickPay");
-            fastpayBean.setNotify_url("http://appnew.shilehui.com");
+//            fastpayBean.setNotify_url("http://appnew.shilehui.com");
             fastpayBean.setSavePciFlag("0");
             fastpayBean.setPayBatch("1");
             fastpayBean.setToken(params[1]);
@@ -336,11 +330,7 @@ public class AddBankCardActivity extends Activity{
                 TXWLProgressDialog.Dismiss();
                 System.out.println("onPostExecute--------------->notifyServier");
                 boundBankCard();
-//                PreferenceUtils.getInstance().setAccountMoney(cz_money);
 
-                BoundSuccessFragmentDialog dialog = new BoundSuccessFragmentDialog();
-                dialog.show(getFragmentManager(),"boundsuccess");
-//                TXWLApplication.getInstance().addActivity(AddPanActivity.this);
             }else{
                 TXWLApplication.getInstance().showTextToast(returnBean.getRespMessage());
             }

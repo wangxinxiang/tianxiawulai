@@ -71,5 +71,8 @@
     <string name="recharge_success_method">支付方式</string>
     <string name="recharge_success_status">当前状态</string>
     <string name="recharge_success_commit">完成</string>
+    <string name="reposit_card">储蓄卡</string>
+    <string name="signs">**** **** ****</string>
+    <string name="choice_other_pay">用其他银行卡支付</string>
 
 </resources>

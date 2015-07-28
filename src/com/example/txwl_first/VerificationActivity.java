@@ -67,9 +67,6 @@ public class VerificationActivity extends Activity {
                 }
                 if(et_chekcode.getText().toString()!=null){
                     Intent intent = new Intent(VerificationActivity.this, ConfirmRechargeActivity.class);
-                    intent.putExtra("aim",getIntent().getStringExtra("aim"));
-                    intent.putExtra("recipientsdisease",getIntent().getStringExtra("recipientsdisease"));
-                    intent.putExtra("recipientsname",getIntent().getStringExtra("recipientsname"));
                     intent.putExtra("billno", billno);
                     intent.putExtra("token", token);
                     intent.putExtra("et_vericode", et_chekcode.getText().toString());
