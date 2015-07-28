@@ -386,7 +386,7 @@ public class MenuFragment extends Fragment {
                 if ("3".equals(list.get(position).getRegisttype())){
                     intent.putExtra("fromButton",QUERY_LISTVIEW_CREDIT_ITEM);
                 }
-                if ("4".equals(list.get(position).getRegisttype())){
+                if ("4".equals(list.get(position).getRegisttype())||"5".equals(list.get(position).getRegisttype())){
                     intent.putExtra("fromButton",QUERY_LISTVIEW_OTHER_ITEM);
                 }
                 intent.putExtra("registid", list.get(position).getRegistid());

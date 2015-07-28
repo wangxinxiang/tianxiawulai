@@ -166,7 +166,7 @@ private GetQueryDetailResultBean getQueryDetailResultBean;
                     tv_black_reward.setVisibility(View.GONE);
                     tv_year.setVisibility(View.GONE);
                 }
-                tv_money_count.setText("恶意拖欠" + queryDetailResultBean.getRegistcompany() + DataVeri.getMoneyFromDouble(queryDetailResultBean.getAccount()) + "元");
+                tv_money_count.setText("恶意拖欠" + queryDetailResultBean.getCompanyname() + DataVeri.getMoneyFromDouble(queryDetailResultBean.getAccount()) + "元");
                 break;
         }
     }

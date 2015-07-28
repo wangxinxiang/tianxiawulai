@@ -108,7 +108,6 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
             //只传id 获取所有数据
             getHttpMyInfo(PreferenceUtils.getUserId(),"","");
         }
-        mScrollView.scrollTo(0, 0);
 //        new myAsyncTask().execute();//模拟耗时操作 完成后开始测量viewpager中子控件的高度
 
 
@@ -265,30 +264,30 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
         });
 
         //edittext的软键盘的搜索按钮监听
-        et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    //隐藏软键盘
-                    if (textView.length() == 0 || textView.equals("")) {
-                        Toast.makeText(getActivity(), getActivity().toString() + "输入框为空", Toast.LENGTH_LONG).show();
-                        return true;
-                    } else {
-                        ((InputMethodManager) et_search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
-                                .hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
-                                        InputMethodManager.HIDE_NOT_ALWAYS);
-                        //实现跳转
-//                    Intent intent=new Intent();
-//                    intent.setClass(getActivity(),)
-//                    startActivity(intent);
-                        Toast.makeText(getActivity(), getActivity().toString() + "点击了软键盘的搜索", Toast.LENGTH_LONG).show();
-                        return true;
-                    }
-
-                }
-                return false;
-            }
-        });
+//        et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+//                    //隐藏软键盘
+//                    if (textView.length() == 0 || textView.equals("")) {
+//                        Toast.makeText(getActivity(), getActivity().toString() + "输入框为空", Toast.LENGTH_LONG).show();
+//                        return true;
+//                    } else {
+//                        ((InputMethodManager) et_search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
+//                                .hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+//                                        InputMethodManager.HIDE_NOT_ALWAYS);
+//                        //实现跳转
+////                    Intent intent=new Intent();
+////                    intent.setClass(getActivity(),)
+////                    startActivity(intent);
+//                        Toast.makeText(getActivity(), getActivity().toString() + "点击了软键盘的搜索", Toast.LENGTH_LONG).show();
+//                        return true;
+//                    }
+//
+//                }
+//                return false;
+//            }
+//        });
 
         tv_right.setOnClickListener(new View.OnClickListener() {
             @Override

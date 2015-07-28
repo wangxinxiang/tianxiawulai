@@ -257,10 +257,7 @@ public class LoanActivity extends Activity implements AddItem {
         tv_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (getIntent().getBooleanExtra("addblack", false)) {
-                    Intent intent = new Intent(LoanActivity.this, JoinBlackListActivity.class);
-                    startActivity(intent);
-                } else {
+
                     //遍历所有控件，获取数据
                     getData();
                     Log.d("遍历子控件", getData().toString());
@@ -274,7 +271,6 @@ public class LoanActivity extends Activity implements AddItem {
                     if (isSubmit) {
                         registToInternet();
                     }
-                }
 
             }
         });
@@ -315,6 +311,7 @@ public class LoanActivity extends Activity implements AddItem {
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
+                    intent.putExtra("registid", queryDetailResultBean.getRegistid());
                     startActivity(intent);
                 }
 
