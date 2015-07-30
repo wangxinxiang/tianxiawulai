@@ -8,9 +8,7 @@ import com.google.gson.annotations.SerializedName;
 public class FastPayReturn {
     @SerializedName("sign")
     private String sign;
-    @SerializedName("responseCode")
-    private String responseCode;
-    @SerializedName("customerId")
+    @SerializedName("customer_id")
     private String customerId;
     @SerializedName("token")
     private String token;
@@ -24,17 +22,17 @@ public class FastPayReturn {
     private String partner;
     @SerializedName("out_trade_no")
     private String out_trade_no;
-    @SerializedName("storablePan")
-    private String storablePan;
-    @SerializedName("responseTextMessage")
-    private String responseTextMessage;
+    @SerializedName("error_message")
+    private String error_message;
+    @SerializedName("result")
+    private String result;
 
-    public String getResponseTextMessage() {
-        return responseTextMessage;
+    public String getResult() {
+        return result;
     }
 
-    public void setResponseTextMessage(String responseTextMessage) {
-        this.responseTextMessage = responseTextMessage;
+    public void setResult(String result) {
+        this.result = result;
     }
 
     public String getSign() {
@@ -43,14 +41,6 @@ public class FastPayReturn {
 
     public void setSign(String sign) {
         this.sign = sign;
-    }
-
-    public String getResponseCode() {
-        return responseCode;
-    }
-
-    public void setResponseCode(String responseCode) {
-        this.responseCode = responseCode;
     }
 
     public String getCustomerId() {
@@ -109,11 +99,11 @@ public class FastPayReturn {
         this.out_trade_no = out_trade_no;
     }
 
-    public String getStorablePan() {
-        return storablePan;
+    public String getError_message() {
+        return error_message;
     }
 
-    public void setStorablePan(String storablePan) {
-        this.storablePan = storablePan;
+    public void setError_message(String error_message) {
+        this.error_message = error_message;
     }
 }

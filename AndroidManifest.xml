@@ -57,6 +57,8 @@
         </activity>
         <activity android:name=".PersonalInfoActivity" android:theme="@android:style/Theme.Holo.NoActionBar"/>
         <activity android:name=".QueryResultActivity" android:theme="@android:style/Theme.Holo.NoActionBar"/>
+        <activity android:name=".GetLaolaiListActivity" android:theme="@android:style/Theme.Holo.NoActionBar"/>
+        <activity android:name=".GetLaolaiDetailActivity" android:theme="@android:style/Theme.Holo.NoActionBar"/>
         <activity android:name=".ReportActivity" android:theme="@android:style/Theme.Holo.NoActionBar"/>
         <activity android:name=".LoginActivity" android:theme="@android:style/Theme.Holo.NoActionBar"/>
         <activity android:name=".RegistActivity" android:theme="@android:style/Theme.Holo.NoActionBar"/>

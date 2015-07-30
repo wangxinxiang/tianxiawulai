@@ -24,6 +24,9 @@ public class GetMyInfoBean {
     @SerializedName("usertype")
     private int usertype;
 
+    @SerializedName("companyname")
+    private String companyname;
+
     @SerializedName("totalcount")
     private String totalcount;
     @SerializedName("totalmoney")
@@ -55,6 +58,13 @@ public class GetMyInfoBean {
     @SerializedName("status")
     private String status;
 
+    public String getCompanyname() {
+        return companyname;
+    }
+
+    public void setCompanyname(String companyname) {
+        this.companyname = companyname;
+    }
 
     public GetMyInfoItemBean[] getRegistinfolist() {
         return registinfolist;

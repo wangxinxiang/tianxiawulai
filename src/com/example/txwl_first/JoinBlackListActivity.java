@@ -9,10 +9,7 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
-import com.example.txwl_first.Util.DataVeri;
-import com.example.txwl_first.Util.PreferenceUtils;
-import com.example.txwl_first.Util.TXWLApplication;
-import com.example.txwl_first.Util.Url;
+import com.example.txwl_first.Util.*;
 import com.example.txwl_first.bean.GetQueryDetailResultBean;
 import com.example.txwl_first.bean.QueryDetailResultBean;
 import com.example.txwl_first.business.LoaderBusiness;
@@ -63,13 +60,25 @@ public class JoinBlackListActivity extends Activity{
         btn_pay_money.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addBlackPerson();
+//                if (checkData()) {
+//                    addBlackPerson();
+//                }
+                TXWLApplication.getInstance().showTextToast("支付接口正在申请中");
+
             }
         });
     }
 
+    private boolean checkData() {
+        if (DataVeri.stringIsNull(et_contact.getText().toString(), "联系人") || !DataVeri.isMobileNum(et_mobilephone.getText().toString())
+                || !DataVeri.isNaN(et_reward_money.getText().toString(), "悬赏金额")) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     private void initView() {
-        Intent intent = getIntent();
 
         tv_title = (TextView) findViewById(R.id.tv_title);
         ibtn_title_back = (ImageButton) findViewById(R.id.ibtn_title_back);

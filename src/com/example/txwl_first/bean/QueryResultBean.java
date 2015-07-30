@@ -17,6 +17,8 @@ public class QueryResultBean {
 
     @SerializedName("list")
     private QueryResultItemBean[] getQueryResultListBean;
+    @SerializedName("laolailist")
+    private QueryResultLaolaiItemBean[] QueryResultLaolaiItemBean;
     @SerializedName("CallBackType")
     private String CallBackType;
     @SerializedName("url")
@@ -38,6 +40,14 @@ public class QueryResultBean {
 
     public void setGetQueryResultListBean(QueryResultItemBean[] getQueryResultListBean) {
         this.getQueryResultListBean = getQueryResultListBean;
+    }
+
+    public com.example.txwl_first.bean.QueryResultLaolaiItemBean[] getQueryResultLaolaiItemBean() {
+        return QueryResultLaolaiItemBean;
+    }
+
+    public void setQueryResultLaolaiItemBean(com.example.txwl_first.bean.QueryResultLaolaiItemBean[] queryResultLaolaiItemBean) {
+        QueryResultLaolaiItemBean = queryResultLaolaiItemBean;
     }
 
     public String getCallBackType() {

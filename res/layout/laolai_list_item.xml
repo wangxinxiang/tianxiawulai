@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+        android:padding="@dimen/space_12">
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_weight="1" android:orientation="vertical">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:id="@+id/tv_case_title" android:textColor="@color/black"
+                android:text="(2015)金永执民字第00814号"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:id="@+id/tv_case_time" android:textColor="@color/black"
+                android:text="2015年03月06日"/>
+    </LinearLayout>
+    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:background="@drawable/btn_entry_gray"
+            android:padding="@dimen/space_12"
+               android:layout_gravity="center"/>
+</LinearLayout>

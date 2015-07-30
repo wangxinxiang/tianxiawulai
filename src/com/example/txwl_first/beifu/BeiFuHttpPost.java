@@ -19,7 +19,7 @@ public class BeiFuHttpPost extends AsyncTask<String, Integer, String> {
     @Override
     protected String  doInBackground(String... params) {
         FastpayBean fastpayBean=new FastpayBean();
-        fastpayBean.setService("ebatong_getdyn_fastpay");
+        fastpayBean.setService("ebatong_mp_dyncode");
         fastpayBean.setPartner(Url.Partner);
         fastpayBean.setSign_type("MD5");
         fastpayBean.setInput_charset("UTF-8");
@@ -33,17 +33,18 @@ public class BeiFuHttpPost extends AsyncTask<String, Integer, String> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        fastpayBean.setIdType("0");
+        fastpayBean.setIdType("01");
         fastpayBean.setCardHolderId(params[2]);
 
         fastpayBean.setPhone(params[4]);
         fastpayBean.setOut_trade_no(params[0]);
         fastpayBean.setAmount(params[5]);
         fastpayBean.setCustomerId(params[6]);
+        fastpayBean.setBankId(params[7]);           //设置银行code
 //            fastpayBean.setBankId("CCB");
 
         //从sdk卡中读取persons.xml文件
-        String urlPath = "https://www.ebatong.com/fppay/getDynNum.htm";
+        String urlPath = "https://www.ebatong.com/mobileFast/getDynNum.htm";
         String postJson = fastpayBean.getPostJson();
         Log.i("lyjtest", "getPostJson:" + postJson);
         byte[] data = postJson.getBytes();
@@ -67,10 +68,10 @@ public class BeiFuHttpPost extends AsyncTask<String, Integer, String> {
     protected void onPostExecute(String result) {
         FastPayReturn   returnBean = new GsonBuilder().create().fromJson( result, FastPayReturn.class);
         Log.d("onPostExecute --> ", result);
-        if("00".equals(returnBean.getResponseCode())){
+        if("T".equals(returnBean.getResult())){
             token = returnBean.getToken();
             }else{
-            TXWLApplication.getInstance().showTextToast(returnBean.getResponseTextMessage());
+            TXWLApplication.getInstance().showTextToast(returnBean.getError_message());
         }
     }
 

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white_line">
+    <include layout="@layout/title_include"/>
+    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <include layout="@layout/item_query_result_laolai"/>
+            <View android:layout_width="fill_parent" android:layout_height="@dimen/space_10"
+                  android:background="@color/gray_bg"/>
+
+            <LinearLayout style="@style/ll_laolai_singline">
+                <TextView style="@style/tv_singline_left"  android:text="@string/courtname_tv"/>
+                <TextView style="@style/tv_singline_right" android:id="@+id/tv_courtname"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/ll_laolai_singline">
+                <TextView style="@style/tv_singline_left" android:text="@string/areaname_tv" />
+                <TextView style="@style/tv_singline_right" android:id="@+id/tv_areaname"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/ll_laolai_singline">
+                <TextView style="@style/tv_singline_left"  android:text="@string/gistid_tv"/>
+                <TextView style="@style/tv_singline_right" android:id="@+id/tv_gistid"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/ll_laolai_singline">
+                <TextView style="@style/tv_singline_left" android:text="@string/casecreatetime_tv"/>
+                <TextView style="@style/tv_singline_right" android:id="@+id/tv_casecreatetime"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/ll_laolai_singline">
+                <TextView style="@style/tv_singline_left" android:text="@string/casecode_tv"/>
+                <TextView style="@style/tv_singline_right" android:id="@+id/tv_casecode"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/ll_laolai_singline">
+                <TextView style="@style/tv_singline_left" android:text="@string/gistunit_tv"/>
+                <TextView style="@style/tv_singline_right" android:id="@+id/tv_gistunit"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/ll_laolai_twoline">
+                <TextView style="@style/tv_twoline_up" android:text="@string/duty_tv"/>
+                <TextView style="@style/tv_twoline_down" android:id="@+id/tv_duty"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/ll_laolai_singline">
+                <TextView style="@style/tv_singline_left" android:text="@string/performance_tv"/>
+                <TextView style="@style/tv_singline_right" android:id="@+id/tv_performance"/>
+            </LinearLayout>
+
+
+            <LinearLayout style="@style/ll_laolai_twoline">
+                <TextView style="@style/tv_twoline_up" android:text="@string/disrupttypename_tv"/>
+                <TextView style="@style/tv_twoline_down" android:id="@+id/tv_disrupttypename"/>
+            </LinearLayout>
+
+
+            <LinearLayout style="@style/ll_laolai_singline">
+                <TextView style="@style/tv_singline_left" android:text="@string/publishdate_tv"/>
+                <TextView style="@style/tv_singline_right" android:id="@+id/tv_publishdate"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

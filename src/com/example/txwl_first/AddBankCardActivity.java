@@ -14,6 +14,7 @@ import android.widget.*;
 import com.example.txwl_first.Util.*;
 import com.example.txwl_first.beifu.BeiFuHttpPost;
 import com.example.txwl_first.beifu.FastPay2Return;
+import com.example.txwl_first.beifu.FastPayReturn;
 import com.example.txwl_first.beifu.FastpayBean;
 import com.google.gson.GsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;
@@ -45,7 +46,8 @@ public class AddBankCardActivity extends Activity{
     private Button ibtn_submit_next, btn_vericode;
 
     private String cz_money, token, billno, registid;
-    private String name, idcard, bankid, phone, bankname;
+    private String name, idcard, bankid, phone, bankname, bank_code;
+    private String encrypt_key;                                     //时间戳
 
     BeiFuHttpPost beiFuHttpPost;
 
@@ -76,6 +78,7 @@ public class AddBankCardActivity extends Activity{
             String bankname = data.getStringExtra("BankName");
             Log.d("BankName",bankname);
             tv_bank_name.setText(bankname);
+            bank_code = data.getStringExtra("bank_code");
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -93,7 +96,7 @@ public class AddBankCardActivity extends Activity{
             @Override
             public void onClick(View view) {
                 TXWLProgressDialog.createDialog(AddBankCardActivity.this);
-                TXWLProgressDialog.setMessage("绑定中...");
+                TXWLProgressDialog.setMessage("支付中...");
                 try{
                     token = beiFuHttpPost.getToken();
                 }catch (Exception e){
@@ -102,9 +105,9 @@ public class AddBankCardActivity extends Activity{
 //                boundBankCard();
 
                 //完成1元支付，跳转到绑定成功界面
-                if (et_vericode.getText().toString()!=null) {
+                if ("".equals(et_vericode.getText().toString())) {
                     if(token!=null){
-                        new BeiFuPayHttpPost().execute(billno,token,et_vericode.getText().toString(),cz_money);
+                        new BeiFuPayPhishingKey().execute();
                     }
                 } else {
                     TXWLApplication.getInstance().showTextToast("验证码不能为空");
@@ -120,7 +123,7 @@ public class AddBankCardActivity extends Activity{
                     Log.d("billno -->", billno);
                     //获取验证码
                     beiFuHttpPost = new BeiFuHttpPost();
-                    beiFuHttpPost.execute(billno, name, idcard, bankid, phone, cz_money, PreferenceUtils.getUserId()+"");
+                    beiFuHttpPost.execute(billno, name, idcard, bankid, phone, cz_money, PreferenceUtils.getUserId()+"", bank_code);
 
                     MyCountDownTimer mc = new MyCountDownTimer(60000, 1000);
                     mc.start();
@@ -252,17 +255,19 @@ public class AddBankCardActivity extends Activity{
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
                 Log.d("boundBankCard ------>", new String(bytes));
+                TXWLProgressDialog.Dismiss();
                 if (new String(bytes).contains("success")) {
                     BoundSuccessFragmentDialog dialog = new BoundSuccessFragmentDialog();
                     dialog.show(getFragmentManager(), "boundsuccess");
                 } else {
-                    TXWLApplication.getInstance().showTextToast("网络错误");
+                    TXWLApplication.getInstance().showTextToast("支付失败");
                 }
             }
 
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-                TXWLApplication.getInstance().showTextToast("网络错误");
+                TXWLProgressDialog.Dismiss();
+                TXWLApplication.getInstance().showTextToast("支付网络错误");
             }
         });
 
@@ -281,7 +286,7 @@ public class AddBankCardActivity extends Activity{
 
 
             FastpayBean fastpayBean=new FastpayBean();
-            fastpayBean.setService("ebatong_direct_fastpay");
+            fastpayBean.setService("create_direct_pay_by_mp");
             fastpayBean.setPartner(Url.Partner);
             fastpayBean.setSign_type("MD5");
             fastpayBean.setInput_charset("UTF-8");
@@ -294,19 +299,29 @@ public class AddBankCardActivity extends Activity{
 
             fastpayBean.setPhone(phone);
             fastpayBean.setOut_trade_no(params[0]);
-            fastpayBean.setAmount(params[3]);
+            fastpayBean.setTotal_fee(Double.valueOf(params[3]) + "");               //(8,2) 位数至少2位
             fastpayBean.setSign_type("MD5");
             fastpayBean.setSpFlag("QuickPay");
-//            fastpayBean.setNotify_url("http://appnew.shilehui.com");
+            fastpayBean.setNotify_url("www.hao123.com");
             fastpayBean.setSavePciFlag("0");
             fastpayBean.setPayBatch("1");
             fastpayBean.setToken(params[1]);
             fastpayBean.setValidCode(params[2]);
             fastpayBean.setCustomerId(PreferenceUtils.getUserId() + "");
+            fastpayBean.setDefault_bank(bank_code);
+
+            fastpayBean.setExter_invoke_ip("");
+            fastpayBean.setAnti_phishing_key(params[4]);
+
+            fastpayBean.setSubject("");
+            fastpayBean.setBody("");
+            fastpayBean.setShow_url("");
+            fastpayBean.setExtend_param("");
+            fastpayBean.setExtra_common_param("");
 //            fastpayBean.setBankId("CCB");
 
 
-            String urlPath = "https://www.ebatong.com/fppay/gateway.htm";
+            String urlPath = "https://www.ebatong.com/mobileFast/pay.htm";
             String postJson = fastpayBean.getPostJson();
             Log.i("lyjtest", "getPostJson:" + postJson);
             byte[] data = postJson.getBytes();
@@ -325,17 +340,66 @@ public class AddBankCardActivity extends Activity{
 
         @Override
         protected void onPostExecute(String result) {
-            FastPay2Return returnBean = new GsonBuilder().create().fromJson( result, FastPay2Return.class);
-            if("00".equals(returnBean.getRespCode())&&"绑定成功".equals(returnBean.getRespMessage())){
-                TXWLProgressDialog.Dismiss();
+            FastPayReturn returnBean = new GsonBuilder().create().fromJson( result, FastPayReturn.class);
+            if("T".equals(returnBean.getResult())){
                 System.out.println("onPostExecute--------------->notifyServier");
                 boundBankCard();
 
             }else{
-                TXWLApplication.getInstance().showTextToast(returnBean.getRespMessage());
+                TXWLApplication.getInstance().showTextToast(returnBean.getError_message());
             }
         }
     }
+
+    /**
+     * 获取时间戳
+     */
+    class BeiFuPayPhishingKey extends AsyncTask<String, Integer, String[]> {
+
+        public BeiFuPayPhishingKey() {
+            super();
+        }
+
+        @Override
+        protected String[]  doInBackground(String... params) {
+            //bankNumber：银行卡号 accountNumber：证件号 mobile：手机号码 accountname：用户姓名
+
+
+            FastpayBean fastpayBean=new FastpayBean();
+            fastpayBean.setService("query_timestamp");
+            fastpayBean.setPartner(Url.Partner);
+            fastpayBean.setSign_type("MD5");
+            fastpayBean.setInput_charset("UTF-8");
+
+            String urlPath = "https://www.ebatong.com/mobileFast/pay.htm";
+            String postJson = fastpayBean.getPostJson();
+            Log.i("lyjtest", "getPostJson:" + postJson);
+            byte[] data = postJson.getBytes();
+            String[] result = new String[2];
+            InputStream is = null;
+            try {
+                is = NetTool.sendXMLData(urlPath, data, "UTF-8");
+                result = NetTool.readXML(is);
+                Log.i("lyjtest", new String(data));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return result;
+        }
+
+
+        @Override
+        protected void onPostExecute(String[] result) {
+            if("T".equals(result[0])){
+                encrypt_key = result[1];
+                new BeiFuPayHttpPost().execute(billno,token,et_vericode.getText().toString(),cz_money, encrypt_key);
+            }else{
+                TXWLApplication.getInstance().showTextToast(result[1]);
+            }
+        }
+    }
+
 
     private TextWatcher textwatcher = new TextWatcher() {
         private CharSequence charSequence;
@@ -391,35 +455,5 @@ public class AddBankCardActivity extends Activity{
         }
     };
 
-    //通知服务端充值金额，同时获取账户余额
-    public void getPaymentOrderOk() {
-//        String url = URL.getPaymentOrderOk(billno);
-//        Log.d("getPaymentOrderOk-->",url);
-//        DataWebService userService = DataWebService.getInstance();
-//        userService.getData(url, new DataWebCallBack() {
-//            @Override
-//            public void onSuccess(String responseBody, String successMsg) {
-//                Log.d("getPaymentOrderOk--> ", responseBody);
-//                String strBody = responseBody.substring(1, responseBody.length() - 1);
-//                Log.d("getPaymentOrderOk--> ", strBody);
-//                try {
-//                    ResultBean resultBean = new GsonBuilder().create().fromJson(strBody, ResultBean.class);
-//                    if ("充值成功".equals(resultBean.getResult())) {
-////                        TXWLApplication.getInstance().showTextToast("获取余额成功");
-//                        PreferenceUtils.getInstance().setAccountMoney(cz_money);
-//                    } else {
-//                        TXWLApplication.getInstance().showTextToast(resultBean.getResult());
-//                    }
-//                } catch (Exception ex) {
-//                    TXWLApplication.getInstance().showErrorConnected(ex);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(String responseBody, String failureMsg) {
-//                TXWLApplication.getInstance().showTextToast("充值失败");
-//            }
-//        });
-    }
 
 }

@@ -14,6 +14,11 @@ import com.example.txwl_first.Util.Constant;
 import com.example.txwl_first.bean.BankListBean;
 import com.google.gson.GsonBuilder;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 /**
  * Created by Administrator on 2015/3/28.
  */
@@ -24,7 +29,7 @@ public class BankSelectionActivity extends Activity {
     private Context mContext;
     private TextView tv_title;
     private ImageButton ibtn_title_back;
-    private String[] bankName;
+    private HashMap<String, String> bankName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,38 +42,18 @@ public class BankSelectionActivity extends Activity {
     }
 
     private void initBankName() {
-        bankName= new String[]{"中国工商银行",
-                "中国农业银行",
-                "中国建设银行",
-                "中国交通银行",
-                "中国银行",
-                "招商银行",
-                "浦发银行"
-                , "中国光大银行"
-                , "中国民生银行"
-                , "中信银行"
-                , "华夏银行"
-                , "兴业银行"
-                , "深圳发展银行"
-                , "广东发展银行"
-                , "广州银行"
-                , "广州农村商业银行"
-                , "北京银行"
-                , "北京农商银行"
-                , "上海银行"
-                , "上海农村商业银行"
-                , "渤海银行"
-                , "南京银行"
-                , "东亚银行"
-                , "宁波银行"
-                , "杭州银行"
-                , "平安银行"
-                , "徽商银行"
-                , "浙商银行"
-                , "中国邮政储蓄银行"
-                , "江苏银行"
-                , "大连银行"
-                , "中国银联"};
+        bankName= new HashMap<>();
+        bankName.put("中国工商银行", "ICBC_D_B2C");
+        bankName.put("中国农业银行", "ABC_D_B2C");
+        bankName.put("中国建设银行", "CCB_D_B2C");
+        bankName.put("民生银行", "CMBCD_D_B2C");
+        bankName.put("中国银行", "BOCSH_D_B2C");
+        bankName.put("兴业银行", "CIB_D_B2C");
+        bankName.put("光大银行", "CEB_D_B2C");
+        bankName.put("中信银行", "CNCB_D_B2C");
+        bankName.put("平安银行", "PINGAN_D_B2C");
+        bankName.put("中国邮政", "POSTGC_D_B2C");
+        bankName.put("交通银行", "COMM_D_B2C");
     }
 
     private void initListener()
@@ -93,9 +78,10 @@ public class BankSelectionActivity extends Activity {
 
 
     private void addCardList() {
-        int size=bankName.length;
-        for (int i = 0; i < size; i++) {
-            String name=bankName[i];
+        Set<String> set = bankName.keySet();
+        Iterator<String> iterator = set.iterator();
+        while (iterator.hasNext()) {
+            String name= iterator.next();
             LinearLayout ll_card_item = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.bank_item,null);
             TextView tv_bankname = (TextView)ll_card_item.findViewById(R.id.tv_bankname);
             tv_bankname.setText(name);
@@ -104,11 +90,13 @@ public class BankSelectionActivity extends Activity {
                 public void onClick(View view) {
                     Intent intent = new Intent();
                     intent.putExtra("BankName", name);
+                    intent.putExtra("bank_code", bankName.get(name));
                     setResult(Constant.ResultCode, intent);
                     finish();
                 }
             });
             ll_card.addView(ll_card_item);
         }
+
     }
 }

@@ -1,5 +1,8 @@
 package com.example.txwl_first.Util;
 
+import android.util.Xml;
+import org.xmlpull.v1.XmlPullParser;
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
@@ -53,5 +56,45 @@ public class NetTool {
         }
         is.close();
         return bos.toByteArray();
+    }
+
+    //读取XML文件获取时间戳
+    public static String[] readXML(InputStream is) {
+        String[] data = new String[2];
+        //获取pull解析器
+        XmlPullParser xp = Xml.newPullParser();
+        try {
+            xp.setInput(is, "UTF-8");
+
+            //获取当前节点的事件类型
+            int type = xp.getEventType();
+            while(type != XmlPullParser.END_DOCUMENT){
+                switch (type) {
+                    case XmlPullParser.START_TAG:
+                        //				获取当前节点的名字
+
+                        if("is_success".equals(xp.getName())){
+                            data[0] = xp.nextText();
+                        }
+
+                        if("error".equals(xp.getName())){
+                            data[1] = xp.nextText();
+                        }
+
+                        if("encrypt_key".equals(xp.getName())){
+                            data[1] = xp.nextText();
+                        }
+                        break;
+                    case XmlPullParser.END_TAG:
+                        break;
+                }
+                //把指针移动到下一个节点，并且返回该节点的事件类型
+                type = xp.next();
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return  data;
     }
 }

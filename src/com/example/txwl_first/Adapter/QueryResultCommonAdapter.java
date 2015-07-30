@@ -18,22 +18,22 @@ import com.example.txwl_first.business.LoaderBusiness;
 
 import java.util.ArrayList;
 
-public class QueryResultNewAdapter extends BaseAdapter {
+public class QueryResultCommonAdapter extends BaseAdapter {
     private Context mContext;
-    private ArrayList<QueryResultItemBean> loanBeans = new ArrayList<>();
+    private ArrayList<QueryResultItemBean> list = new ArrayList<>();
     private HolderView holderView;
     private Resources resources;
 
-    public QueryResultNewAdapter(Context context, ArrayList<QueryResultItemBean> loanBeanArrayList, Resources resources) {
+    public QueryResultCommonAdapter(Context context, ArrayList<QueryResultItemBean> loanBeanArrayList, Resources resources) {
         super();
         this.mContext = context;
         this.resources = resources;
-        this.loanBeans = loanBeanArrayList;
+        this.list = loanBeanArrayList;
     }
 
     @Override
     public int getCount() {
-        return loanBeans.size();
+        return list.size();
     }
 
     @Override
@@ -45,7 +45,7 @@ public class QueryResultNewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView==null){
             holderView = new HolderView();
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.query_result_item,null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_query_result_conmm,null);
             holderView.own_user_head_image = (ImageView) convertView.findViewById(R.id.img_user_head);
             holderView.tv_own_user_name = (TextView) convertView.findViewById(R.id.tv_query_name);
             holderView.tv_own_user_phone = (TextView) convertView.findViewById(R.id.tv_query_phone_num);
@@ -59,7 +59,7 @@ public class QueryResultNewAdapter extends BaseAdapter {
         }else {
             holderView = (HolderView) convertView.getTag();
         }
-        final QueryResultItemBean loanBeanlist = loanBeans.get(position);
+        final QueryResultItemBean loanBeanlist = list.get(position);
 
         LoaderBusiness.loadImage(loanBeanlist.getOwneridimg(), holderView.own_user_head_image);
         holderView.tv_own_user_name.setText(loanBeanlist.getName());

@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.example.txwl_first.Util.*;
-import com.example.txwl_first.beifu.FastPay2Return;
+import com.example.txwl_first.beifu.FastPayReturn;
 import com.example.txwl_first.beifu.FastpayBean;
 import com.google.gson.GsonBuilder;
 
@@ -21,7 +21,7 @@ import java.io.InputStream;
 public class ConfirmRechargeActivity extends Activity{
 
     private Button confirm_recharge_commit;
-    private String name,idcard,bankid,phone,et_vericode,billno,token,cz_money;
+    private String name,idcard,bankid,phone,et_vericode,billno,token,cz_money,bank_code;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,7 @@ public class ConfirmRechargeActivity extends Activity{
 
     private void initView() {
 
+        bank_code = getIntent().getStringExtra("bank_code");
         name = getIntent().getStringExtra("name");
         idcard = getIntent().getStringExtra("idcard");
         bankid = getIntent().getStringExtra("bankid");
@@ -70,10 +71,11 @@ public class ConfirmRechargeActivity extends Activity{
             public void onClick(View view) {
                 TXWLProgressDialog.createDialog(ConfirmRechargeActivity.this);
                 TXWLProgressDialog.setMessage("支付中...");
-                    new BeiFuPayHttpPost().execute(billno, token, et_vericode, cz_money);
+                    new BeiFuPayPhishingKey().execute();
             }
         });
     }
+
 
     class BeiFuPayHttpPost extends AsyncTask<String, Integer, String> {
 
@@ -87,7 +89,7 @@ public class ConfirmRechargeActivity extends Activity{
 
 
             FastpayBean fastpayBean=new FastpayBean();
-            fastpayBean.setService("ebatong_direct_fastpay");
+            fastpayBean.setService("create_direct_pay_by_mp");
             fastpayBean.setPartner(Url.Partner);
             fastpayBean.setSign_type("MD5");
             fastpayBean.setInput_charset("UTF-8");
@@ -100,19 +102,29 @@ public class ConfirmRechargeActivity extends Activity{
 
             fastpayBean.setPhone(phone);
             fastpayBean.setOut_trade_no(params[0]);
-            fastpayBean.setAmount(params[3]);
+            fastpayBean.setTotal_fee(Double.valueOf(params[3]) + "");               //(8,2) 位数至少2位
             fastpayBean.setSign_type("MD5");
             fastpayBean.setSpFlag("QuickPay");
-//            fastpayBean.setNotify_url("http://appnew.shilehui.com");
+            fastpayBean.setNotify_url("www.hao123.com");
             fastpayBean.setSavePciFlag("0");
             fastpayBean.setPayBatch("1");
             fastpayBean.setToken(params[1]);
             fastpayBean.setValidCode(params[2]);
             fastpayBean.setCustomerId(PreferenceUtils.getUserId() + "");
+            fastpayBean.setDefault_bank(bank_code);
+
+            fastpayBean.setExter_invoke_ip("");
+            fastpayBean.setAnti_phishing_key(params[4]);
+
+            fastpayBean.setSubject("");
+            fastpayBean.setBody("");
+            fastpayBean.setShow_url("");
+            fastpayBean.setExtend_param("");
+            fastpayBean.setExtra_common_param("");
 //            fastpayBean.setBankId("CCB");
 
 
-            String urlPath = "https://www.ebatong.com/fppay/gateway.htm";
+            String urlPath = "https://www.ebatong.com/mobileFast/pay.htm";
             String postJson = fastpayBean.getPostJson();
             Log.i("lyjtest", "getPostJson:" + postJson);
             byte[] data = postJson.getBytes();
@@ -131,21 +143,68 @@ public class ConfirmRechargeActivity extends Activity{
 
         @Override
         protected void onPostExecute(String result) {
-            FastPay2Return returnBean = new GsonBuilder().create().fromJson( result, FastPay2Return.class);
-            if("00".equals(returnBean.getRespCode())){
-                System.out.println("onPostExecute--------------->notifyServier");
+            FastPayReturn returnBean = new GsonBuilder().create().fromJson( result, FastPayReturn.class);
+            if("T".equals(returnBean.getResult())) {
                 TXWLProgressDialog.Dismiss();
                 getPaymentOrderOk();
                 Intent intent = new Intent(ConfirmRechargeActivity.this, RechargeSuccessActivity.class);
+                intent.putExtra("registid", getIntent().getStringExtra("registid"));
                 intent.putExtra("cz_money",cz_money);
                 intent.putExtra("billno", billno);
                 startActivity(intent);
-//                TXWLApplication.getInstance().addActivity(ConfirmRechargeActivity.this);
+
             }else{
-                TXWLApplication.getInstance().showTextToast(returnBean.getRespMessage());
+                TXWLApplication.getInstance().showTextToast(returnBean.getError_message());
             }
         }
+    }
 
+    /**
+     * 获取时间戳
+     */
+    class BeiFuPayPhishingKey extends AsyncTask<String, Integer, String[]> {
+
+        public BeiFuPayPhishingKey() {
+            super();
+        }
+
+        @Override
+        protected String[]  doInBackground(String... params) {
+            //bankNumber：银行卡号 accountNumber：证件号 mobile：手机号码 accountname：用户姓名
+
+
+            FastpayBean fastpayBean=new FastpayBean();
+            fastpayBean.setService("query_timestamp");
+            fastpayBean.setPartner(Url.Partner);
+            fastpayBean.setSign_type("MD5");
+            fastpayBean.setInput_charset("UTF-8");
+
+            String urlPath = "https://www.ebatong.com/mobileFast/pay.htm";
+            String postJson = fastpayBean.getPostJson();
+            Log.i("lyjtest", "getPostJson:" + postJson);
+            byte[] data = postJson.getBytes();
+            String[] result = new String[2];
+            InputStream is = null;
+            try {
+                is = NetTool.sendXMLData(urlPath, data, "UTF-8");
+                result = NetTool.readXML(is);
+                Log.i("lyjtest", new String(data));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return result;
+        }
+
+
+        @Override
+        protected void onPostExecute(String[] result) {
+            if("T".equals(result[0])){
+                new BeiFuPayHttpPost().execute(billno, token, et_vericode, cz_money, result[1]);
+            }else{
+                TXWLApplication.getInstance().showTextToast(result[1]);
+            }
+        }
     }
 
     //通知服务端充值金额，同时获取账户余额

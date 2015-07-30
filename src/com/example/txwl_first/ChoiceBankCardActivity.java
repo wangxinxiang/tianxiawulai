@@ -146,6 +146,7 @@ public class ChoiceBankCardActivity extends Activity{
                             intent.putExtra("accountname", item.getAccountname());
                             intent.putExtra("recharge_money", tip);
                             intent.putExtra("billno",billno);
+                            intent.putExtra("bank_code", item.getBank_code());
                             startActivity(intent);
                         }
                     });

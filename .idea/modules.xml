@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://D:/Android_package/Android-PullToRefresh-master/library/PullToRefresh.iml" filepath="D:/Android_package/Android-PullToRefresh-master/library/PullToRefresh.iml" />
       <module fileurl="file://D:/Android_package/UniversalImageLoader(1)/UniversalImageLoader.iml" filepath="D:/Android_package/UniversalImageLoader(1)/UniversalImageLoader.iml" />
+      <module fileurl="file://D:/library/UniversalImageLoader(1)/UniversalImageLoader/UniversalImageLoader.iml" filepath="D:/library/UniversalImageLoader(1)/UniversalImageLoader/UniversalImageLoader.iml" />
+      <module fileurl="file://D:/library/library-refresh/library-refresh.iml" filepath="D:/library/library-refresh/library-refresh.iml" />
       <module fileurl="file://$PROJECT_DIR$/txwl_first.iml" filepath="$PROJECT_DIR$/txwl_first.iml" />
     </modules>
   </component>

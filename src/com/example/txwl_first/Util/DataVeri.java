@@ -12,6 +12,10 @@ import java.util.regex.Pattern;
 public class DataVeri {
 
     public static Boolean isNaN(String array, String name) {
+        if ("".equals(array)) {
+            TXWLApplication.getInstance().showTextToast(name + "数字为空");
+            return false;
+        }
         if (array.matches("^[0-9]*$") || array.matches("\\d+\\.\\d+"))
             return true;
         else {
@@ -137,7 +141,7 @@ public class DataVeri {
             Date dt1 = df.parse(DATE1);
             Date dt2 = df.parse(DATE2);
             if (dt1.getTime() > dt2.getTime()) {
-                TXWLApplication.getInstance().showTextToast("欠款日期在还款日期前");
+                TXWLApplication.getInstance().showTextToast("欠款日期应在还款日期前");
                 flag = true;
             } else if (dt1.getTime() < dt2.getTime()) {
                 flag = false;

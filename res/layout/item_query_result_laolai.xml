@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+                android:background="@color/white"
+        android:padding="@dimen/space_12">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                     >
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:id="@+id/tv_query_name"
+                          android:textColor="@color/black"
+                          android:textSize="@dimen/textsize_16"
+                          android:text="傅旭东"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:id="@+id/tv_query_age"
+                          android:textColor="@color/gray_text"
+                          android:paddingLeft="@dimen/space_5"
+                          android:text="38岁"
+                        />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:id="@+id/tv_query_cardnum"
+                          android:textColor="@color/gray_text"
+                          android:layout_weight="1"
+                          android:gravity="right"
+                          android:text="12222222222222222"/>
+            </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:orientation="horizontal">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:id="@+id/tv_query_area"
+                      android:textColor="@color/gray_text"
+                      android:text="地区"
+                      android:layout_weight="1"/>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:id="@+id/tv_query_casecount"
+                      android:textColor="@color/gray_text"
+                      android:text="失信记录：0条"/>
+        </LinearLayout>
+
+</LinearLayout>

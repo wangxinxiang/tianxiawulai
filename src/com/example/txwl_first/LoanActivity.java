@@ -288,9 +288,7 @@ public class LoanActivity extends Activity implements AddItem {
     public void fill_LinearLayout(String title_name, String[] owner, String[] selectors, QueryDetailResultBean queryDetailResultBean) {
         tv_title.setText(title_name);
         tv_right.setText("举报");
-        if ("5".equals(queryDetailResultBean.getRegisttype())) {
-            tv_right.setVisibility(View.GONE);
-        } else if (getIntent().getBooleanExtra("addblack", false)) {
+       if (getIntent().getBooleanExtra("addblack", false)) {
             if ( "3".equals(queryDetailResultBean.getStatus())) {
                 tv_right.setVisibility(View.GONE);
             }else {
@@ -329,6 +327,8 @@ public class LoanActivity extends Activity implements AddItem {
     }
 
     private void registToInternet() {
+        TXWLProgressDialog.createDialog(LoanActivity.this);
+        TXWLProgressDialog.setMessage("登记中");
         String url = Url.REGISTER_URL;
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
@@ -352,14 +352,17 @@ public class LoanActivity extends Activity implements AddItem {
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
                 Log.d("LoanActivity ----->", new String(bytes));
                 if (new String(bytes).contains("success")) {
+                    TXWLProgressDialog.Dismiss();
                    TXWLApplication.getInstance().showTextToast("登记成功");
                     setResult(Constant.LOGIN_CHANGE);
                     finish();
                 }else {
                     try {
                         FaileBean faileBean = new GsonBuilder().create().fromJson(new String(bytes), FaileBean.class);
+                        TXWLProgressDialog.Dismiss();
                         TXWLApplication.getInstance().showTextToast(faileBean.getMsg());
                     } catch (Exception e) {
+                        TXWLProgressDialog.Dismiss();
                         TXWLApplication.getInstance().showErrorConnected(e);
                     }
                 }
@@ -367,6 +370,7 @@ public class LoanActivity extends Activity implements AddItem {
 
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                TXWLProgressDialog.Dismiss();
                 TXWLApplication.getInstance().showTextToast("网络错误");
             }
         });
@@ -523,7 +527,7 @@ public class LoanActivity extends Activity implements AddItem {
         public void onDateSet(DatePicker datePicker, int year, int month, int day) {
             loan_datetime = new StringBuffer().append(year + "-").append(month + 1 + "-").append(day).toString();
             String currentTime = TimeUtil.getCurrentTime();
-            if (!TimeUtil.compareTime(currentTime, loan_datetime)) {
+            if (TimeUtil.compareTime(currentTime, loan_datetime)) {
                 TXWLApplication.getInstance().showTextToast("借款时间要小于当前时间");
                 return;
             }

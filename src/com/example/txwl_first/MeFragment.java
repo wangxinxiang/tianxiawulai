@@ -144,6 +144,7 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
                                 bean.getRecallcount(), bean.getRecallmoney(), bean.getUnrecallcount(), bean.getUnrecallmoney());//设置头部的各个值
                         LoaderBusiness.loadImage(PreferenceUtils.getUserHeadImage(), img_headimage);
                         tv_user_name.setText(PreferenceUtils.getUserName());
+                        tv_title.setText(bean.getCompanyname());
                         for (ViewPagerFragment fragment : fragmentsList) {
                             fragment.initListView(bean);
                         }
@@ -156,6 +157,7 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
                 } catch (Exception e) {
                     TXWLApplication.getInstance().showErrorConnected(e);
                 }
+
 
             }
 

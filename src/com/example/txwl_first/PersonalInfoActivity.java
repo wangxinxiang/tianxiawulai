@@ -124,6 +124,8 @@ public class PersonalInfoActivity extends Activity {
     }
 
     private void initView() {
+        TXWLProgressDialog.createDialog(PersonalInfoActivity.this);
+        TXWLProgressDialog.setMessage("获取信息中");
         tv_title = (TextView) findViewById(R.id.tv_title);
         ibtn_title_back = (ImageButton) findViewById(R.id.ibtn_title_back);
         ibtn_title_back.setVisibility(View.VISIBLE);
@@ -160,13 +162,16 @@ public class PersonalInfoActivity extends Activity {
                     setData();
                     PreferenceUtils.getInstance().setUserName(personalInfoBean.getRealname());
                     PreferenceUtils.getInstance().setUserHeadImage(personalInfoBean.getHeadimage());
+                    TXWLProgressDialog.Dismiss();
                 } catch (Exception e) {
                     TXWLApplication.getInstance().showErrorConnected(e);
+                    TXWLProgressDialog.Dismiss();
                 }
             }
 
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                TXWLProgressDialog.Dismiss();
                 TXWLApplication.getInstance().showTextToast("网络错误");
             }
         });

@@ -40,6 +40,10 @@ public class HouseLoanActivity extends LoanActivity {
         if (DataVeri.compare_date(check_data_str[9], check_data_str[10])) {
             isSubmit = false;
         }
+
+        if (!DataVeri.isIDNum(check_data_str[5])) {
+            isSubmit = false;
+        }
     }
 
     @Override

@@ -9,7 +9,11 @@ public class Url {
 
     public static String  UPLOADURL = URL + "Default/uploadimage";      //上传图片接口
 
-    public static String  QUERY_URL = URL + "Default/GetUserListByway";      //上传图片接口
+    public static String  QUERY_URL = URL + "Default/GetUserListByway";      //查询主页面
+
+    public static String  GetLaoLaiSecondList_URL = URL + "Default/GetLaoLaiSecondList";      //老赖查询结果二级列表
+
+    public static String  GetLaoLaiDetail_URL = URL + "Default/GetLaoLaiDetail";      //查询老赖详细信息
 
     public static String  QUERY_DETAIL_URL = URL + "Default/GetUserDetail";      //查询详细信息
 

@@ -5,7 +5,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import com.example.txwl_first.Util.PreferenceUtils;
 import com.example.txwl_first.Util.TXWLApplication;
+import com.example.txwl_first.Util.Url;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import org.apache.http.Header;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,7 +22,6 @@ import java.util.Date;
 public class RechargeSuccessActivity extends Activity{
 
     private Button recharge_success_commit;
-    private String recipientsdisease,recipientsname,confirm_recharge_money;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +63,7 @@ public class RechargeSuccessActivity extends Activity{
         recharge_success_commit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TXWLApplication.getInstance().finishStack();
+                getPaymentOrderOk();
             }
         });
     }
@@ -71,8 +76,35 @@ public class RechargeSuccessActivity extends Activity{
 
     @Override
     public void onBackPressed() {
-        //返回键按下
-        super.onBackPressed();
-        TXWLApplication.getInstance().finishStack();
+       TXWLApplication.getInstance().showTextToast("交易成功，请按确定将交易数据提交到服务器");
+    }
+
+    //将结果交给服务器
+    public void getPaymentOrderOk() {
+        String url = Url.RechargeOK_URL;
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+
+        params.put("out_trade_no", getIntent().getStringExtra("billno"));
+        params.put("customerId", PreferenceUtils.getUserId());
+        params.put("registid", getIntent().getStringExtra("registid"));
+
+        client.post(url, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                if (new String(bytes).contains("success")) {
+                    TXWLApplication.getInstance().showTextToast("已将记录交给服务器");
+                    TXWLApplication.getInstance().finishStack();
+                } else {
+                    TXWLApplication.getInstance().showTextToast("支付成功，将记录交给服务器失败,再按次确定");
+                }
+
+            }
+
+            @Override
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                TXWLApplication.getInstance().showTextToast("支付成功，网络错误,再按次确定");
+            }
+        });
     }
 }

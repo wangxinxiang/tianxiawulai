@@ -41,6 +41,22 @@
     <string name="input_et_query">输入姓名/身份证/手机号</string>
     <string name="add">添加</string>
 
+    <string name="head_title_tv">法律案件</string>
+
+
+    <string name="courtname_tv">执行法院</string>
+    <string name="areaname_tv">省份</string>
+    <string name="gistid_tv">执行依据文号</string>
+    <string name="casecreatetime_tv">立案时间</string>
+    <string name="casecode_tv">案号</string>
+    <string name="gistunit_tv">做出执行依据单位</string>
+    <string name="duty_tv">生效法律文书确定的义务</string>
+    <string name="performance_tv">被执行人的履行情况</string>
+    <string name="disrupttypename_tv">失信被执行人行为具体情况</string>
+    <string name="publishdate_tv">发布时间</string>
+
+
+
 
     <string name="car_loan">车贷</string>
     <string name="house_loan">房贷</string>

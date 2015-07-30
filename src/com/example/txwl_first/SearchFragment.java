@@ -115,7 +115,7 @@ public class SearchFragment extends Fragment {
         edit_query = (EditText) view.findViewById(R.id.et_input);
         tv_servison= (TextView) view.findViewById(R.id.tv_servison);
 
-        tv_servison.setText("V："+getVersion());
+        tv_servison.setText("V."+getVersion());
     }
 
 

@@ -23,7 +23,7 @@ public class VerificationActivity extends Activity {
     EditText et_chekcode;
     Button btn_submit_reget,btn_next;
     private String token,billno;
-    private String cz_money,name,idcard,bankid,phone;
+    private String cz_money,name,idcard,bankid,phone, bank_code;
     BeiFuHttpPost beiFuHttpPost;
 
     @Override
@@ -75,6 +75,8 @@ public class VerificationActivity extends Activity {
                     intent.putExtra("idcard", idcard);
                     intent.putExtra("bankid", bankid);
                     intent.putExtra("phone", phone);
+                    intent.putExtra("bank_code", bank_code);
+                    intent.putExtra("registid", getIntent().getStringExtra("registid"));
                     startActivity(intent);
 //                    TXWLApplication.getInstance().addActivity(VerificationActivity.this);
                 }else{
@@ -92,6 +94,7 @@ public class VerificationActivity extends Activity {
         bankid=getIntent().getStringExtra("bankNumber");
         phone=getIntent().getStringExtra("mobile");
         billno = getIntent().getStringExtra("billno");
+        bank_code = getIntent().getStringExtra("bank_code");
         tv_paymoney = (TextView) findViewById(R.id.tv_paymoney);
         tv_phone = (TextView) findViewById(R.id.phone_tv);
         et_chekcode = (EditText) findViewById(R.id.et_user_checkcode);
@@ -132,7 +135,7 @@ public class VerificationActivity extends Activity {
     private void getChecCode(){
         beiFuHttpPost = new BeiFuHttpPost();
         Log.d("billno -->", billno);
-        beiFuHttpPost.execute(billno, name, idcard, bankid, phone, cz_money, PreferenceUtils.getUserId() + "");
+        beiFuHttpPost.execute(billno, name, idcard, bankid, phone, cz_money, PreferenceUtils.getUserId() + "", bank_code);
         MyCountDownTimer mc = new MyCountDownTimer(60000, 1000);
         mc.start();
         btn_submit_reget.setEnabled(false);

@@ -28,7 +28,7 @@ public class FastpayBean {
     private String idType;
     private String input_charset;
     private String out_trade_no;
-    private String pan;
+    private String card_no;             //银行卡号
     private String partner;
     private String phone;
     private String service;
@@ -44,6 +44,88 @@ public class FastpayBean {
 
     private String customerId;
     private String bankId;
+
+    private String total_fee;
+    private String exter_invoke_ip;
+    private String anti_phishing_key;
+    private String default_bank;
+    private String subject;
+    private String body;
+    private String show_url;
+    private String extra_common_param;
+    private String extend_param;
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public String getShow_url() {
+        return show_url;
+    }
+
+    public void setShow_url(String show_url) {
+        this.show_url = show_url;
+    }
+
+    public String getExtra_common_param() {
+        return extra_common_param;
+    }
+
+    public void setExtra_common_param(String extra_common_param) {
+        this.extra_common_param = extra_common_param;
+    }
+
+    public String getExtend_param() {
+        return extend_param;
+    }
+
+    public void setExtend_param(String extend_param) {
+        this.extend_param = extend_param;
+    }
+
+    public String getDefault_bank() {
+        return default_bank;
+    }
+
+    public void setDefault_bank(String default_bank) {
+        this.default_bank = default_bank;
+    }
+
+    public String getAnti_phishing_key() {
+        return anti_phishing_key;
+    }
+
+    public void setAnti_phishing_key(String anti_phishing_key) {
+        this.anti_phishing_key = anti_phishing_key;
+    }
+
+    public String getExter_invoke_ip() {
+        return exter_invoke_ip;
+    }
+
+    public void setExter_invoke_ip(String exter_invoke_ip) {
+        this.exter_invoke_ip = exter_invoke_ip;
+    }
+
+    public String getTotal_fee() {
+        return total_fee;
+    }
+
+    public void setTotal_fee(String total_fee) {
+        this.total_fee = total_fee;
+    }
 
     public String getAmount() {
         return amount;
@@ -94,11 +176,11 @@ public class FastpayBean {
     }
 
     public String getPan() {
-        return pan;
+        return card_no;
     }
 
-    public void setPan(String pan) {
-        this.pan = pan;
+    public void setPan(String card_no) {
+        this.card_no = card_no;
     }
 
     public String getPartner() {
@@ -239,17 +321,44 @@ public class FastpayBean {
 
     private Map<String, String> getContentMap() {
         Map<String,String> temp=new LinkedHashMap<String,String>();
+        if (total_fee != null) {
+            temp.put("total_fee", total_fee);
+        }
+        if (subject != null) {
+            temp.put("subject", "");                //商品名称
+        }
+        if (body != null) {
+            temp.put("body", "");               //商品描述
+        }
+        if (show_url != null) {
+            temp.put("show_url", "");               //商品展示网址
+        }
+        if (extra_common_param != null) {
+            temp.put("extra_common_param", "");         //公用回传参数
+        }
+        if (extend_param != null) {
+            temp.put("extend_param", "");           //公用业务扩展参数
+        }
         if(amount!=null){
             temp.put("amount",amount);
         }
+        if (default_bank != null) {
+            temp.put("default_bank", default_bank);
+        }
+        if (exter_invoke_ip != null) {
+            temp.put("exter_invoke_ip", exter_invoke_ip);           //订单IP
+        }
+        if (anti_phishing_key != null) {
+            temp.put("anti_phishing_key", anti_phishing_key);       //防钓鱼时间戳，调用时间戳查询接口获取
+        }
         if(cardHolderId!=null){
-            temp.put("cardHolderId",cardHolderId);
+            temp.put("cert_no",cardHolderId);
         }
         if(cardHolderName!=null){
-            temp.put("cardHolderName",cardHolderName);
+            temp.put("real_name",cardHolderName);
         }
         if(idType!=null){
-            temp.put("idType",idType);
+            temp.put("cert_type",idType);
         }
         if(input_charset!=null){
             temp.put("input_charset",input_charset);
@@ -257,8 +366,8 @@ public class FastpayBean {
         if(out_trade_no!=null){
             temp.put("out_trade_no",out_trade_no);
         }
-        if(pan!=null){
-            temp.put("pan",pan);
+        if(card_no!=null){
+            temp.put("card_no",card_no);
         }
         if(partner!=null){
             temp.put("partner",partner);
@@ -270,7 +379,7 @@ public class FastpayBean {
             temp.put("sign_type",sign_type);
         }
         if(phone!=null){
-            temp.put("phone",phone);
+            temp.put("card_bind_mobile_phone_no",phone);
         }
         if(notify_url!=null){
             temp.put("notify_url",notify_url);
@@ -282,19 +391,19 @@ public class FastpayBean {
             temp.put("savePciFlag",savePciFlag);
         }
         if(token!=null){
-            temp.put("token",token);
+            temp.put("dynamic_code_token",token);
         }
         if(payBatch!=null){
             temp.put("payBatch",payBatch);
         }
         if(validCode!=null){
-            temp.put("validCode",validCode);
+            temp.put("dynamic_code",validCode);
         }
         if(customerId!=null){
-            temp.put("customerId",customerId);
+            temp.put("customer_id",customerId);
         }
         if(bankId!=null){
-            temp.put("bankId",bankId);
+            temp.put("bank_code",bankId);
         }
         return temp;
     }

@@ -476,11 +476,8 @@ public class TimeUtil {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if(date1.after(date2)) {
-            return true;
-        } else {
-            return false;
-        }
+        assert date1 != null;
+        return date1.before(date2);
     }
 
 
