@@ -35,11 +35,13 @@ public class AddOldBeaterActivity extends LoanActivity{
             if (image_url[i] == null || "".equals(image_url[i])) {
                 isSubmit = false;
                 TXWLApplication.getInstance().showTextToast("图片不能为空");
+                return;
             }
         }
 
         if (DataVeri.compare_date(check_data_str[8], check_data_str[9])) {
             isSubmit = false;
+            return;
         }
     }
 

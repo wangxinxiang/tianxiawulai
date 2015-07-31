@@ -1,11 +1,10 @@
 package com.example.txwl_first;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -23,7 +22,6 @@ import com.loopj.android.http.RequestParams;
 import com.umeng.analytics.MobclickAgent;
 import org.apache.http.Header;
 
-import java.io.File;
 import java.util.Calendar;
 
 public class LoanActivity extends Activity implements AddItem {
@@ -182,6 +180,7 @@ public class LoanActivity extends Activity implements AddItem {
                             if ("".equals(((TextView) vv).getText())) {
                                 TXWLApplication.getInstance().showTextToast("数据不能为空");
                                 isSubmit = false;
+                                return data;
                             } else {
                                 data.append(((TextView) vv).getText() + ",");
                             }
@@ -193,6 +192,7 @@ public class LoanActivity extends Activity implements AddItem {
                     if ("".equals(((EditText) v).getText())) {
                         TXWLApplication.getInstance().showTextToast("数据不能为空");
                         isSubmit = false;
+                        return data;
                     } else {
                         data.append(((EditText) v).getText() + ",");
                     }
@@ -206,6 +206,7 @@ public class LoanActivity extends Activity implements AddItem {
                                 if ("".equals(((RadioButton) vvv).getText().toString())) {
                                     TXWLApplication.getInstance().showTextToast("数据不能为空");
                                     isSubmit = false;
+                                    return data;
                                 } else {
                                     data.append(((RadioButton) vvv).getText().toString() + ",");
                                 }
@@ -225,6 +226,7 @@ public class LoanActivity extends Activity implements AddItem {
             if ("".equals(editText.getText().toString())) {
                 isSubmit = false;
                 TXWLApplication.getInstance().showTextToast("备注不能为空");
+                return data;
             } else {
                 image_remark[i] = editText.getText().toString();
             }
@@ -514,10 +516,27 @@ public class LoanActivity extends Activity implements AddItem {
         TextView tv_descrip = (TextView) rl_item_five.findViewById(R.id.tv_descrip);
         TextView tv_descrip_content = (TextView) rl_item_five.findViewById(R.id.tv_descrip_content);
         LoaderBusiness.loadImage(house, btn_photo);
-        btn_photo.setClickable(false);
         tv_descrip.setText(remark);
         tv_descrip_content.setText(descrip_content);
         layout.addView(rl_item_five);
+
+        btn_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View imgEntryView =  LayoutInflater.from(LoanActivity.this).inflate(R.layout.dialog_photo_choice, null); // 加载自定义的布局文件
+                final AlertDialog dialog = new AlertDialog.Builder(LoanActivity.this).create();
+                ImageView imageView = (ImageView) imgEntryView.findViewById(R.id.large_image);
+                LoaderBusiness.loadImage(house, imageView);
+                dialog.setView(imgEntryView);
+                dialog.show();
+                imgEntryView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.cancel();
+                    }
+                });
+            }
+        });
 
     }
 

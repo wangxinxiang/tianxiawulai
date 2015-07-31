@@ -80,6 +80,7 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
 
     private GetMyInfoBean bean;
     public static final int REQUSET = 1; //请求码
+    private Boolean isToast=false;
 
 
     @Override
@@ -106,6 +107,7 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
         if (PreferenceUtils.getIsLogin()){
             //如果登录开始联网 获取个人信息数据
             //只传id 获取所有数据
+            isToast=false;
             getHttpMyInfo(PreferenceUtils.getUserId(),"","");
         }
 //        new myAsyncTask().execute();//模拟耗时操作 完成后开始测量viewpager中子控件的高度
@@ -145,10 +147,20 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
                         LoaderBusiness.loadImage(PreferenceUtils.getUserHeadImage(), img_headimage);
                         tv_user_name.setText(PreferenceUtils.getUserName());
                         tv_title.setText(bean.getCompanyname());
-                        for (ViewPagerFragment fragment : fragmentsList) {
-                            fragment.initListView(bean);
+                        if( bean.getRegistinfolist().length==0){
+                            if(isToast){
+                                TXWLApplication.getInstance().showTextToast("没有查询到数据");
+                            }
+                        }else {
+                            if(isToast){
+                                TXWLApplication.getInstance().showTextToast("查找成功");
+                            }
+                            for (ViewPagerFragment fragment : fragmentsList) {
+                                fragment.initListView(bean);
+                            }
+                            resetViewPagerHeight(0);
                         }
-                        resetViewPagerHeight(0);
+
 
                     } else {
 //                        Toast.makeText(getActivity(), "网络错误，请检查网络", Toast.LENGTH_LONG).show();
@@ -236,12 +248,13 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
                 //当有输入时 显示清空按钮 实现点击清空输入
                 if (editable.length() == 0 || et_search.equals("")) {
                     ibtn_clear.setVisibility(View.GONE);
+                    isToast=false;
                     if (PreferenceUtils.getIsLogin()) {
                         getHttpMyInfo(PreferenceUtils.getUserId(), "", "");
                     }
                 } else {
                     ibtn_clear.setVisibility(View.VISIBLE);
-                    getHttpMyInfo(PreferenceUtils.getUserId(), editable.toString(), "");
+//                    getHttpMyInfo(PreferenceUtils.getUserId(), editable.toString(), "");
                 }
             }
         });
@@ -260,36 +273,42 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
                 if (et_search.getText().toString().trim().equals("")){
                     TXWLApplication.getInstance().showTextToast("搜索关键字输入不能为空");
                 }else {
+                    isToast=true;
+                    ((InputMethodManager) et_search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
+                                .hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+                                        InputMethodManager.HIDE_NOT_ALWAYS);
                     getHttpMyInfo(PreferenceUtils.getUserId(),et_search.getText().toString().trim(),"");
                 }
             }
         });
 
         //edittext的软键盘的搜索按钮监听
-//        et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-//                    //隐藏软键盘
-//                    if (textView.length() == 0 || textView.equals("")) {
-//                        Toast.makeText(getActivity(), getActivity().toString() + "输入框为空", Toast.LENGTH_LONG).show();
-//                        return true;
-//                    } else {
-//                        ((InputMethodManager) et_search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
-//                                .hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
-//                                        InputMethodManager.HIDE_NOT_ALWAYS);
-//                        //实现跳转
-////                    Intent intent=new Intent();
-////                    intent.setClass(getActivity(),)
-////                    startActivity(intent);
+        et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    //隐藏软键盘
+                    if (textView.length() == 0 || textView.equals("")) {
+                        Toast.makeText(getActivity(),  "输入框为空", Toast.LENGTH_LONG).show();
+                        return true;
+                    } else {
+                        ((InputMethodManager) et_search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
+                                .hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+                                        InputMethodManager.HIDE_NOT_ALWAYS);
+                        isToast=true;
+                        getHttpMyInfo(PreferenceUtils.getUserId(), et_search.getText().toString().trim(), "");
+                        //实现跳转
+//                    Intent intent=new Intent();
+//                    intent.setClass(getActivity(),)
+//                    startActivity(intent);
 //                        Toast.makeText(getActivity(), getActivity().toString() + "点击了软键盘的搜索", Toast.LENGTH_LONG).show();
-//                        return true;
-//                    }
-//
-//                }
-//                return false;
-//            }
-//        });
+                        return true;
+                    }
+
+                }
+                return false;
+            }
+        });
 
         tv_right.setOnClickListener(new View.OnClickListener() {
             @Override

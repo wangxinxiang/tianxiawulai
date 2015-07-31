@@ -48,12 +48,10 @@ public class PreferenceUtils {
     //设置登录用户名
     public void setUserName(String userName){
         editor.putString("userName", userName);
-        Log.d("PreferenceUtils-->setUserName",userName);
         editor.commit();
     }
 
     public static String getUserName(){
-        Log.d("PreferenceUtils-->getUserName",sp.getString("userName", ""));
         return sp.getString("userName", "");
     }
 

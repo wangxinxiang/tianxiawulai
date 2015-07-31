@@ -143,6 +143,7 @@ public class QueryResultActivity extends Activity {
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("way", way);
+        client.setTimeout(15000);
         client.post(url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
@@ -167,6 +168,7 @@ public class QueryResultActivity extends Activity {
                         TXWLProgressDialog.Dismiss();
                     }
                 } catch (Exception e) {
+                    TXWLProgressDialog.Dismiss();
                     TXWLApplication.getInstance().showErrorConnected(e);
                 }
 
@@ -174,6 +176,7 @@ public class QueryResultActivity extends Activity {
 
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                TXWLProgressDialog.Dismiss();
                 TXWLApplication.getInstance().showTextToast("网络错误");
             }
         });

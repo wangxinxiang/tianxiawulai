@@ -25,6 +25,7 @@
         <EditText android:layout_width="match_parent"
                   android:id="@+id/et_reward_money"
                   android:textColor="@color/gray_text"
+                  android:background="@drawable/register_input_box"
                   android:layout_height="wrap_content" android:layout_centerVertical="true"
                   android:layout_toRightOf="@+id/tv_reward" android:layout_toLeftOf="@+id/tv_yuan"
                   android:inputType="number"/>
@@ -52,6 +53,7 @@
                   style="@style/join_blacklist_tv"
                   android:id="@+id/et_contact"
                   android:textColor="@color/gray_text"
+                  android:background="@drawable/register_input_box"
                   android:layout_alignParentRight="true"
                   android:layout_height="wrap_content" android:layout_centerVertical="true"
                   android:layout_toRightOf="@+id/tv_contact" android:inputType="text"/>
@@ -73,6 +75,7 @@
                   android:id="@+id/et_mobilephone"
                   style="@style/join_blacklist_tv"
                   android:textColor="@color/gray_text"
+                  android:background="@drawable/register_input_box"
                   android:layout_alignParentRight="true"
                   android:layout_height="wrap_content" android:layout_centerVertical="true"
                   android:layout_toRightOf="@+id/tv_mobilephone" android:inputType="number"/>

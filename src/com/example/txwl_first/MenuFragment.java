@@ -114,8 +114,8 @@ public class MenuFragment extends Fragment {
                     }
                 } else {
                     //输入不为空
-                    getHttpByWayBlackPerson(editable.toString());
-                    mPullRefreshListView.setMode(PullToRefreshBase.Mode.DISABLED);
+//                    getHttpByWayBlackPerson(editable.toString());
+//                    mPullRefreshListView.setMode(PullToRefreshBase.Mode.DISABLED);
                 }
             }
         });
@@ -127,7 +127,7 @@ public class MenuFragment extends Fragment {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     //隐藏软键盘
                     if (textView.length() == 0 || textView.equals("")) {
-                        Toast.makeText(getActivity(), getActivity().toString() + "输入框为空", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(),   "输入框为空", Toast.LENGTH_LONG).show();
                         return true;
                     } else {
                         ((InputMethodManager) et_search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
@@ -159,6 +159,9 @@ public class MenuFragment extends Fragment {
                     //输入框不为空
                      getHttpByWayBlackPerson(way);
                      mPullRefreshListView.setMode(PullToRefreshBase.Mode.DISABLED);
+                    ((InputMethodManager) et_search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
+                            .hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+                                    InputMethodManager.HIDE_NOT_ALWAYS);
                 }
 
 

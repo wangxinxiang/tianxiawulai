@@ -1,18 +1,21 @@
 package com.example.txwl_first;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.txwl_first.Util.*;
 import com.example.txwl_first.bean.UpLoadImgBean;
@@ -24,8 +27,6 @@ import com.umeng.analytics.MobclickAgent;
 import org.apache.http.Header;
 
 import java.io.*;
-import java.net.URI;
-import java.net.URL;
 
 /**
  * Created by wang on 2015/4/6.
@@ -102,16 +103,14 @@ public class PhotoActivity extends Activity{
         if (resultCode != RESULT_OK) {
             return;
         }
-        TXWLProgressDialog.createDialog(mContext);
-        TXWLProgressDialog.setMessage("图片上传中...");
         switch (requestCode) {
             case 1:
                 ContentResolver resolver = getContentResolver();
                 try{
                     Bitmap photo = MediaStore.Images.Media.getBitmap(resolver, data.getData());
-                    String imgKey = TimeUtil.getFileKeyByNowDate();
-                    setPicToView(photo, imgKey);
-                    upLoadImg(imgKey);
+
+                    showPhoto(photo);
+
                 } catch (Exception e){
                     // 保存不成功时捕获异常
                     e.printStackTrace();
@@ -120,9 +119,9 @@ public class PhotoActivity extends Activity{
                 break;
             case 2:
                 Bitmap photo = BitmapFactory.decodeFile(new File(Environment.getExternalStorageDirectory(), "img.jpg").getAbsolutePath());
-                String imgKey = TimeUtil.getFileKeyByNowDate();
-                setPicToView(photo, imgKey);
-                upLoadImg(imgKey);
+
+                //预览图片
+                showPhoto(photo);
 
                 break;
             default:
@@ -131,6 +130,28 @@ public class PhotoActivity extends Activity{
 
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void showPhoto(final Bitmap photo) {
+        //预览图片
+        View imgEntryView =  LayoutInflater.from(PhotoActivity.this).inflate(R.layout.dialog_photo_choice, null); // 加载自定义的布局文件
+        final AlertDialog dialog = new AlertDialog.Builder(PhotoActivity.this).create();
+        ImageView imageView = (ImageView) imgEntryView.findViewById(R.id.large_image);
+        imageView.setImageBitmap(photo);
+        dialog.setView(imgEntryView);
+        dialog.show();
+        imgEntryView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+                TXWLProgressDialog.createDialog(mContext);
+                TXWLProgressDialog.setMessage("图片上传中...");
+                String imgKey = TimeUtil.getFileKeyByNowDate();
+                setPicToView(photo, imgKey);
+                upLoadImg(imgKey);
+            }
+        });
+
     }
 
     private void setPicToView(Bitmap mBitmap, String imgKey) {
@@ -239,4 +260,6 @@ public class PhotoActivity extends Activity{
 
         }
     }
+
+
 }

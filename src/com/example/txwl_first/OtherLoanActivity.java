@@ -37,6 +37,7 @@ public class OtherLoanActivity extends LoanActivity {
             if (image_url[i] == null || "".equals(image_url[i])) {
                 isSubmit = false;
                 TXWLApplication.getInstance().showTextToast("图片不能为空");
+                return;
             }
         }
 
