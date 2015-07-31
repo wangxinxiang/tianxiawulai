@@ -3,13 +3,13 @@
                 xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical">
 
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:gravity="center"
+              android:text="点击图片确定,点击图片以外的区域取消"/>
+
     <ImageView android:layout_height="wrap_content"
                android:id="@+id/large_image"
                android:layout_width="wrap_content"
                android:scaleType="fitXY"
                android:src="@drawable/defaul_head_image"/>
-
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:gravity="center"
-            android:text="点击图片确定,点击图片以外的区域取消"/>
 </LinearLayout>
