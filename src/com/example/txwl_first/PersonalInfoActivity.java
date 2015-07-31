@@ -26,7 +26,7 @@ import java.io.File;
 /**
  * Created by licheng on 18/7/15.
  */
-public class PersonalInfoActivity extends Activity {
+public class PersonalInfoActivity extends Activity implements View.OnFocusChangeListener {
     private static final String TAG = "PersonalInfoActivity";
     private TextView tv_title, tv_right, detail_name, detail_phone, detail_company, detail_company_phone, detail_city, detail_address;
     private ImageButton ibtn_title_back;
@@ -264,4 +264,13 @@ public class PersonalInfoActivity extends Activity {
     }
 
 
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if (v instanceof EditText) {
+            if (hasFocus) {
+                int length = ((EditText) v).getText().length();
+                ((EditText) v).setSelection(length);
+            }
+        }
+    }
 }

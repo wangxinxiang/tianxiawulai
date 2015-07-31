@@ -13,6 +13,7 @@ import com.example.txwl_first.Adapter.QueryResultCommonAdapter;
 import com.example.txwl_first.Adapter.QueryResultLaolaiAdapter;
 import com.example.txwl_first.Util.Measure_ForListView;
 import com.example.txwl_first.Util.TXWLApplication;
+import com.example.txwl_first.Util.TXWLProgressDialog;
 import com.example.txwl_first.Util.Url;
 import com.example.txwl_first.bean.QueryResultBean;
 import com.example.txwl_first.bean.QueryResultItemBean;
@@ -135,6 +136,8 @@ public class QueryResultActivity extends Activity {
     }
 
     private void getHttp() {
+        TXWLProgressDialog.createDialog(QueryResultActivity.this);
+        TXWLProgressDialog.setMessage("查询结果中.....");
         String url = Url.QUERY_URL;
         Log.d("QueryResult_url ------>", url);
         AsyncHttpClient client = new AsyncHttpClient();
@@ -161,6 +164,7 @@ public class QueryResultActivity extends Activity {
                         adapter_common.notifyDataSetChanged();
                         adapter_laolai.notifyDataSetChanged();
                         Measure_ForListView.setListViewHeightBasedOnChildren(lv_add);
+                        TXWLProgressDialog.Dismiss();
                     }
                 } catch (Exception e) {
                     TXWLApplication.getInstance().showErrorConnected(e);

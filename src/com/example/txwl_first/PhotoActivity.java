@@ -99,34 +99,34 @@ public class PhotoActivity extends Activity{
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK) {
+            return;
+        }
         TXWLProgressDialog.createDialog(mContext);
         TXWLProgressDialog.setMessage("图片上传中...");
         switch (requestCode) {
             case 1:
-                if (resultCode == RESULT_OK) {
-                    ContentResolver resolver = getContentResolver();
-                    try{
-                        Bitmap photo = MediaStore.Images.Media.getBitmap(resolver, data.getData());
-                        String imgKey = TimeUtil.getFileKeyByNowDate();
-                        setPicToView(photo, imgKey);
-                        upLoadImg(imgKey);
-                    } catch (Exception e){
-                        // 保存不成功时捕获异常
-                        e.printStackTrace();
-                    }
+                ContentResolver resolver = getContentResolver();
+                try{
+                    Bitmap photo = MediaStore.Images.Media.getBitmap(resolver, data.getData());
+                    String imgKey = TimeUtil.getFileKeyByNowDate();
+                    setPicToView(photo, imgKey);
+                    upLoadImg(imgKey);
+                } catch (Exception e){
+                    // 保存不成功时捕获异常
+                    e.printStackTrace();
                 }
 
                 break;
             case 2:
-                if (resultCode == RESULT_OK) {
-                    Bitmap photo = BitmapFactory.decodeFile(new File(Environment.getExternalStorageDirectory(), "img.jpg").getAbsolutePath());
-                    String imgKey = TimeUtil.getFileKeyByNowDate();
-                    setPicToView(photo, imgKey);
-                    upLoadImg(imgKey);
-                }
+                Bitmap photo = BitmapFactory.decodeFile(new File(Environment.getExternalStorageDirectory(), "img.jpg").getAbsolutePath());
+                String imgKey = TimeUtil.getFileKeyByNowDate();
+                setPicToView(photo, imgKey);
+                upLoadImg(imgKey);
 
                 break;
             default:
+                TXWLProgressDialog.Dismiss();
                 break;
 
         }

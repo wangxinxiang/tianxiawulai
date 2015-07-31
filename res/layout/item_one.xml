@@ -20,6 +20,7 @@
               android:id="@+id/et_input_content"
               android:background="@null"
               android:gravity="right"
+              android:textCursorDrawable="@null"
               android:layout_centerVertical="true" android:layout_toRightOf="@+id/left"
               android:layout_toLeftOf="@+id/right_content" android:visibility="gone"
               android:textColor="@color/item_left" android:padding="@dimen/space_16" android:singleLine="true"
