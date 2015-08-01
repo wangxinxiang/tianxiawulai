@@ -137,7 +137,7 @@ public class QueryResultActivity extends Activity {
 
     private void getHttp() {
         TXWLProgressDialog.createDialog(QueryResultActivity.this);
-        TXWLProgressDialog.setMessage("查询结果中.....");
+        TXWLProgressDialog.setMessage("查询中.....");
         String url = Url.QUERY_URL;
         Log.d("QueryResult_url ------>", url);
         AsyncHttpClient client = new AsyncHttpClient();

@@ -2,6 +2,7 @@ package com.example.txwl_first;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
@@ -79,7 +80,7 @@ public class RegistActivity extends Activity implements View.OnClickListener{
                 getRegist();//开始联网注册
                 break;
             case R.id.btn_get_check_code:
-                getRegistCode();//开始联网获取 验证码
+                getChecCode();//开始联网获取 验证码
                 break;
 
 
@@ -146,7 +147,7 @@ public class RegistActivity extends Activity implements View.OnClickListener{
 
             final RequestParams params = new RequestParams();
             params.put("mobile",mobile);//手机号参数
-            params.put("validatenum",validatenum);//验证码
+            params.put("validatenum", validatenum);//验证码
             params.put("userpwd",userpwd);//登录密码
 
             client.post(Url.UserRegist_URL, params, new AsyncHttpResponseHandler() {
@@ -199,5 +200,39 @@ public class RegistActivity extends Activity implements View.OnClickListener{
         super.onPause();
         MobclickAgent.onPause(this);
         Log.d(TAG, "onPause");
+    }
+
+    class MyCountDownTimer extends CountDownTimer {
+        /**
+         * @param millisInFuture    表示以毫秒为单位 倒计时的总数
+         *                          <p/>
+         *                          例如 millisInFuture=1000 表示1秒
+         * @param countDownInterval 表示 间隔 多少微秒 调用一次 onTick 方法
+         *                          <p/>
+         *                          例如: countDownInterval =1000 ; 表示每1000毫秒调用一次onTick()
+         */
+        public MyCountDownTimer(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+
+        @Override
+        public void onFinish() {
+            btn_get_check_code.setText("重新获取验证码");
+            btn_get_check_code.setEnabled(true);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            btn_get_check_code.setText("重新获取验证码(" + millisUntilFinished / 1000 + "秒)");
+        }
+    }
+
+    private void getChecCode(){
+        getRegistCode();
+        MyCountDownTimer mc = new MyCountDownTimer(60000, 1000);
+        mc.start();
+        btn_get_check_code.setEnabled(false);
+//        SLHApplication.getInstance().showTextToast("获取验证码后请不要再修改信息");
     }
 }
