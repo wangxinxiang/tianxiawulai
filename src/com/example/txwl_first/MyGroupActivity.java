@@ -114,9 +114,8 @@ public class MyGroupActivity extends Activity{
                     for (MyGroupBean myGroupBean: getMyGroupBean.getMyGroupBeans()) {
                         myGroupBeans.add(myGroupBean);
                     }
-
                     if (myGroupBeans.size() == 0) {
-                        TXWLApplication.getInstance().showTextToast("占无数据");
+                        TXWLApplication.getInstance().showTextToast("没有团队成员信息");
                     } else {
                         adapter.notifyDataSetChanged();
                     }

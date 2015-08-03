@@ -313,8 +313,16 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
         tv_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MyGroupActivity.class);
-                startActivity(intent);
+                if (PreferenceUtils.getIsLogin()){
+                    Intent intent = new Intent(getActivity(),MyGroupActivity.class);
+                    startActivityForResult(intent,REQUSET);
+                }else {
+                    TXWLApplication.getInstance().showTextToast("请登录后查看");
+//                    PreferenceUtils.getInstance().setIsLogin(true);
+                    //应该是startforsult启动 当登录成功返回 再开启联网获取数据
+                    Intent intent=new Intent(getActivity(),LoginActivity.class);
+                    startActivityForResult(intent,REQUSET);
+                }
             }
         });
 

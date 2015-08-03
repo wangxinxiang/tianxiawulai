@@ -60,7 +60,11 @@ public class MainActivity extends FragmentActivity {
 //		MobclickAgent.setSessionContinueMillis(1000);
 
         MobclickAgent.updateOnlineConfig(this);
+
+        UmengUpdateAgent.setUpdateOnlyWifi(false);//在所有网络环境下均检测更新
         UmengUpdateAgent.update(this);
+
+
 
         TXWLApplication.getInstance().addActivity(this);
         initView();
