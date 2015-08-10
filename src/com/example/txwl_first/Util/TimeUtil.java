@@ -238,11 +238,7 @@ public class TimeUtil {
         long l=now.getTime()-date.getTime();
         if(l>23*60*60*1000){
             //并且当前时间 大于18 点
-            if(TimeUtil.compareTime(endtime,endtime2)){
-                return true;
-            } else {
-                return  false;
-            }
+            return TimeUtil.compareTime(endtime, endtime2);
         } else {
             return false;
         }

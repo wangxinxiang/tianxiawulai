@@ -17,6 +17,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="libs" level="project" />
     <orderEntry type="module" module-name="UniversalImageLoader" />
-    <orderEntry type="module" module-name="PullToRefresh" />
+    <orderEntry type="module" module-name="library-refresh" />
   </component>
 </module>

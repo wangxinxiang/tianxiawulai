@@ -1,6 +1,7 @@
 package com.example.txwl_first.beifu;
 
 
+import android.util.Log;
 import com.example.txwl_first.Util.MD5;
 
 import java.text.Collator;
@@ -54,6 +55,24 @@ public class FastpayBean {
     private String show_url;
     private String extra_common_param;
     private String extend_param;
+    private String pay_method;
+    private String bank_card_no;
+
+    public String getBank_card_no() {
+        return bank_card_no;
+    }
+
+    public void setBank_card_no(String bank_card_no) {
+        this.bank_card_no = bank_card_no;
+    }
+
+    public String getPay_method() {
+        return pay_method;
+    }
+
+    public void setPay_method(String pay_method) {
+        this.pay_method = pay_method;
+    }
 
     public String getSubject() {
         return subject;
@@ -295,6 +314,7 @@ public class FastpayBean {
     public String getNeedSignCode(){
         Map<String, String> temp = getContentMap();
 
+
         List<String> list = new ArrayList();
         for (Iterator<String> iterator = temp.keySet().iterator(); iterator.hasNext(); ) {
             String key = iterator.next();
@@ -312,8 +332,9 @@ public class FastpayBean {
             }
             i++;
         }
+        Log.d("getNeedSignCode --->",needSign.toString() );
 
-        String mycode="OCYCB1ZTI4RAIGK48H0G6AIJ9AOC6Etbixyz";
+        String mycode="LE21FS3PQPA3140V1GOKPF35LBHLZWundhet";
         needSign.append(mycode);
         String string = needSign.toString();
         return MD5.getMD5Lower(string);
@@ -321,23 +342,24 @@ public class FastpayBean {
 
     private Map<String, String> getContentMap() {
         Map<String,String> temp=new LinkedHashMap<String,String>();
-        if (total_fee != null) {
-            temp.put("total_fee", total_fee);
-        }
+
         if (subject != null) {
-            temp.put("subject", "");                //商品名称
+            temp.put("subject", subject);                //商品名称
+        }
+        if (pay_method != null) {
+            temp.put("pay_method", pay_method);                //默认支付方式
         }
         if (body != null) {
-            temp.put("body", "");               //商品描述
+            temp.put("body", body);               //商品描述
         }
         if (show_url != null) {
-            temp.put("show_url", "");               //商品展示网址
+            temp.put("show_url", show_url);               //商品展示网址
         }
         if (extra_common_param != null) {
-            temp.put("extra_common_param", "");         //公用回传参数
+            temp.put("extra_common_param", extra_common_param);         //公用回传参数
         }
         if (extend_param != null) {
-            temp.put("extend_param", "");           //公用业务扩展参数
+            temp.put("extend_param", extend_param);           //公用业务扩展参数
         }
         if(amount!=null){
             temp.put("amount",amount);
@@ -366,6 +388,9 @@ public class FastpayBean {
         if(out_trade_no!=null){
             temp.put("out_trade_no",out_trade_no);
         }
+        if (bank_card_no != null) {
+            temp.put("bank_card_no",bank_card_no);                      //交易时的银行卡号
+        }
         if(card_no!=null){
             temp.put("card_no",card_no);
         }
@@ -392,6 +417,9 @@ public class FastpayBean {
         }
         if(token!=null){
             temp.put("dynamic_code_token",token);
+        }
+        if (total_fee != null) {
+            temp.put("total_fee", total_fee);
         }
         if(payBatch!=null){
             temp.put("payBatch",payBatch);
@@ -431,4 +459,6 @@ public class FastpayBean {
 //        System.out.println(MD5.stringToMD5(test));
 //        System.out.println("MD5.getMD5Lower(test) = " + MD5.stringToMD5(test).equals(result));
 //    }
+
+
 }

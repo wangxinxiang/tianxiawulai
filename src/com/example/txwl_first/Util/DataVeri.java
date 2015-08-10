@@ -80,11 +80,7 @@ public class DataVeri {
     }
 
     public static boolean isBlank(String str){
-        if(str==null||"".equals(str)){
-            return true;
-        }else{
-            return false;
-        }
+        return str == null || "".equals(str);
     }
 
     public static String getLoan_type(String i) {

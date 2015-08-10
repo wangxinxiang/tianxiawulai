@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 //保存充值记录
 public class AddRechargeBean {
 
+    @SerializedName("bankcode")
+    private String bankcode;
     @SerializedName("code")
     private String code;
     @SerializedName("msg")
@@ -17,6 +19,14 @@ public class AddRechargeBean {
     private String status;
     @SerializedName("recharge")
     private AddRechargeItemBean recharge;
+
+    public String getBankcode() {
+        return bankcode;
+    }
+
+    public void setBankcode(String bankcode) {
+        this.bankcode = bankcode;
+    }
 
     public String getCode() {
         return code;

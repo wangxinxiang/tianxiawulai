@@ -43,13 +43,12 @@ public class Url {
 
     public static String REPORT_URL = URL + "Default/AddReport";            //举报
 
-    public static String UpdateBlackPerson_URL = URL + "Default/UpdateBlackPerson";            //添加黑名单
     public static String GetBankInfo_URL = URL + "Default/GetBankInfo";            //取银行卡信息
     public static String AddBankInfo_URL = URL + "Default/AddBankInfo";            //添加绑定银行卡
     public static String AddRecharge_URL = URL + "Default/AddRecharge";            //保存充值记录
     public static String RechargeOK_URL = URL + "Default/RechargeOK";            //充值成功操作
 
     //贝付
-    public static String Partner="201502101818121388";
+    public static String Partner="201508061047514248";
 
 }

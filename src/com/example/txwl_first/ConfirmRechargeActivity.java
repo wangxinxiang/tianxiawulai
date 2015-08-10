@@ -93,34 +93,33 @@ public class ConfirmRechargeActivity extends Activity{
             fastpayBean.setPartner(Url.Partner);
             fastpayBean.setSign_type("MD5");
             fastpayBean.setInput_charset("UTF-8");
-            fastpayBean.setPan(bankid);
+            fastpayBean.setBank_card_no(bankid);
 
             fastpayBean.setCardHolderName(name);
 
-            fastpayBean.setIdType("0");
+            fastpayBean.setIdType("01");
             fastpayBean.setCardHolderId(idcard);
 
             fastpayBean.setPhone(phone);
             fastpayBean.setOut_trade_no(params[0]);
-            fastpayBean.setTotal_fee(Double.valueOf(params[3]) + "");               //(8,2) 位数至少2位
+            fastpayBean.setTotal_fee(params[3]);               //(8,2) 位数至少2位
             fastpayBean.setSign_type("MD5");
-            fastpayBean.setSpFlag("QuickPay");
+//            fastpayBean.setSpFlag("QuickPay");
             fastpayBean.setNotify_url("www.hao123.com");
-            fastpayBean.setSavePciFlag("0");
-            fastpayBean.setPayBatch("1");
             fastpayBean.setToken(params[1]);
             fastpayBean.setValidCode(params[2]);
             fastpayBean.setCustomerId(PreferenceUtils.getUserId() + "");
             fastpayBean.setDefault_bank(bank_code);
 
-            fastpayBean.setExter_invoke_ip("");
+            fastpayBean.setExter_invoke_ip("11.11.11.11");
             fastpayBean.setAnti_phishing_key(params[4]);
 
-            fastpayBean.setSubject("");
-            fastpayBean.setBody("");
-            fastpayBean.setShow_url("");
-            fastpayBean.setExtend_param("");
-            fastpayBean.setExtra_common_param("");
+            fastpayBean.setSubject("txwl");
+            fastpayBean.setBody("spms");
+            fastpayBean.setShow_url("spzs");
+            fastpayBean.setExtend_param("ggcs");
+            fastpayBean.setExtra_common_param("hccs");
+            fastpayBean.setPay_method("");
 //            fastpayBean.setBankId("CCB");
 
 
@@ -146,7 +145,6 @@ public class ConfirmRechargeActivity extends Activity{
             FastPayReturn returnBean = new GsonBuilder().create().fromJson( result, FastPayReturn.class);
             if("T".equals(returnBean.getResult())) {
                 TXWLProgressDialog.Dismiss();
-                getPaymentOrderOk();
                 Intent intent = new Intent(ConfirmRechargeActivity.this, RechargeSuccessActivity.class);
                 intent.putExtra("registid", getIntent().getStringExtra("registid"));
                 intent.putExtra("cz_money",cz_money);
@@ -179,16 +177,17 @@ public class ConfirmRechargeActivity extends Activity{
             fastpayBean.setSign_type("MD5");
             fastpayBean.setInput_charset("UTF-8");
 
-            String urlPath = "https://www.ebatong.com/mobileFast/pay.htm";
-            String postJson = fastpayBean.getPostJson();
-            Log.i("lyjtest", "getPostJson:" + postJson);
-            byte[] data = postJson.getBytes();
+            String urlPath = "https://www.ebatong.com/gateway.htm";
+            urlPath += "?service=query_timestamp";
+            urlPath = urlPath + "&partner=" + Url.Partner + "&input_charset=UTF-8&sign_type=MD5&sign=" + fastpayBean.getNeedSignCode();
+
+            Log.i("lyjtest", "urlPath:" + urlPath);
+
             String[] result = new String[2];
             InputStream is = null;
             try {
-                is = NetTool.sendXMLData(urlPath, data, "UTF-8");
+                is = NetTool.sendGetData(urlPath);
                 result = NetTool.readXML(is);
-                Log.i("lyjtest", new String(data));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -207,92 +206,4 @@ public class ConfirmRechargeActivity extends Activity{
         }
     }
 
-    //通知服务端充值金额，同时获取账户余额
-    public void getPaymentOrderOk() {
-//        String url = URL.getPaymentOrderOk(billno);
-//        Log.d("getPaymentOrderOk-->",url);
-//        DataWebService userService = DataWebService.getInstance();
-//        userService.getData(url, new DataWebCallBack() {
-//            @Override
-//            public void onSuccess(String responseBody, String successMsg) {
-//                Log.d("getPaymentOrderOk--> ", responseBody);
-//                String strBody = responseBody.substring(1, responseBody.length() - 1);
-//                Log.d("getPaymentOrderOk--> ", strBody);
-//                try {
-//                    ResultBean resultBean = new GsonBuilder().create().fromJson(strBody, ResultBean.class);
-//                    if ("充值成功".equals(resultBean.getResult())) {
-//                        TXWLApplication.getInstance().showTextToast("获取余额成功");
-//                        PreferenceUtils.getInstance().setAccountMoney(cz_money);
-//                    } else {
-//                        TXWLApplication.getInstance().showTextToast(resultBean.getResult());
-//                    }
-//                } catch (Exception ex) {
-//                    TXWLApplication.getInstance().showErrorConnected(ex);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(String responseBody, String failureMsg) {
-//                TXWLApplication.getInstance().showTextToast("充值失败");
-//            }
-//        });
-    }
-
-
-//    public void donationMoneyTopic( ) {
-//        String url = getUserDonateUrl(recharge_money);
-//
-//        Log.d("donationURL-->",url);
-//
-//        DataWebService userService = DataWebService.getInstance();
-//        userService.getData(url, new DataWebCallBack() {
-//
-//            @Override
-//            public void onSuccess(String responseBody, String successMsg) {
-//                Log.d("donationMoneyTopic--> ", responseBody);
-//
-//                String strBody = responseBody.substring(1,responseBody.length()-1);
-//
-//                Log.d("donationMoneyTopic--> ", strBody);
-//                try {
-//                    ResultBean resultBean = new GsonBuilder().create().fromJson(strBody, ResultBean.class);
-//                    if ("成功".equals(resultBean.getResult())) {
-//                        //TODO:传入的参数recharge_money需要处理成负数
-//                        PreferenceUtils.getInstance().setAccountMoney("-" + recharge_money);
-//                        TXWLApplication.getInstance().showTextToast("捐助成功");
-//                    }else {
-//                        TXWLApplication.getInstance().showTextToast(resultBean.getResult());
-//                    }
-//                }catch (Exception ex) {
-//                    TXWLApplication.getInstance().showErrorConnected(ex);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(String responseBody, String failureMsg) {
-//                TXWLApplication.getInstance().showTextToast("捐助失败");
-//            }
-//        });
-//    }
-
-//    private String getUserDonateUrl(String moneycount){
-//
-//        String auction="AssistEndow";
-//        String tempId= SharedMethod.getInstance().getRandomNumber();
-//        String userId= PreferenceUtils.getUserID();
-//        String sign= MD5.getMD5("Auction:" + auction + "Key:1q2w3e1q2w3e,./<>?!@#!@#QAZWSXEDC{}UserID:"
-//                + PreferenceUtils.getUserID());
-//        //这里要小写加密
-//        String enodwSign=MD5.getMD5Lower("AssistIDS:"+topicID+"Moneys:"+moneycount+URL.plaintext);
-//
-//
-//        String randSign=MD5.getMD5("RandInfo:" + PreferenceUtils.getRandInfo() + URL.plaintext);
-//
-//        String url="http://appnew.shilehui.com/WebService/endow.aspx?"+"&Auction="+auction+
-//                "&sign="+sign+"&TempID="+tempId+"&AssistIDS="+topicID+"&Moneys="+moneycount+
-//                "&userid="+userId+"&RandSign="+randSign+"&EnodwSign="+enodwSign;
-//
-//        return url;
-//
-//    }
 }

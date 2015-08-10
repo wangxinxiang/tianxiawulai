@@ -24,16 +24,6 @@ public class BackInfoItemBean {
     private String ID;
     @SerializedName("createdate")
     private String createdate;
-    @SerializedName("bank_code")
-    private String bank_code;
-
-    public String getBank_code() {
-        return bank_code;
-    }
-
-    public void setBank_code(String bank_code) {
-        this.bank_code = bank_code;
-    }
 
     public String getBankid() {
         return bankid;

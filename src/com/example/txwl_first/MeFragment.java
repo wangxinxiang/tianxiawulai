@@ -321,7 +321,7 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
 //                    PreferenceUtils.getInstance().setIsLogin(true);
                     //应该是startforsult启动 当登录成功返回 再开启联网获取数据
                     Intent intent=new Intent(getActivity(),LoginActivity.class);
-                    startActivityForResult(intent,REQUSET);
+                    startActivityForResult(intent, REQUSET);
                 }
             }
         });
@@ -417,7 +417,7 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
 
         Log.d("width", "screenW=" + screenW );
         bottomLineWidth=ivBottomLine.getWidth();
-        offset = (int) ((screenW / num - bottomLineWidth) / 2);
+        offset = (screenW / num - bottomLineWidth) / 2;
         position_one = (int)(screenW/5.0);
         position_two=position_one*2;
         position_three=position_one*3;
@@ -497,7 +497,7 @@ public class MeFragment extends Fragment implements CustomScrollView.Callbacks {
         public void onClick(View v) {
             mPager.setCurrentItem(index);
         }
-    };
+    }
 
     public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
         //viewpage的事件监听

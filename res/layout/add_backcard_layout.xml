@@ -27,7 +27,7 @@
                     >
                 <EditText android:id="@+id/et_user_name"
                           style="@style/addBankCard_edit"
-                          android:text="黎城" android:paddingLeft="@dimen/space_100"/>
+                          android:text="王辛翔" android:paddingLeft="@dimen/space_100"/>
                 <TextView
                         style="@style/addBankCard_text"
                         android:text="持卡人姓名"
@@ -43,7 +43,7 @@
                 <EditText android:id="@+id/et_user_phone"
                           android:hint="银行预留手机号"
                           style="@style/addBankCard_edit"
-                          android:inputType="phone" android:text="18966045735"/>
+                          android:inputType="phone" android:text="18297608334"/>
                 <TextView
                         style="@style/addBankCard_text"
                         android:text="手机号"
@@ -57,7 +57,7 @@
                     >
                 <EditText android:id="@+id/et_user_card" style="@style/addBankCard_edit"
                           android:singleLine="true"
-                          android:text="500236199311210651"/>
+                          android:text="362228199112150030"/>
                 <TextView
                         style="@style/addBankCard_text"
                         android:text="身份证号"
@@ -70,6 +70,7 @@
                             android:layout_below="@+id/rl_bank_name">
                 <EditText android:id="@+id/et_user_ban"
                           android:hint="请输入储蓄卡号码" style="@style/addBankCard_edit"
+                          android:text="6217231102003332995"
                           android:inputType="number"/>
                 <TextView
                         style="@style/addBankCard_text"

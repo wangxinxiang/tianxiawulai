@@ -11,7 +11,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.example.txwl_first.Util.PreferenceUtils;
 import com.example.txwl_first.Util.TXWLApplication;
+import com.example.txwl_first.Util.TXWLProgressDialog;
 import com.example.txwl_first.Util.Url;
+import com.example.txwl_first.bean.AddRechargeBean;
+import com.example.txwl_first.bean.AddRechargeItemBean;
 import com.example.txwl_first.bean.BackInfoItemBean;
 import com.example.txwl_first.bean.GetBankInfoBean;
 import com.google.gson.GsonBuilder;
@@ -30,9 +33,8 @@ public class ChoiceBankCardActivity extends Activity{
     private static final String TAG ="ChoiceBankCardActivity" ;
     private RelativeLayout rl_about_add_card;
     private LinearLayout rl_about_card;
-    private String registid,billno,tip;
+    private String registid,tip;
     private GetBankInfoBean bean;
-    private ArrayList<BackInfoItemBean> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,6 @@ public class ChoiceBankCardActivity extends Activity{
         rl_about_add_card = (RelativeLayout) findViewById(R.id.rl_about_add_card);
         rl_about_card = (LinearLayout) findViewById(R.id.rl_about_card);
         registid = getIntent().getStringExtra("registid");
-        billno = getIntent().getStringExtra("billno");
         tip = getIntent().getStringExtra("tip");
     }
 
@@ -72,7 +73,6 @@ public class ChoiceBankCardActivity extends Activity{
                 Intent intent = new Intent(ChoiceBankCardActivity.this, AddBankCardActivity.class);
 //                intent.putExtra("recharge_money", getIntent().getStringExtra("recharge_money"));
                 intent.putExtra("registid", registid);
-                intent.putExtra("billno", billno);
                 intent.putExtra("tip", tip);
                 startActivity(intent);
 //                SLHApplication.getInstance().addActivity(ChoiceBankCardActivity.this);
@@ -138,15 +138,13 @@ public class ChoiceBankCardActivity extends Activity{
                             //点击下一界面
                             Intent intent = new Intent(ChoiceBankCardActivity.this, VerificationActivity.class);
                             intent.putExtra("registid", registid);
-                            intent.putExtra("billno", billno);
                             intent.putExtra("recharge_money", tip);
                             intent.putExtra("bankNumber", item.getBankid());
                             intent.putExtra("accountNumber", item.getBanknumber());
                             intent.putExtra("mobile", item.getMobile());
                             intent.putExtra("accountname", item.getAccountname());
                             intent.putExtra("recharge_money", tip);
-                            intent.putExtra("billno",billno);
-                            intent.putExtra("bank_code", item.getBank_code());
+                            intent.putExtra("bankname", item.getBankname());
                             startActivity(intent);
                         }
                     });
@@ -161,6 +159,5 @@ public class ChoiceBankCardActivity extends Activity{
         });
 
     }
-
 
 }

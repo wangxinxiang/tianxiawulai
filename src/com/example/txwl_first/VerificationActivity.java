@@ -13,7 +13,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import com.example.txwl_first.Util.PreferenceUtils;
 import com.example.txwl_first.Util.TXWLApplication;
+import com.example.txwl_first.Util.TXWLProgressDialog;
+import com.example.txwl_first.Util.Url;
+import com.example.txwl_first.bean.AddRechargeBean;
+import com.example.txwl_first.bean.AddRechargeItemBean;
 import com.example.txwl_first.beifu.BeiFuHttpPost;
+import com.google.gson.GsonBuilder;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import org.apache.http.Header;
 
 /**
  * Created by licheng on 31/5/15.
@@ -23,7 +32,7 @@ public class VerificationActivity extends Activity {
     EditText et_chekcode;
     Button btn_submit_reget,btn_next;
     private String token,billno;
-    private String cz_money,name,idcard,bankid,phone, bank_code;
+    private String cz_money,name,idcard,bankid,phone, bank_code, bankname;
     BeiFuHttpPost beiFuHttpPost;
 
     @Override
@@ -35,8 +44,6 @@ public class VerificationActivity extends Activity {
         initView();
 
         setOnClickListener();
-
-        getChecCode();
 
 
     }
@@ -65,7 +72,7 @@ public class VerificationActivity extends Activity {
                 }catch (Exception e){
                     TXWLApplication.getInstance().showTextToast("请重新输入验证码");
                 }
-                if(et_chekcode.getText().toString()!=null){
+                if("".equals(et_chekcode.getText().toString())){
                     Intent intent = new Intent(VerificationActivity.this, ConfirmRechargeActivity.class);
                     intent.putExtra("billno", billno);
                     intent.putExtra("token", token);
@@ -87,14 +94,17 @@ public class VerificationActivity extends Activity {
     }
 
     private void initView(){
+
+
+        TXWLProgressDialog.createDialog(VerificationActivity.this);
+        TXWLProgressDialog.setMessage("获取订单号中.....");
 //        setNormalTitle("填写验证码");
         cz_money = getIntent().getStringExtra("recharge_money");
         name=getIntent().getStringExtra("accountname");
         idcard=getIntent().getStringExtra("accountNumber");
         bankid=getIntent().getStringExtra("bankNumber");
         phone=getIntent().getStringExtra("mobile");
-        billno = getIntent().getStringExtra("billno");
-        bank_code = getIntent().getStringExtra("bank_code");
+        bankname = getIntent().getStringExtra("bankname");
         tv_paymoney = (TextView) findViewById(R.id.tv_paymoney);
         tv_phone = (TextView) findViewById(R.id.phone_tv);
         et_chekcode = (EditText) findViewById(R.id.et_user_checkcode);
@@ -104,6 +114,8 @@ public class VerificationActivity extends Activity {
         tv_phone.setText(phone);
         btn_next.setEnabled(false);
         et_chekcode.addTextChangedListener(textwatcher);
+
+        getOrderNum();          //获取订单号
     }
 
     class MyCountDownTimer extends CountDownTimer {
@@ -159,4 +171,44 @@ public class VerificationActivity extends Activity {
 
         }
     };
+
+    private void getOrderNum() {
+        String url = Url.AddRecharge_URL;
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("rechargeaccount", cz_money);
+        params.put("userid", PreferenceUtils.getUserId());
+        params.put("bankname", bankname);
+
+        client.post(url, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                Log.d("getOrderNum ---->", new String(bytes));
+
+                try {
+                    AddRechargeBean addRechargeBean = new GsonBuilder().create().fromJson(new String(bytes), AddRechargeBean.class);
+                    AddRechargeItemBean addRechargeItemBean = addRechargeBean.getRecharge();
+                    billno = addRechargeItemBean.getBillno();
+                    bank_code = addRechargeBean.getBankcode();
+
+                    getChecCode();              //获取验证码
+
+                    TXWLProgressDialog.Dismiss();
+                } catch (Exception e) {
+                    TXWLApplication.getInstance().showErrorConnected(e);
+                    TXWLProgressDialog.Dismiss();
+                }
+
+            }
+
+            @Override
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                TXWLProgressDialog.Dismiss();
+                TXWLApplication.getInstance().showTextToast("网络错误, 获取订单号失败,请重新进入此页面");
+            }
+        });
+//
+    }
+
+
 }

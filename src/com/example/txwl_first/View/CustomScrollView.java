@@ -47,10 +47,7 @@ public class CustomScrollView extends ScrollView {
 		@Override
 		public boolean onScroll(MotionEvent e1, MotionEvent e2,
 				float distanceX, float distanceY) {
-			if (Math.abs(distanceY) > Math.abs(distanceX)) {
-				return true;
-			}
-			return false;
+			return Math.abs(distanceY) > Math.abs(distanceX);
 		}
 	}
 
@@ -170,9 +167,9 @@ public class CustomScrollView extends ScrollView {
 		mCallbacks = listener;
 	}
 
-	public static interface Callbacks {
-		public void onScrollChanged(int scrollY);
-		public void onDownMotionEvent();
-		public void onUpOrCancelMotionEvent();
+	public interface Callbacks {
+		void onScrollChanged(int scrollY);
+		void onDownMotionEvent();
+		void onUpOrCancelMotionEvent();
 	}
 }

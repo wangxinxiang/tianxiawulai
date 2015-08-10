@@ -60,22 +60,18 @@ public class JoinBlackListActivity extends Activity{
         btn_pay_money.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (checkData()) {
-//                    addBlackPerson();
-//                }
-                TXWLApplication.getInstance().showTextToast("支付接口正在申请中");
+                if (checkData()) {
+                    addBlackPerson();
+                }
+//                TXWLApplication.getInstance().showTextToast("支付接口正在申请中");
 
             }
         });
     }
 
     private boolean checkData() {
-        if (DataVeri.stringIsNull(et_contact.getText().toString(), "联系人") || !DataVeri.isMobileNum(et_mobilephone.getText().toString())
-                || !DataVeri.isNaN(et_reward_money.getText().toString(), "悬赏金额")) {
-            return false;
-        } else {
-            return true;
-        }
+        return !(DataVeri.stringIsNull(et_contact.getText().toString(), "联系人") || !DataVeri.isMobileNum(et_mobilephone.getText().toString())
+                || !DataVeri.isNaN(et_reward_money.getText().toString(), "悬赏金额"));
     }
 
     private void initView() {
@@ -256,7 +252,7 @@ public class JoinBlackListActivity extends Activity{
                 if (new String(bytes).contains("success")) {
                     TXWLApplication.getInstance().showTextToast("添加成功");
                     Intent intent = new Intent(JoinBlackListActivity.this, ChoicePayModeActivity.class);
-                    intent.putExtra("tip", "1");
+                    intent.putExtra("tip", "1.5");
                     intent.putExtra("registid", queryDetailResultBean.getRegistid());
                     startActivity(intent);
                 } else {
@@ -285,4 +281,6 @@ public class JoinBlackListActivity extends Activity{
         MobclickAgent.onPause(this);
         Log.d(TAG, "onPause");
     }
+
+
 }

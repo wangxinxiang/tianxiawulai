@@ -144,9 +144,9 @@
     <style name="addBankCard_edit">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/space_35</item>
-        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
         <item name="android:paddingLeft">@dimen/space_80</item>
-        <item name="android:layout_marginRight">@dimen/space_10</item>
+        <item name="android:layout_marginRight">@dimen/space_8</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:background">@color/transparent</item>
         <item name="android:textColor">@color/gray</item>
@@ -156,9 +156,9 @@
     </style>
 
     <style name="rl_paycard">
-        <item name="android:layout_marginTop">@dimen/space_10</item>
-        <item name="android:layout_marginLeft">@dimen/space_10</item>
-        <item name="android:layout_marginRight">@dimen/space_10</item>
+        <item name="android:layout_marginTop">@dimen/space_8</item>
+        <item name="android:layout_marginLeft">@dimen/space_8</item>
+        <item name="android:layout_marginRight">@dimen/space_8</item>
         <item name="android:height">@dimen/space_50</item>
     </style>
 
