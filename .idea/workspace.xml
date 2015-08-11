@@ -127,24 +127,34 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="add_backcard_layout.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="add_backcard_layout.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/res/layout/add_backcard_layout.xml">
-          <provider editor-type-id="android-designer">
+          <provider selected="true" editor-type-id="android-designer">
             <state />
           </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.73735726">
-              <caret line="171" column="16" selection-start-line="171" selection-start-column="16" selection-end-line="171" selection-end-column="16" />
+          <provider editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="49" column="50" selection-start-line="49" selection-start-column="50" selection-end-line="49" selection-end-column="50" />
               <folding>
-                <element signature="e#1322#1340#0" expanded="true" />
-                <element signature="e#4647#4667#0" expanded="true" />
-                <element signature="e#5434#5454#0" expanded="true" />
-                <element signature="e#6564#6581#0" expanded="true" />
-                <element signature="e#7293#7310#0" expanded="true" />
-                <element signature="e#8568#8584#0" expanded="true" />
-                <element signature="e#8630#8646#0" expanded="true" />
-                <element signature="e#9109#9126#0" expanded="true" />
+                <element signature="e#1303#1321#0" expanded="true" />
+                <element signature="e#4480#4500#0" expanded="true" />
+                <element signature="e#5267#5287#0" expanded="true" />
+                <element signature="e#6397#6414#0" expanded="true" />
+                <element signature="e#7126#7143#0" expanded="true" />
+                <element signature="e#8401#8417#0" expanded="true" />
+                <element signature="e#8463#8479#0" expanded="true" />
+                <element signature="e#8942#8959#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JoinBlackListActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/example/txwl_first/JoinBlackListActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="258" column="42" selection-start-line="258" selection-start-column="42" selection-end-line="258" selection-end-column="42" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -153,20 +163,20 @@
         <entry file="file://$PROJECT_DIR$/src/com/example/txwl_first/Util/BoundSuccessFragmentDialog.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="33" column="59" selection-start-line="33" selection-start-column="46" selection-end-line="33" selection-end-column="66" />
+              <caret line="33" column="56" selection-start-line="33" selection-start-column="56" selection-end-line="33" selection-end-column="56" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bound_success_dialog.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="bound_success_dialog.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/res/layout/bound_success_dialog.xml">
           <provider editor-type-id="android-designer">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.67536706">
+              <caret line="21" column="81" selection-start-line="21" selection-start-column="81" selection-end-line="21" selection-end-column="81" />
               <folding />
             </state>
           </provider>
@@ -210,7 +220,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/example/txwl_first/bean/LaolaiInfo.java" />
         <option value="$PROJECT_DIR$/src/com/example/txwl_first/bean/GetLaoLaiDetail.java" />
         <option value="$PROJECT_DIR$/src/com/example/txwl_first/bean/LaolaiInfoItem.java" />
         <option value="$PROJECT_DIR$/src/com/example/txwl_first/Adapter/LaolaiListAdapter.java" />
@@ -251,16 +260,17 @@
         <option value="$PROJECT_DIR$/src/com/example/txwl_first/VerificationActivity.java" />
         <option value="$PROJECT_DIR$/src/com/example/txwl_first/ConfirmRechargeActivity.java" />
         <option value="$PROJECT_DIR$/res/layout/join_blacklist_layout.xml" />
-        <option value="$PROJECT_DIR$/src/com/example/txwl_first/JoinBlackListActivity.java" />
         <option value="$PROJECT_DIR$/src/com/example/txwl_first/ChoicePayModeActivity.java" />
         <option value="$PROJECT_DIR$/src/com/example/txwl_first/ChoiceBankCardActivity.java" />
         <option value="$PROJECT_DIR$/src/com/example/txwl_first/AddBankCardActivity.java" />
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/src/com/example/txwl_first/Util/BoundSuccessFragmentDialog.java" />
         <option value="$PROJECT_DIR$/src/com/example/txwl_first/RechargeSuccessActivity.java" />
         <option value="$PROJECT_DIR$/src/com/example/txwl_first/LoanActivity.java" />
         <option value="$PROJECT_DIR$/res/values/style.xml" />
         <option value="$PROJECT_DIR$/res/layout/add_backcard_layout.xml" />
+        <option value="$PROJECT_DIR$/src/com/example/txwl_first/JoinBlackListActivity.java" />
+        <option value="$PROJECT_DIR$/src/com/example/txwl_first/Util/BoundSuccessFragmentDialog.java" />
+        <option value="$PROJECT_DIR$/res/layout/bound_success_dialog.xml" />
       </list>
     </option>
   </component>
@@ -927,12 +937,12 @@
       <workItem from="1439191612765" duration="222000" />
       <workItem from="1439192275135" duration="118000" />
       <workItem from="1439192563935" duration="67000" />
-      <workItem from="1439193073964" duration="22754000" />
+      <workItem from="1439193073964" duration="23787000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="525285000" />
+    <option name="totallyTimeSpent" value="526318000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1372,22 +1382,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4628483">
-          <caret line="13" column="38" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/example/txwl_first/JoinBlackListActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.6052632">
-          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/example/txwl_first/RechargeSuccessActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4628483">
@@ -1431,25 +1425,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/example/txwl_first/Util/BoundSuccessFragmentDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="59" selection-start-line="33" selection-start-column="46" selection-end-line="33" selection-end-column="66" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/bound_success_dialog.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/example/txwl_first/AddBankCardActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.090909">
@@ -1473,23 +1448,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4628483">
+          <caret line="13" column="38" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/add_backcard_layout.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="49" column="50" selection-start-line="49" selection-start-column="50" selection-end-line="49" selection-end-column="50" />
+          <folding>
+            <element signature="e#1303#1321#0" expanded="true" />
+            <element signature="e#4480#4500#0" expanded="true" />
+            <element signature="e#5267#5287#0" expanded="true" />
+            <element signature="e#6397#6414#0" expanded="true" />
+            <element signature="e#7126#7143#0" expanded="true" />
+            <element signature="e#8401#8417#0" expanded="true" />
+            <element signature="e#8463#8479#0" expanded="true" />
+            <element signature="e#8942#8959#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/example/txwl_first/JoinBlackListActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="258" column="42" selection-start-line="258" selection-start-column="42" selection-end-line="258" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/example/txwl_first/Util/BoundSuccessFragmentDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="33" column="56" selection-start-line="33" selection-start-column="56" selection-end-line="33" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/bound_success_dialog.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.73735726">
-          <caret line="171" column="16" selection-start-line="171" selection-start-column="16" selection-end-line="171" selection-end-column="16" />
-          <folding>
-            <element signature="e#1322#1340#0" expanded="true" />
-            <element signature="e#4647#4667#0" expanded="true" />
-            <element signature="e#5434#5454#0" expanded="true" />
-            <element signature="e#6564#6581#0" expanded="true" />
-            <element signature="e#7293#7310#0" expanded="true" />
-            <element signature="e#8568#8584#0" expanded="true" />
-            <element signature="e#8630#8646#0" expanded="true" />
-            <element signature="e#9109#9126#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.67536706">
+          <caret line="21" column="81" selection-start-line="21" selection-start-column="81" selection-end-line="21" selection-end-column="81" />
+          <folding />
         </state>
       </provider>
     </entry>

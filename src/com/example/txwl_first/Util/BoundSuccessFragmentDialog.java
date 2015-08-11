@@ -31,7 +31,7 @@ public class BoundSuccessFragmentDialog extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.bound_success_dialog, null);
+        View view = inflater.inflate(R.layout.bound_success_dialog, container);
         Bundle data = getArguments();
         billon = data.getString("billon");
         btn_bound_success = (Button) view.findViewById(R.id.btn_bound_sucess);

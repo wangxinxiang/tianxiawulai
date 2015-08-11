@@ -254,7 +254,7 @@ public class JoinBlackListActivity extends Activity{
                 if (new String(bytes).contains("success")) {
                     TXWLApplication.getInstance().showTextToast("添加成功");
                     Intent intent = new Intent(JoinBlackListActivity.this, ChoicePayModeActivity.class);
-                    intent.putExtra("tip", "1.01");
+                    intent.putExtra("tip", "100");
                     intent.putExtra("registid", queryDetailResultBean.getRegistid());
                     startActivity(intent);
                 } else {
