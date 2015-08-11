@@ -74,7 +74,6 @@ public class BoundSuccessFragmentDialog extends DialogFragment {
                 if (new String(bytes).contains("success")) {
                     TXWLApplication.getInstance().showTextToast("已将记录交给服务器");
                     getDialog().dismiss();
-                    getActivity().setResult(Constant.LOGIN_CHANGE);
                     TXWLApplication.getInstance().finishStack();
                 } else {
                     TXWLApplication.getInstance().showTextToast("支付成功，将记录交给服务器失败,再按次确定");

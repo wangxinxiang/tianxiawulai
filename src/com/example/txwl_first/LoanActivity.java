@@ -303,6 +303,7 @@ public class LoanActivity extends Activity implements AddItem {
             @Override
             public void onClick(View view) {
                 if (getIntent().getBooleanExtra("addblack", false)) {
+                    setResult(Constant.LOGIN_CHANGE);
                     TXWLApplication.getInstance().pushStack(LoanActivity.this);
                     Intent intent = new Intent(LoanActivity.this, JoinBlackListActivity.class);
 //                    Bundle bundle = new Bundle();
@@ -456,6 +457,7 @@ public class LoanActivity extends Activity implements AddItem {
                 et_input_content.setInputType(InputType.TYPE_CLASS_NUMBER);
             }
             if (data1.equals("年利率")) {
+                et_input_content.setHint("%");
                 et_input_content.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
             }
             if (data1.equals("借款日")) {
