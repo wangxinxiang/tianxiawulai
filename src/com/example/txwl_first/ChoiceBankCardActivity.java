@@ -2,27 +2,29 @@ package com.example.txwl_first;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.example.txwl_first.Util.PreferenceUtils;
-import com.example.txwl_first.Util.TXWLApplication;
-import com.example.txwl_first.Util.TXWLProgressDialog;
-import com.example.txwl_first.Util.Url;
+import com.example.txwl_first.Util.*;
 import com.example.txwl_first.bean.AddRechargeBean;
 import com.example.txwl_first.bean.AddRechargeItemBean;
 import com.example.txwl_first.bean.BackInfoItemBean;
 import com.example.txwl_first.bean.GetBankInfoBean;
+import com.example.txwl_first.beifu.FastPayReturn;
+import com.example.txwl_first.beifu.FastpayBean;
 import com.google.gson.GsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import org.apache.http.Header;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
@@ -35,6 +37,7 @@ public class ChoiceBankCardActivity extends Activity{
     private LinearLayout rl_about_card;
     private String registid,tip;
     private GetBankInfoBean bean;
+    private ImageButton ibtn_title_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,13 @@ public class ChoiceBankCardActivity extends Activity{
     }
 
     private void initView() {
+        TextView tv_title = (TextView) findViewById(R.id.tv_title);
+        ibtn_title_back = (ImageButton) findViewById(R.id.ibtn_title_back);
+        ibtn_title_back.setVisibility(View.VISIBLE);
+        TextView tv_right = (TextView) findViewById(R.id.tv_right);
+        tv_right.setVisibility(View.GONE);
+        tv_title.setText("选择支付方式");
+
         rl_about_add_card = (RelativeLayout) findViewById(R.id.rl_about_add_card);
         rl_about_card = (LinearLayout) findViewById(R.id.rl_about_card);
         registid = getIntent().getStringExtra("registid");
@@ -66,16 +76,30 @@ public class ChoiceBankCardActivity extends Activity{
     }
 
     private void initListener() {
+        ibtn_title_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                TXWLApplication.getInstance().popStack(ChoiceBankCardActivity.this);
+            }
+        });
+
         rl_about_add_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //跳转到添加银行卡 实现生命周期管理
+
                 Intent intent = new Intent(ChoiceBankCardActivity.this, AddBankCardActivity.class);
-//                intent.putExtra("recharge_money", getIntent().getStringExtra("recharge_money"));
                 intent.putExtra("registid", registid);
                 intent.putExtra("tip", tip);
+                if ((bean != null) && ("success".equals(bean.getStatus())) && bean.getList().length != 0 ) {
+                    BackInfoItemBean item = bean.getList()[0];
+                    intent.putExtra("bankNumber", item.getBanknumber());
+                    intent.putExtra("phone", item.getMobile());
+                    intent.putExtra("isDetele", true);
+                } else {
+                    intent.putExtra("isDetele", false);
+                }
                 startActivity(intent);
-//                SLHApplication.getInstance().addActivity(ChoiceBankCardActivity.this);
             }
         });
     }
@@ -83,11 +107,11 @@ public class ChoiceBankCardActivity extends Activity{
     private void getUserBankCard() {
         //得到用户的银行卡信息
 
-        AsyncHttpClient client=new AsyncHttpClient();
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
         client.setTimeout(10000);
-        //查询所有黑名单接口 目前没有参数上传
-        final RequestParams params = new RequestParams();
-        params.put("id", PreferenceUtils.getUserId());//只传入用户id
+        params.put("userid", PreferenceUtils.getUserId());//只传入用户id
+        Log.d("getUserBankCard", params.toString());
 
         client.post(Url.GetBankInfo_URL, params, new AsyncHttpResponseHandler() {
 
@@ -139,8 +163,8 @@ public class ChoiceBankCardActivity extends Activity{
                             Intent intent = new Intent(ChoiceBankCardActivity.this, VerificationActivity.class);
                             intent.putExtra("registid", registid);
                             intent.putExtra("recharge_money", tip);
-                            intent.putExtra("bankNumber", item.getBankid());
-                            intent.putExtra("accountNumber", item.getBanknumber());
+                            intent.putExtra("bankNumber", item.getBanknumber());
+                            intent.putExtra("accountNumber", item.getID());
                             intent.putExtra("mobile", item.getMobile());
                             intent.putExtra("accountname", item.getAccountname());
                             intent.putExtra("recharge_money", tip);

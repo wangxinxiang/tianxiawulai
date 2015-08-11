@@ -303,6 +303,7 @@ public class LoanActivity extends Activity implements AddItem {
             @Override
             public void onClick(View view) {
                 if (getIntent().getBooleanExtra("addblack", false)) {
+                    TXWLApplication.getInstance().pushStack(LoanActivity.this);
                     Intent intent = new Intent(LoanActivity.this, JoinBlackListActivity.class);
 //                    Bundle bundle = new Bundle();
                     intent.putExtra("headImage", getIntent().getStringExtra("headImage"));

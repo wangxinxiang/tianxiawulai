@@ -44,6 +44,7 @@ public class JoinBlackListActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.join_blacklist_layout);
+        TXWLApplication.getInstance().pushStack(this);
         initView();
         setOnClickListener();
         getDataFromInternet();
@@ -53,6 +54,7 @@ public class JoinBlackListActivity extends Activity{
         ibtn_title_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                TXWLApplication.getInstance().popStack(JoinBlackListActivity.this);
                 finish();
             }
         });
@@ -252,7 +254,7 @@ public class JoinBlackListActivity extends Activity{
                 if (new String(bytes).contains("success")) {
                     TXWLApplication.getInstance().showTextToast("添加成功");
                     Intent intent = new Intent(JoinBlackListActivity.this, ChoicePayModeActivity.class);
-                    intent.putExtra("tip", "1.5");
+                    intent.putExtra("tip", "1.01");
                     intent.putExtra("registid", queryDetailResultBean.getRegistid());
                     startActivity(intent);
                 } else {
@@ -282,5 +284,9 @@ public class JoinBlackListActivity extends Activity{
         Log.d(TAG, "onPause");
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        TXWLApplication.getInstance().popStack(this);
+    }
 }

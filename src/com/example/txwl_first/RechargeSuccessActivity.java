@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import com.example.txwl_first.Util.Constant;
 import com.example.txwl_first.Util.PreferenceUtils;
 import com.example.txwl_first.Util.TXWLApplication;
 import com.example.txwl_first.Util.Url;
@@ -22,6 +24,7 @@ import java.util.Date;
 public class RechargeSuccessActivity extends Activity{
 
     private Button recharge_success_commit;
+    private ImageButton ibtn_title_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,13 @@ public class RechargeSuccessActivity extends Activity{
     }
 
     private void initView() {
+        TextView tv_title = (TextView) findViewById(R.id.tv_title);
+        ibtn_title_back = (ImageButton) findViewById(R.id.ibtn_title_back);
+        ibtn_title_back.setVisibility(View.VISIBLE);
+        TextView tv_right = (TextView) findViewById(R.id.tv_right);
+        tv_right.setVisibility(View.GONE);
+        tv_title.setText("确认支付");
+
         recharge_success_commit = (Button) findViewById(R.id.recharge_success_commit);
 
         TextView  recharge_success_order = (TextView) findViewById(R.id.recharge_success_order);
@@ -60,6 +70,13 @@ public class RechargeSuccessActivity extends Activity{
     }
 
     private void initListener() {
+        ibtn_title_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TXWLApplication.getInstance().showTextToast("交易成功，请按确定将交易数据提交到服务器");
+            }
+        });
+
         recharge_success_commit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,6 +111,7 @@ public class RechargeSuccessActivity extends Activity{
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
                 if (new String(bytes).contains("success")) {
                     TXWLApplication.getInstance().showTextToast("已将记录交给服务器");
+                    setResult(Constant.LOGIN_CHANGE);
                     TXWLApplication.getInstance().finishStack();
                 } else {
                     TXWLApplication.getInstance().showTextToast("支付成功，将记录交给服务器失败,再按次确定");

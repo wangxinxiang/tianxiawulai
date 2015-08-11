@@ -14,6 +14,7 @@ import android.widget.*;
 import com.example.txwl_first.Util.*;
 import com.example.txwl_first.bean.AddRechargeBean;
 import com.example.txwl_first.bean.AddRechargeItemBean;
+import com.example.txwl_first.bean.BackInfoItemBean;
 import com.example.txwl_first.beifu.BeiFuHttpPost;
 import com.example.txwl_first.beifu.FastPay2Return;
 import com.example.txwl_first.beifu.FastPayReturn;
@@ -51,6 +52,7 @@ public class AddBankCardActivity extends Activity{
     private String encrypt_key;                                     //时间戳
 
     BeiFuHttpPost beiFuHttpPost;
+    private ImageButton ibtn_title_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +90,14 @@ public class AddBankCardActivity extends Activity{
     }
 
     private void initListener() {
+        ibtn_title_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                TXWLApplication.getInstance().popStack(AddBankCardActivity.this);
+            }
+        });
+
         rl_bank_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -148,6 +158,13 @@ public class AddBankCardActivity extends Activity{
 
 
     private void initView() {
+        TextView tv_title = (TextView) findViewById(R.id.tv_title);
+        ibtn_title_back = (ImageButton) findViewById(R.id.ibtn_title_back);
+        ibtn_title_back.setVisibility(View.VISIBLE);
+        TextView tv_right = (TextView) findViewById(R.id.tv_right);
+        tv_right.setVisibility(View.GONE);
+        tv_title.setText("银行卡支付");
+
         cz_money = getIntent().getStringExtra("tip");
 
         et_user_name = (EditText) findViewById(R.id.et_user_name);
@@ -161,6 +178,7 @@ public class AddBankCardActivity extends Activity{
         bankcardnum = (TextView) findViewById(R.id.bankcardnum);
         et_vericode = (EditText) findViewById(R.id.et_vericode);
         ibtn_submit_next.setEnabled(false);
+
     }
 
 
@@ -185,6 +203,9 @@ public class AddBankCardActivity extends Activity{
     }
 
 
+    /**
+     * 验证码设置
+     */
     class MyCountDownTimer extends CountDownTimer {
         /**
          * @param millisInFuture    表示以毫秒为单位 倒计时的总数
@@ -213,6 +234,10 @@ public class AddBankCardActivity extends Activity{
     }
 
 
+    /**
+     * 验证信息是否为空
+     * @return
+     */
     private boolean verification() {
         name = et_user_name.getText().toString();
         idcard = et_user_card.getText().toString();
@@ -260,6 +285,9 @@ public class AddBankCardActivity extends Activity{
                 TXWLProgressDialog.Dismiss();
                 if (new String(bytes).contains("success")) {
                     BoundSuccessFragmentDialog dialog = new BoundSuccessFragmentDialog();
+                    Bundle data = new Bundle();
+                    data.putString("billon", billno);
+                    dialog.setArguments(data);//通过Bundle向Activity中传递值
                     dialog.show(getFragmentManager(), "boundsuccess");
                 } else {
                     TXWLApplication.getInstance().showTextToast("支付成功，绑定银行卡失败");
@@ -275,7 +303,9 @@ public class AddBankCardActivity extends Activity{
 
     }
 
-
+    /**
+     * 提交交易
+     */
     class BeiFuPayHttpPost extends AsyncTask<String, Integer, String> {
 
         public BeiFuPayHttpPost() {
@@ -303,7 +333,6 @@ public class AddBankCardActivity extends Activity{
             fastpayBean.setOut_trade_no(params[0]);
             fastpayBean.setTotal_fee(params[3]);               //(8,2) 位数至少2位
             fastpayBean.setSign_type("MD5");
-//            fastpayBean.setSpFlag("QuickPay");
             fastpayBean.setNotify_url("www.hao123.com");
             fastpayBean.setToken(params[1]);
             fastpayBean.setValidCode(params[2]);
@@ -421,14 +450,20 @@ public class AddBankCardActivity extends Activity{
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            bankcardnum.setText(s);
+            String bankId = "";
+            for (int i = 0; i < s.length(); i++) {
+                if ((i + 1) % 4 == 0) {
+                    bankId += " ";
+                }
+                bankId += s.charAt(i);
+            }
+            bankcardnum.setText(bankId);
             Log.v("TextWatcher-onTextChanged-->", " text=" + s.toString() + " length=" + s.length() + " start=" + start + " before-" + before + " count=" + count);
         }
 
         @Override
         public void afterTextChanged(Editable s) {
-            Log.v("TextWatcher-afterTextChanged-->",s.toString()+"length"+s.length());
+            Log.v("TextWatcher-afterTextChanged-->", s.toString() + "length" + s.length());
             // 输入的时候，只有一个光标，那么这两个值应该是相等的。。。
             editStart = et_user_ban.getSelectionStart();
             editEnd = et_user_ban.getSelectionEnd();
@@ -461,6 +496,9 @@ public class AddBankCardActivity extends Activity{
         }
     };
 
+    /**
+     * 获取订单号
+     */
     private void getOrderNum() {
         String url = Url.AddRecharge_URL;
         AsyncHttpClient client = new AsyncHttpClient();
@@ -478,8 +516,14 @@ public class AddBankCardActivity extends Activity{
                     AddRechargeBean addRechargeBean = new GsonBuilder().create().fromJson(new String(bytes), AddRechargeBean.class);
                     AddRechargeItemBean addRechargeItemBean = addRechargeBean.getRecharge();
                     billno = addRechargeItemBean.getBillno();
-
                     TXWLProgressDialog.Dismiss();
+
+                    if (getIntent().getBooleanExtra("isDetele", false)) {
+                        TXWLProgressDialog.createDialog(AddBankCardActivity.this);
+                        TXWLProgressDialog.setMessage("只能绑定一张银行卡，解绑中");
+                        new UnBindBeiFu().execute();
+                    }
+
                 } catch (Exception e) {
                     TXWLApplication.getInstance().showErrorConnected(e);
                     TXWLProgressDialog.Dismiss();
@@ -496,4 +540,61 @@ public class AddBankCardActivity extends Activity{
 //
     }
 
+    /**
+     * 解除银行卡绑定
+     */
+    class UnBindBeiFu extends AsyncTask<String, Integer, String> {
+
+        public UnBindBeiFu() {
+            super();
+        }
+
+        @Override
+        protected String  doInBackground(String... params) {
+            //bankNumber：银行卡号 accountNumber：证件号 mobile：手机号码 accountname：用户姓名
+
+            FastpayBean fastpayBean=new FastpayBean();
+            fastpayBean.setService("ebatong_mp_unbind");
+            fastpayBean.setPartner(Url.Partner);
+            fastpayBean.setSign_type("MD5");
+            fastpayBean.setInput_charset("UTF-8");
+            fastpayBean.setBank_card_no(getIntent().getStringExtra("bankNumber"));
+            fastpayBean.setOut_trade_no(billno);
+            fastpayBean.setPhone(getIntent().getStringExtra("phone"));
+            fastpayBean.setNotify_url("www.hao123.com");
+            fastpayBean.setCustomerId(PreferenceUtils.getUserId() + "");
+            fastpayBean.setSubject("描述");
+
+            String urlPath = "https://www.ebatong.com/mobileFast/unbind.htm";
+            String postJson = fastpayBean.getPostJson();
+            Log.i("lyjtest", "getPostJson:" + postJson);
+            byte[] data = postJson.getBytes();
+            InputStream is = null;
+            try {
+                is = NetTool.sendXMLData(urlPath, data, "UTF-8");
+                data = NetTool.readStream(is);
+                Log.i("lyjtest", new String(data));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return new String(data);
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            FastPayReturn returnBean = new GsonBuilder().create().fromJson( result, FastPayReturn.class);
+            if("T".equals(returnBean.getResult())){
+                TXWLProgressDialog.Dismiss();
+                TXWLApplication.getInstance().showTextToast("解绑成功");
+
+            }else{
+                TXWLProgressDialog.Dismiss();
+                TXWLApplication.getInstance().showTextToast("解绑失败，重新进入");
+                TXWLApplication.getInstance().showTextToast(returnBean.getError_message());
+                Log.d("mobileFast_error---->", returnBean.getError_message());
+            }
+        }
+    }
 }

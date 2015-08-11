@@ -142,6 +142,7 @@
         <item name="android:textSize">@dimen/textsize_18</item>
     </style>
     <style name="addBankCard_edit">
+        <item name="android:textCursorDrawable">@null</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/space_35</item>
         <item name="android:layout_marginLeft">10dp</item>

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.example.txwl_first.Util.PreferenceUtils;
@@ -24,6 +25,7 @@ import org.apache.http.Header;
  */
 public class ChoicePayModeActivity extends Activity{
     private String tip,registid;
+    private ImageButton ibtn_title_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,13 @@ public class ChoicePayModeActivity extends Activity{
     }
 
     private void initView() {
+        TextView tv_title = (TextView) findViewById(R.id.tv_title);
+        ibtn_title_back = (ImageButton) findViewById(R.id.ibtn_title_back);
+        ibtn_title_back.setVisibility(View.VISIBLE);
+        TextView tv_right = (TextView) findViewById(R.id.tv_right);
+        tv_right.setVisibility(View.GONE);
+        tv_title.setText("选择支付方式");
+
         tip = getIntent().getStringExtra("tip");
         registid = getIntent().getStringExtra("registid");
 
@@ -47,10 +56,18 @@ public class ChoicePayModeActivity extends Activity{
         rl_choice_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    Intent intent = new Intent(ChoicePayModeActivity.this, ChoiceBankCardActivity.class);
-                    intent.putExtra("registid", registid);
-                    intent.putExtra("tip", tip);
-                    startActivity(intent);
+                Intent intent = new Intent(ChoicePayModeActivity.this, ChoiceBankCardActivity.class);
+                intent.putExtra("registid", registid);
+                intent.putExtra("tip", tip);
+                startActivity(intent);
+            }
+        });
+
+        ibtn_title_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TXWLApplication.getInstance().popStack(ChoicePayModeActivity.this);
+                finish();
             }
         });
     }
@@ -59,6 +76,7 @@ public class ChoicePayModeActivity extends Activity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        TXWLApplication.getInstance().popStack(this);
     }
 
     @Override

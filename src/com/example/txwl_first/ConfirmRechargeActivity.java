@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import com.example.txwl_first.Util.*;
 import com.example.txwl_first.beifu.FastPayReturn;
@@ -22,6 +23,7 @@ public class ConfirmRechargeActivity extends Activity{
 
     private Button confirm_recharge_commit;
     private String name,idcard,bankid,phone,et_vericode,billno,token,cz_money,bank_code;
+    private ImageButton ibtn_title_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,12 @@ public class ConfirmRechargeActivity extends Activity{
     }
 
     private void initView() {
+        TextView tv_title = (TextView) findViewById(R.id.tv_title);
+        ibtn_title_back = (ImageButton) findViewById(R.id.ibtn_title_back);
+        ibtn_title_back.setVisibility(View.VISIBLE);
+        TextView tv_right = (TextView) findViewById(R.id.tv_right);
+        tv_right.setVisibility(View.GONE);
+        tv_title.setText("确认支付");
 
         bank_code = getIntent().getStringExtra("bank_code");
         name = getIntent().getStringExtra("name");
@@ -66,6 +74,14 @@ public class ConfirmRechargeActivity extends Activity{
     }
 
     private void initListener() {
+        ibtn_title_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                TXWLApplication.getInstance().popStack(ConfirmRechargeActivity.this);
+            }
+        });
+
         confirm_recharge_commit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,7 +120,6 @@ public class ConfirmRechargeActivity extends Activity{
             fastpayBean.setOut_trade_no(params[0]);
             fastpayBean.setTotal_fee(params[3]);               //(8,2) 位数至少2位
             fastpayBean.setSign_type("MD5");
-//            fastpayBean.setSpFlag("QuickPay");
             fastpayBean.setNotify_url("www.hao123.com");
             fastpayBean.setToken(params[1]);
             fastpayBean.setValidCode(params[2]);
@@ -152,6 +167,7 @@ public class ConfirmRechargeActivity extends Activity{
                 startActivity(intent);
 
             }else{
+                TXWLProgressDialog.Dismiss();
                 TXWLApplication.getInstance().showTextToast(returnBean.getError_message());
             }
         }

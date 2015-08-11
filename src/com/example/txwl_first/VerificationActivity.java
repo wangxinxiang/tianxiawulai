@@ -2,6 +2,7 @@ package com.example.txwl_first;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
@@ -10,19 +11,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import com.example.txwl_first.Util.PreferenceUtils;
-import com.example.txwl_first.Util.TXWLApplication;
-import com.example.txwl_first.Util.TXWLProgressDialog;
-import com.example.txwl_first.Util.Url;
+import com.example.txwl_first.Util.*;
 import com.example.txwl_first.bean.AddRechargeBean;
 import com.example.txwl_first.bean.AddRechargeItemBean;
+import com.example.txwl_first.bean.BackInfoItemBean;
 import com.example.txwl_first.beifu.BeiFuHttpPost;
+import com.example.txwl_first.beifu.FastPayReturn;
+import com.example.txwl_first.beifu.FastpayBean;
 import com.google.gson.GsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import org.apache.http.Header;
+
+import java.io.InputStream;
 
 /**
  * Created by licheng on 31/5/15.
@@ -34,6 +38,7 @@ public class VerificationActivity extends Activity {
     private String token,billno;
     private String cz_money,name,idcard,bankid,phone, bank_code, bankname;
     BeiFuHttpPost beiFuHttpPost;
+    private ImageButton ibtn_title_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,14 @@ public class VerificationActivity extends Activity {
     }
 
     private void setOnClickListener(){
+        ibtn_title_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                TXWLApplication.getInstance().popStack(VerificationActivity.this);
+            }
+        });
+
         //重新获取验证码
         btn_submit_reget.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +85,7 @@ public class VerificationActivity extends Activity {
                 }catch (Exception e){
                     TXWLApplication.getInstance().showTextToast("请重新输入验证码");
                 }
-                if("".equals(et_chekcode.getText().toString())){
+                if(!"".equals(et_chekcode.getText().toString())){
                     Intent intent = new Intent(VerificationActivity.this, ConfirmRechargeActivity.class);
                     intent.putExtra("billno", billno);
                     intent.putExtra("token", token);
@@ -94,7 +107,12 @@ public class VerificationActivity extends Activity {
     }
 
     private void initView(){
-
+        TextView tv_title = (TextView) findViewById(R.id.tv_title);
+        ibtn_title_back = (ImageButton) findViewById(R.id.ibtn_title_back);
+        ibtn_title_back.setVisibility(View.VISIBLE);
+        TextView tv_right = (TextView) findViewById(R.id.tv_right);
+        tv_right.setVisibility(View.GONE);
+        tv_title.setText("验证码");
 
         TXWLProgressDialog.createDialog(VerificationActivity.this);
         TXWLProgressDialog.setMessage("获取订单号中.....");
@@ -209,6 +227,5 @@ public class VerificationActivity extends Activity {
         });
 //
     }
-
 
 }
