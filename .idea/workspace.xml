@@ -133,15 +133,17 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.39967373">
-              <caret line="138" column="55" selection-start-line="138" selection-start-column="55" selection-end-line="138" selection-end-column="55" />
+            <state vertical-scroll-proportion="0.73735726">
+              <caret line="171" column="16" selection-start-line="171" selection-start-column="16" selection-end-line="171" selection-end-column="16" />
               <folding>
-                <element signature="e#5289#5306#0" expanded="true" />
+                <element signature="e#1322#1340#0" expanded="true" />
+                <element signature="e#4647#4667#0" expanded="true" />
                 <element signature="e#5434#5454#0" expanded="true" />
                 <element signature="e#6564#6581#0" expanded="true" />
                 <element signature="e#7293#7310#0" expanded="true" />
                 <element signature="e#8568#8584#0" expanded="true" />
                 <element signature="e#8630#8646#0" expanded="true" />
+                <element signature="e#9109#9126#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -257,8 +259,8 @@
         <option value="$PROJECT_DIR$/src/com/example/txwl_first/Util/BoundSuccessFragmentDialog.java" />
         <option value="$PROJECT_DIR$/src/com/example/txwl_first/RechargeSuccessActivity.java" />
         <option value="$PROJECT_DIR$/src/com/example/txwl_first/LoanActivity.java" />
-        <option value="$PROJECT_DIR$/res/layout/add_backcard_layout.xml" />
         <option value="$PROJECT_DIR$/res/values/style.xml" />
+        <option value="$PROJECT_DIR$/res/layout/add_backcard_layout.xml" />
       </list>
     </option>
   </component>
@@ -925,12 +927,12 @@
       <workItem from="1439191612765" duration="222000" />
       <workItem from="1439192275135" duration="118000" />
       <workItem from="1439192563935" duration="67000" />
-      <workItem from="1439193073964" duration="22010000" />
+      <workItem from="1439193073964" duration="22754000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="524541000" />
+    <option name="totallyTimeSpent" value="525285000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1476,15 +1478,17 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.39967373">
-          <caret line="138" column="55" selection-start-line="138" selection-start-column="55" selection-end-line="138" selection-end-column="55" />
+        <state vertical-scroll-proportion="0.73735726">
+          <caret line="171" column="16" selection-start-line="171" selection-start-column="16" selection-end-line="171" selection-end-column="16" />
           <folding>
-            <element signature="e#5289#5306#0" expanded="true" />
+            <element signature="e#1322#1340#0" expanded="true" />
+            <element signature="e#4647#4667#0" expanded="true" />
             <element signature="e#5434#5454#0" expanded="true" />
             <element signature="e#6564#6581#0" expanded="true" />
             <element signature="e#7293#7310#0" expanded="true" />
             <element signature="e#8568#8584#0" expanded="true" />
             <element signature="e#8630#8646#0" expanded="true" />
+            <element signature="e#9109#9126#0" expanded="true" />
           </folding>
         </state>
       </provider>

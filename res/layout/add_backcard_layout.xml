@@ -26,7 +26,8 @@
                             android:background="@color/white"
                     >
                 <EditText android:id="@+id/et_user_name"
-                          style="@style/addBankCard_edit" android:paddingLeft="@dimen/space_100"/>
+                          style="@style/addBankCard_edit"
+                          android:text="徐大创" android:paddingLeft="@dimen/space_100"/>
                 <TextView
                         style="@style/addBankCard_text"
                         android:text="持卡人姓名"
@@ -42,7 +43,7 @@
                 <EditText android:id="@+id/et_user_phone"
                           android:hint="银行预留手机号"
                           style="@style/addBankCard_edit"
-                          android:inputType="phone"/>
+                          android:inputType="phone" android:text="15056972756"/>
                 <TextView
                         style="@style/addBankCard_text"
                         android:text="手机号"
@@ -56,7 +57,8 @@
                     >
                 <EditText android:id="@+id/et_user_card" style="@style/addBankCard_edit"
                           android:singleLine="true"
-                          android:inputType="number"/>
+                          android:inputType="number"
+                          android:text="342427199212094217"/>
                 <TextView
                         style="@style/addBankCard_text"
                         android:text="身份证号"
@@ -69,6 +71,7 @@
                             android:layout_below="@+id/rl_bank_name">
                 <EditText android:id="@+id/et_user_ban"
                           android:hint="请输入储蓄卡号码" style="@style/addBankCard_edit"
+                          android:text="6221503610008220885"
                           android:inputType="number"/>
                 <TextView
                         style="@style/addBankCard_text"
@@ -158,6 +161,15 @@
                         android:textColor="@color/white"
                         android:paddingLeft="@dimen/space_7"
                         android:paddingRight="@dimen/space_7" android:singleLine="false" android:ellipsize="marquee"/>
+            </RelativeLayout>
+
+            <RelativeLayout android:id="@+id/rl_layout_tixing" android:layout_width="fill_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/linegray" style="@style/rl_paycard"
+                            android:layout_below="@+id/rl_layout_vericode"
+                            android:layout_marginTop="@dimen/space_10" android:layout_centerInParent="true"
+                    >
+                
             </RelativeLayout>
 
         </RelativeLayout>
