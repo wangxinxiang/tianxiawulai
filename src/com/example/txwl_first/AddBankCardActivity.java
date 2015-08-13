@@ -591,8 +591,8 @@ public class AddBankCardActivity extends Activity{
 
             }else{
                 TXWLProgressDialog.Dismiss();
-                TXWLApplication.getInstance().showTextToast("解绑失败，重新进入");
-                TXWLApplication.getInstance().showTextToast(returnBean.getError_message());
+//                TXWLApplication.getInstance().showTextToast("解绑失败，重新进入");
+//                TXWLApplication.getInstance().showTextToast(returnBean.getError_message());
                 Log.d("mobileFast_error---->", returnBean.getError_message());
             }
         }

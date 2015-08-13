@@ -107,7 +107,14 @@ public class PhotoActivity extends Activity{
             case 1:
                 ContentResolver resolver = getContentResolver();
                 try{
-                    Bitmap photo = MediaStore.Images.Media.getBitmap(resolver, data.getData());
+//                    Bitmap photo = MediaStore.Images.Media.getBitmap(resolver, data.getData());
+
+                    BitmapFactory.Options opt = new BitmapFactory.Options();
+                    opt.inPreferredConfig = Bitmap.Config.RGB_565;
+                    opt.inPurgeable = true;
+                    opt.inInputShareable = true;
+                    InputStream input = resolver.openInputStream(data.getData());
+                    Bitmap photo = BitmapFactory.decodeStream(input, null, opt);
 
                     showPhoto(photo);
 
@@ -118,7 +125,11 @@ public class PhotoActivity extends Activity{
 
                 break;
             case 2:
-                Bitmap photo = BitmapFactory.decodeFile(new File(Environment.getExternalStorageDirectory(), "img.jpg").getAbsolutePath());
+                BitmapFactory.Options opt = new BitmapFactory.Options();
+                opt.inPreferredConfig = Bitmap.Config.RGB_565;
+                opt.inPurgeable = true;
+                opt.inInputShareable = true;
+                Bitmap photo = BitmapFactory.decodeFile(new File(Environment.getExternalStorageDirectory(), "img.jpg").getAbsolutePath(), opt);
 
                 //预览图片
                 showPhoto(photo);
